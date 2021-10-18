@@ -32,7 +32,7 @@ npm install -g @vue/cli @vue/cli-service-global
 # install VS Code Extensions: Vetur, EditorConfig for VS Code
 
 
-docker run -d --name postgres \
+docker run -d --name postgres-test \
     --restart unless-stopped \
     -p 5432:5432 \
     -e POSTGRES_PASSWORD=postgres \

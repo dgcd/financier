@@ -35,9 +35,20 @@ pipeline {
 
         stage("build back") {
             steps {
-                echo "=========== building apps ============================================================"
+                echo "=========== build back ============================================================"
                 sh './gradlew :app:build'
                 sh 'ls -la ./app/build/libs'
+            }
+        }
+
+        stage("build front") {
+            steps {
+                echo "=========== build front ============================================================"
+                dir('front') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                    sh 'ls -laR ./dist'
+                }
             }
         }
 
