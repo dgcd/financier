@@ -3,6 +3,8 @@
 // requires Pipeline Utility Steps plugin
 // requires Build Name and Description Setter plugin
 
+// https://www.jenkins.io/doc/book/pipeline/syntax/
+
 properties([disableConcurrentBuilds()])
 
 pipeline {
@@ -117,5 +119,13 @@ pipeline {
 //                echo "=========== Done! ==========================================================================="
 //            }
 //        }
+    }
+    post {
+        always {
+            echo "=========== finally block ============================================================"
+            sh './gradlew clean'
+            sh 'rm -rf front/node_modules/'
+            sh 'rm -rf dist/'
+        }
     }
 }
