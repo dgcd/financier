@@ -7,6 +7,7 @@ properties([disableConcurrentBuilds()])
 
 pipeline {
     agent any
+
     triggers {
         pollSCM('* * * * *')
     }
@@ -25,29 +26,21 @@ pipeline {
             steps {
                 echo "=========== read version ============================================================"
                 script {
-//                    String versionString = readFile 'version.conf'
-//                    if (!(versionString ==~ /version=\d+\.\d+\.\d+/))
-//                        throw new Exception('wrong version string in file: ' + versionString)
-//                    def versions = ((versionString.split('='))[1]).split('\\.')
-
-                    def props = readProperties file: 'version.conf'
-                    println props.version
-                    CURRENT_VERSION = "${version}.$BUILD_NUMBER"
+                    def props = readProperties file: 'deploy/version.conf'
+                    CURRENT_VERSION = "${props.version}.$BUILD_NUMBER"
                     buildName "Version: ${CURRENT_VERSION}"
                 }
             }
         }
 
-//        stage("building apps") {
-//            steps {
-//                echo "=========== building apps ============================================================"
-//                sh './gradlew clean'
-//                sh './gradlew :kube:frontend:installFront :kube:frontend:buildFront'
-//                sh './gradlew :kube:backend:build'
-//                sh './gradlew :kube:gateway:build'
-//            }
-//        }
-//
+        stage("build back") {
+            steps {
+                echo "=========== building apps ============================================================"
+                sh './gradlew :app:build'
+                sh 'ls -la ./app/build/libs'
+            }
+        }
+
 //        stage("build images") {
 //            steps {
 //                echo "=========== build frontend image ==========================================================="
