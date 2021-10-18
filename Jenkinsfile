@@ -1,5 +1,8 @@
 #!groovy
 
+// requires Pipeline Utility Steps plugin
+// requires Build Name and Description Setter plugin
+
 properties([disableConcurrentBuilds()])
 
 pipeline {
@@ -22,12 +25,14 @@ pipeline {
             steps {
                 echo "=========== read version ============================================================"
                 script {
-                    String versionString = readFile 'version.conf'
-                    if (!(versionString ==~ /version=\d+\.\d+/))
-                        throw new Exception('wrong version string in file: ' + versionString)
-                    def versions = ((versionString.split('='))[1]).split('\\.')
-                    CURRENT_VERSION = "${versions[0]}.${versions[1]}.$BUILD_NUMBER"
-                    // requires Build Name and Description Setter plugin
+//                    String versionString = readFile 'version.conf'
+//                    if (!(versionString ==~ /version=\d+\.\d+\.\d+/))
+//                        throw new Exception('wrong version string in file: ' + versionString)
+//                    def versions = ((versionString.split('='))[1]).split('\\.')
+
+                    def props = readProperties file: 'version.conf'
+                    println props.version
+                    CURRENT_VERSION = "${version}.$BUILD_NUMBER"
                     buildName "Version: ${CURRENT_VERSION}"
                 }
             }
