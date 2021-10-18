@@ -126,6 +126,7 @@ pipeline {
             sh './gradlew clean'
 //            sh 'rm -rf front/node_modules'
 //            sh 'rm -rf front/dist'
+            sh 'ls -la front'
         }
     }
 }
