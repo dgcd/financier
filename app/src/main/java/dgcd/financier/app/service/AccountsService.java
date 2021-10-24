@@ -1,7 +1,7 @@
 package dgcd.financier.app.service;
 
 import dgcd.financier.app.domain.model.Account;
-import dgcd.financier.app.domain.model.AccountsRepository;
+import dgcd.financier.app.service.dao.AccountsDaoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +12,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountsService {
 
-    private final AccountsRepository accountsRepository;
+    private final AccountsDaoService accountsDaoService;
+
 
     @Transactional(readOnly = true)
     public List<Account> getAccounts() {
-        return accountsRepository.findAll();
+        return accountsDaoService.findAll();
     }
 
 }

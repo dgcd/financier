@@ -4,7 +4,7 @@
 
         <h1>Accounts</h1>
 
-        <table>
+        <table class="tbl">
             <tr>
                 <th>Id</th>
                 <th>Title</th>
@@ -36,13 +36,11 @@ export default {
         apiRequests.getAccounts(this.success, this.fail);
     },
     methods: {
-        success(responseBody) {
-            console.log(responseBody);
-            this.accounts = responseBody;
+        success(payload) {
+            this.accounts = payload;
         },
-        fail(errorMessage) {
-            console.log(errorMessage);
-            this.error = errorMessage;
+        fail(message) {
+            this.error = message;
         },
     },
 }
