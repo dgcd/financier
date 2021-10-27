@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Operations from '../views/Operations.vue'
 import Accounts from '../views/Accounts.vue'
+import AccountCreate from '../views/AccountCreate.vue'
 import Categories from '../views/Categories.vue'
 
 Vue.use(VueRouter)
@@ -30,6 +31,14 @@ const routes = [
         component: Accounts,
         meta: {
             title: 'Accounts',
+        },
+    },
+    {
+        path: '/accounts/create',
+        name: 'AccountCreate',
+        component: AccountCreate,
+        meta: {
+            title: 'Create account',
         },
     },
     {

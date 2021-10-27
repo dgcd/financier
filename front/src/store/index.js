@@ -1,15 +1,19 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+    state: {
+        accounts: null,
+        isAppReady: false,
+    },
+
+    mutations: {
+        setInitData(state, initData) {
+            console.log('init data: ', initData);
+            state.accounts = initData.accounts || [];
+            state.isAppReady = true;
+        },
+    },
+});

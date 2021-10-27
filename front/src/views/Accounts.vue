@@ -4,6 +4,10 @@
 
         <h1>Accounts</h1>
 
+        <p>
+            <button @click="onClickCreate">Create account</button>
+        </p>
+
         <table class="tbl">
             <tr>
                 <th>Id</th>
@@ -21,26 +25,19 @@
     </div>
 </template>
 
+
 <script>
-import apiRequests from '@/service/apiRequests.js';
+import { mapState } from 'vuex';
+import router from '@/router';
 
 export default {
     name: 'Accounts',
-    data() {
-        return {
-            accounts: [],
-            error: null,
-        };
-    },
-    created() {
-        apiRequests.getAccounts(this.success, this.fail);
+    computed: {
+        ...mapState(['accounts']),
     },
     methods: {
-        success(payload) {
-            this.accounts = payload;
-        },
-        fail(message) {
-            this.error = message;
+        onClickCreate() {
+            router.push('/accounts/create');
         },
     },
 }

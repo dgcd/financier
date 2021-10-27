@@ -10,6 +10,7 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
@@ -25,6 +26,7 @@ import java.math.BigDecimal;
 public class Account {
 
     @Id
+    @GeneratedValue(generator = "accounts_id_generator")
     private Long id;
 
     private String title;
