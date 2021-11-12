@@ -15,7 +15,7 @@
                 <th>Currency</th>
                 <th>Balance</th>
             </tr>
-            <tr v-for="a in accounts" :key="a.id">
+            <tr v-for="a in sortedAccounts" :key="a.id">
                 <td>{{ a.id }}</td>
                 <td>{{ a.title }}</td>
                 <td>{{ a.currency }}</td>
@@ -25,16 +25,21 @@
     </div>
 </template>
 
-
 <script>
 import { mapState } from 'vuex';
 import router from '@/router';
 
 export default {
     name: 'Accounts',
+
     computed: {
         ...mapState(['accounts']),
+
+        sortedAccounts() {
+            return this.accounts.sort((a,b) => b.id - a.id);
+        },
     },
+
     methods: {
         onClickCreate() {
             router.push('/accounts/create');

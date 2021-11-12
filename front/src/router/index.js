@@ -5,6 +5,7 @@ import Operations from '../views/Operations.vue'
 import Accounts from '../views/Accounts.vue'
 import AccountCreate from '../views/AccountCreate.vue'
 import Categories from '../views/Categories.vue'
+import CategoryCreate from '../views/CategoryCreate.vue'
 
 Vue.use(VueRouter)
 
@@ -48,7 +49,15 @@ const routes = [
         meta: {
             title: 'Categories',
         },
-    }
+    },
+    {
+        path: '/categories/create',
+        name: 'CategoryCreate',
+        component: CategoryCreate,
+        meta: {
+            title: 'Create category',
+        },
+    },
 ]
 
 const router = new VueRouter({
