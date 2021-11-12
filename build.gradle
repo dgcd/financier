@@ -39,7 +39,6 @@ subprojects {
         testAnnotationProcessor 'org.projectlombok:lombok'
     }
 
-
     test {
         useJUnitPlatform()
     }
