@@ -1,4 +1,4 @@
-import apiUrls from '../config/apiUrls.js'
+import apiUrls from '../config/apiUrls.js';
 
 const apiRequests = {
     async getInitData(success, fail) {

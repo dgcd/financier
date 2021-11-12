@@ -23,7 +23,6 @@
 import { mapMutations } from 'vuex';
 import ErrorTitle from '@/components/ErrorTitle.vue';
 import router from '@/router';
-import dicts from '@/config/dicts.js';
 import apiRequests from '@/service/apiRequests.js';
 
 export default {

@@ -1,11 +1,11 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Dashboard from '../views/Dashboard.vue'
-import Operations from '../views/Operations.vue'
-import Accounts from '../views/Accounts.vue'
-import AccountCreate from '../views/AccountCreate.vue'
-import Categories from '../views/Categories.vue'
-import CategoryCreate from '../views/CategoryCreate.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Dashboard from '../views/Dashboard.vue';
+import Operations from '../views/Operations.vue';
+import Accounts from '../views/Accounts.vue';
+import AccountCreate from '../views/AccountCreate.vue';
+import Categories from '../views/Categories.vue';
+import CategoryCreate from '../views/CategoryCreate.vue';
 
 Vue.use(VueRouter)
 

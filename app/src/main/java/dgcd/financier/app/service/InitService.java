@@ -19,14 +19,8 @@ public class InitService {
     @Transactional(readOnly = true)
     public InitResponseDto getInitData() {
         return new InitResponseDto(
-                accountsDaoService.findAll()
-                        .stream()
-                        .map(AccountResponseDto::of)
-                        .toList(),
-                categoriesDaoService.findAll()
-                        .stream()
-                        .map(CategoryResponseDto::of)
-                        .toList()
+                accountsDaoService.findAll().stream().map(AccountResponseDto::of).toList(),
+                categoriesDaoService.findAll().stream().map(CategoryResponseDto::of).toList()
         );
     }
 
