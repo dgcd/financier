@@ -24,9 +24,9 @@ public class AccountsController {
 
     private final AccountsService accountsService;
 
-    @PostMapping(ACCOUNTS_CREATE_PATH)
     @HandleException
-    @LogControllerData(logResult = true)
+    @LogControllerData
+    @PostMapping(ACCOUNTS_CREATE_PATH)
     public GeneralResponseDto createAccount(@RequestBody AccountCreateRequestDto dto) {
         var payload = accountsService.createAccount(dto);
         return new GeneralResponseDto(payload);

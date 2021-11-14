@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Dashboard from '../views/Dashboard.vue';
 import Operations from '../views/Operations.vue';
+import OperationCreate from '../views/OperationCreate.vue';
 import Accounts from '../views/Accounts.vue';
 import AccountCreate from '../views/AccountCreate.vue';
 import Categories from '../views/Categories.vue';
@@ -24,6 +25,14 @@ const routes = [
         component: Operations,
         meta: {
             title: 'Operations',
+        },
+    },
+    {
+        path: '/operations/create',
+        name: 'OperationCreate',
+        component: OperationCreate,
+        meta: {
+            title: 'Create operation',
         },
     },
     {

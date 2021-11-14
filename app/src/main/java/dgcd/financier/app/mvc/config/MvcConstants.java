@@ -12,4 +12,7 @@ public final class MvcConstants {
     public static final String CATEGORIES_PATH = API_PATH + "/categories";
     public static final String CATEGORIES_CREATE_PATH = CATEGORIES_PATH + "/create";
 
+    public static final String OPERATIONS_PATH = API_PATH + "/operations";
+    public static final String OPERATIONS_CREATE_PATH = OPERATIONS_PATH + "/create";
+
 }

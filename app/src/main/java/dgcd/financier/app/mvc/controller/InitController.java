@@ -1,5 +1,7 @@
 package dgcd.financier.app.mvc.controller;
 
+import dgcd.financier.app.mvc.aspects.HandleException;
+import dgcd.financier.app.mvc.aspects.LogControllerData;
 import dgcd.financier.app.mvc.dto.GeneralResponseDto;
 import dgcd.financier.app.service.InitService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +14,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(
-        value = INIT_PATH,
         consumes = APPLICATION_JSON_VALUE,
         produces = APPLICATION_JSON_VALUE
 )
@@ -21,7 +22,9 @@ public class InitController {
 
     private final InitService initService;
 
-    @PostMapping
+    @HandleException
+    @LogControllerData
+    @PostMapping(INIT_PATH)
     public GeneralResponseDto getInitData() {
         var payload = initService.getInitData();
         return new GeneralResponseDto(payload);

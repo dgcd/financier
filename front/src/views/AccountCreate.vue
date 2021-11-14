@@ -72,18 +72,19 @@ export default {
             }
             this.error = null;
 
-            apiRequests.createAccount(newAccount,
-                this.createSuccess,
-                this.createErorr,
+            apiRequests.createAccount(
+                newAccount,
+                this.requestSuccess,
+                this.requestError,
             );
         },
 
-        createSuccess(payload) {
+        requestSuccess(payload) {
             this.addAccount(payload);
             this.onBack();
         },
 
-        createErorr(message) {
+        requestError(message) {
             this.error = message;
         },
     },

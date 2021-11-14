@@ -1,73 +1,77 @@
 import apiUrls from '../config/apiUrls.js';
 
 const apiRequests = {
-    async getInitData(success, fail) {
-        let response = await fetch(apiUrls.initDataUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Accept': 'application/json;charset=UTF-8',
-            },
-        });
-        if (response.ok) {
-            let body = await response.json();
-            console.log(body)
-            success(body.payload);
-        } else {
-            console.warn('Request error: ' + response.status);
-            fail('Init data request failed: ' + response.status);
-        }
+    getInitData(success, fail) {
+        performRequest(
+            apiUrls.initDataUrl,
+            null,
+            'Init data',
+            success,
+            fail           
+        );
     },
 
-    async createAccount(account, success, fail) {
-        let response = await fetch(apiUrls.accountCreateUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Accept': 'application/json;charset=UTF-8',
-            },
-            body: JSON.stringify(account),
-        });
-        if (response.ok) {
-            let body = await response.json();
-            console.log(body)
-            
-            if (body.code == 'OK') {
-                success(body.payload);
-            } else {
-                fail(body.message);
-            }
-
-        } else {
-            console.warn('Request error: ' + response.status);
-            fail('Create account request failed:' + response.status);
-        }
+    createAccount(account, success, fail) {
+        performRequest(
+            apiUrls.accountCreateUrl,
+            account,
+            'Create account',
+            success,
+            fail           
+        );
     },
 
-    async createCategory(category, success, fail) {
-        let response = await fetch(apiUrls.categoryCreateUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Accept': 'application/json;charset=UTF-8',
-            },
-            body: JSON.stringify(category),
-        });
-        if (response.ok) {
-            let body = await response.json();
-            console.log(body)
-            
-            if (body.code == 'OK') {
-                success(body.payload);
-            } else {
-                fail(body.message);
-            }
+    createCategory(category, success, fail) {
+        performRequest(
+            apiUrls.categoryCreateUrl,
+            category,
+            'Create category',
+            success,
+            fail           
+        );
+    },
 
-        } else {
-            console.warn('Request error: ' + response.status);
-            fail('Create category request failed:' + response.status);
-        }
+
+    async createOperation(operation, success, fail) {
+        performRequest(
+            apiUrls.operationCreateUrl,
+            operation,
+            'Create operation',
+            success,
+            fail           
+        );
     },
 }
 
 export default apiRequests;
+
+
+async function performRequest(url, requestBody, title, successCallback, failCallback) {
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Accept': 'application/json;charset=UTF-8',
+        },
+        body: requestBody ? JSON.stringify(requestBody) : null,
+    });
+
+    if (!response.ok) {
+        var message = title + ' request failed with code: ' + response.status;
+        console.warn(message);
+        if (failCallback)
+            failCallback(message);
+        return;
+    }
+
+    let body = await response.json();
+    if (body.code == 'OK') {
+        console.log(title + ' request succeed: ', body);
+        if (successCallback)
+            successCallback(body.payload);
+    } else {
+        console.warn(title + ' request failed: ', body);
+        if (failCallback)
+            failCallback(title + ' request failed: ' + body.message);
+    }
+}
