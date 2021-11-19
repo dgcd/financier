@@ -16,7 +16,7 @@ public class OperationsService {
     @Transactional
     public OperationCreateResponseDto createOperation(OperationCreateRequestDto dto) {
 
-        return null;
+        return new OperationCreateResponseDto(null, null);
     }
 
 }

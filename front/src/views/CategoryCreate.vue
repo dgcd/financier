@@ -22,7 +22,6 @@
 <script>
 import { mapMutations } from 'vuex';
 import ErrorTitle from '@/components/ErrorTitle.vue';
-import router from '@/router';
 import apiRequests from '@/service/apiRequests.js';
 
 export default {
@@ -43,7 +42,7 @@ export default {
         ...mapMutations(['addCategory']),
 
         onBack() {
-            router.push('/categories');
+            this.$router.push('/categories');
         },
 
         onCreate() {

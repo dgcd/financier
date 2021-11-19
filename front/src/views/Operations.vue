@@ -43,7 +43,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import router from '@/router';
 import ErrorTitle from '@/components/ErrorTitle.vue';
 
 export default {
@@ -69,7 +68,7 @@ export default {
 
     methods: {
         onClickCreate() {
-            router.push('/operations/create');
+            this.$router.push('/operations/create');
         },
     },
 }

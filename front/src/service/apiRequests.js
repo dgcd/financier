@@ -1,77 +1,44 @@
 import apiUrls from '../config/apiUrls.js';
+import apiHelper from '../service/apiHelper.js';
 
-const apiRequests = {
+export default {
     getInitData(success, fail) {
-        performRequest(
+        apiHelper.performApiRequest(
             apiUrls.initDataUrl,
             null,
             'Init data',
             success,
-            fail           
+            fail,
         );
     },
 
     createAccount(account, success, fail) {
-        performRequest(
+        apiHelper.performApiRequest(
             apiUrls.accountCreateUrl,
             account,
             'Create account',
             success,
-            fail           
+            fail,
         );
     },
 
     createCategory(category, success, fail) {
-        performRequest(
+        apiHelper.performApiRequest(
             apiUrls.categoryCreateUrl,
             category,
             'Create category',
             success,
-            fail           
+            fail,
         );
     },
 
-
-    async createOperation(operation, success, fail) {
-        performRequest(
+    createOperation(operation, success, fail) {
+        apiHelper.performApiRequest(
             apiUrls.operationCreateUrl,
             operation,
             'Create operation',
             success,
-            fail           
+            fail,
         );
     },
-}
-
-export default apiRequests;
-
-
-async function performRequest(url, requestBody, title, successCallback, failCallback) {
-    let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Accept': 'application/json;charset=UTF-8',
-        },
-        body: requestBody ? JSON.stringify(requestBody) : null,
-    });
-
-    if (!response.ok) {
-        var message = title + ' request failed with code: ' + response.status;
-        console.warn(message);
-        if (failCallback)
-            failCallback(message);
-        return;
-    }
-
-    let body = await response.json();
-    if (body.code == 'OK') {
-        console.log(title + ' request succeed: ', body);
-        if (successCallback)
-            successCallback(body.payload);
-    } else {
-        console.warn(title + ' request failed: ', body);
-        if (failCallback)
-            failCallback(title + ' request failed: ' + body.message);
-    }
 }

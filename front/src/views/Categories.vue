@@ -21,7 +21,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import router from '@/router';
 
 export default {
     name: 'Categories',
@@ -40,7 +39,7 @@ export default {
     methods: {
         onClickCreate(parentId) {
             const parentIdParam = parentId ? `?parentId=${parentId}` : '';
-            router.push('/categories/create' + parentIdParam);
+            this.$router.push('/categories/create' + parentIdParam);
         },
 
 

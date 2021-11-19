@@ -27,7 +27,6 @@
 import { mapMutations } from 'vuex';
 import SelectList from '@/components/SelectList.vue';
 import ErrorTitle from '@/components/ErrorTitle.vue';
-import router from '@/router';
 import dicts from '@/config/dicts.js';
 import apiRequests from '@/service/apiRequests.js';
 
@@ -52,7 +51,7 @@ export default {
         ...mapMutations(['addAccount']),
 
         onBack() {
-            router.push('/accounts');
+            this.$router.push('/accounts');
         },
 
         onCreate() {
