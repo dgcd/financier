@@ -27,7 +27,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import router from '@/router';
 
 export default {
     name: 'Accounts',
@@ -42,7 +41,7 @@ export default {
 
     methods: {
         onClickCreate() {
-            router.push('/accounts/create');
+            this.$router.push('/accounts/create');
         },
     },
 }

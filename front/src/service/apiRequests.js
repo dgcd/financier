@@ -1,73 +1,44 @@
 import apiUrls from '../config/apiUrls.js';
+import apiHelper from '../service/apiHelper.js';
 
-const apiRequests = {
-    async getInitData(success, fail) {
-        let response = await fetch(apiUrls.initDataUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Accept': 'application/json;charset=UTF-8',
-            },
-        });
-        if (response.ok) {
-            let body = await response.json();
-            console.log(body)
-            success(body.payload);
-        } else {
-            console.warn('Request error: ' + response.status);
-            fail('Init data request failed: ' + response.status);
-        }
+export default {
+    getInitData(success, fail) {
+        apiHelper.performApiRequest(
+            apiUrls.initDataUrl,
+            null,
+            'Init data',
+            success,
+            fail,
+        );
     },
 
-    async createAccount(account, success, fail) {
-        let response = await fetch(apiUrls.accountCreateUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Accept': 'application/json;charset=UTF-8',
-            },
-            body: JSON.stringify(account),
-        });
-        if (response.ok) {
-            let body = await response.json();
-            console.log(body)
-            
-            if (body.code == 'OK') {
-                success(body.payload);
-            } else {
-                fail(body.message);
-            }
-
-        } else {
-            console.warn('Request error: ' + response.status);
-            fail('Create account request failed:' + response.status);
-        }
+    createAccount(account, success, fail) {
+        apiHelper.performApiRequest(
+            apiUrls.accountCreateUrl,
+            account,
+            'Create account',
+            success,
+            fail,
+        );
     },
 
-    async createCategory(category, success, fail) {
-        let response = await fetch(apiUrls.categoryCreateUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Accept': 'application/json;charset=UTF-8',
-            },
-            body: JSON.stringify(category),
-        });
-        if (response.ok) {
-            let body = await response.json();
-            console.log(body)
-            
-            if (body.code == 'OK') {
-                success(body.payload);
-            } else {
-                fail(body.message);
-            }
+    createCategory(category, success, fail) {
+        apiHelper.performApiRequest(
+            apiUrls.categoryCreateUrl,
+            category,
+            'Create category',
+            success,
+            fail,
+        );
+    },
 
-        } else {
-            console.warn('Request error: ' + response.status);
-            fail('Create category request failed:' + response.status);
-        }
+    createOperation(operation, success, fail) {
+        apiHelper.performApiRequest(
+            apiUrls.operationCreateUrl,
+            operation,
+            'Create operation',
+            success,
+            fail,
+        );
     },
 }
-
-export default apiRequests;

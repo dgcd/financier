@@ -13,7 +13,7 @@
             <tr v-for="c in sortedCategories" :key="c.id">
                 <td>{{ c.id }}</td>
                 <td align="left">{{ c.title }}</td>
-                <td><button @click="onClickCreate(c.id)">+</button></td>
+                <td><button v-if="!c.parentId" @click="onClickCreate(c.id)">+</button></td>
             </tr>
         </table>
     </div>
@@ -21,7 +21,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import router from '@/router';
 
 export default {
     name: 'Categories',
@@ -40,8 +39,7 @@ export default {
     methods: {
         onClickCreate(parentId) {
             const parentIdParam = parentId ? `?parentId=${parentId}` : '';
-            console.log(parentId);
-            router.push('/categories/create' + parentIdParam);
+            this.$router.push('/categories/create' + parentIdParam);
         },
 
 
@@ -54,6 +52,7 @@ export default {
                 const newCat = {
                     id: cat.id,
                     title: cat.title,
+                    parentId: cat.parentId,
                     children: this.getChildrenList(categories, cat.id),
                 }
 

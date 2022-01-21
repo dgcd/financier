@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.0-RC1'
+    id 'org.springframework.boot' version '2.6.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'idea'
@@ -7,7 +7,6 @@ plugins {
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
 }
 
 subprojects {
@@ -18,17 +17,10 @@ subprojects {
 
     compileJava.options.encoding = "UTF-8"
     compileTestJava.options.encoding = "UTF-8"
-
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
-//            vendor = JvmVendorSpec.ORACLE
-        }
-    }
+    sourceCompatibility = '17'
 
     repositories {
         mavenCentral()
-        maven { url 'https://repo.spring.io/milestone' }
     }
 
     dependencies {
