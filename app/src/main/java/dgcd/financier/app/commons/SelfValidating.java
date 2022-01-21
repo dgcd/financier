@@ -1,8 +1,9 @@
 package dgcd.financier.app.commons;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validation;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validation;
+
 import java.util.Set;
 
 public interface SelfValidating<T> {

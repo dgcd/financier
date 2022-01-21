@@ -1,11 +1,12 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.0'
+    id 'org.springframework.boot' version '3.0.0-M1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'idea'
 }
 
 repositories {
+    maven { url 'https://repo.spring.io/milestone' }
     mavenCentral()
 }
 
@@ -15,11 +16,12 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'org.springframework.boot'
 
-    compileJava.options.encoding = "UTF-8"
-    compileTestJava.options.encoding = "UTF-8"
+    compileJava.options.encoding = 'UTF-8'
+    compileTestJava.options.encoding = 'UTF-8'
     sourceCompatibility = '17'
 
     repositories {
+        maven { url 'https://repo.spring.io/milestone' }
         mavenCentral()
     }
 
@@ -35,4 +37,3 @@ subprojects {
         useJUnitPlatform()
     }
 }
-
