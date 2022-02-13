@@ -53,7 +53,6 @@ export default {
 
             this.error = null;
             this.category.parentId = this.$route.query.parentId;
-            console.log(this.category);
 
             apiRequests.createCategory(
                 this.category,

@@ -26,21 +26,30 @@ export default {
     },
 
     created() {
-        if (!this.valuesList.length) {
-            throw new Error('valuesList can not be empty');
-        }
-        if (!this.value) {
-            this.valueInternal = this.valuesList[0];
-            return;
-        }
-        if (!this.valuesList.includes(this.value)) {
-            throw new Error('value must be in valuesList');
-        }
-        this.valueInternal = this.value;
+        this.setInternalValue();
     },
 
     watch: {
         valueInternal() {
+            this.emitInternalValue();
+        },
+        valuesList() {
+            this.setInternalValue();
+        },
+    },
+
+    methods: {
+        setInternalValue() {
+            if (!this.valuesList.length) {
+                return this.valueInternal = null;
+            }
+            if (!this.valuesList.includes(this.value)) {
+                return this.valueInternal = this.valuesList[0];
+            }
+            this.valueInternal = this.value;
+        },
+
+        emitInternalValue() {
             this.$emit('input', this.valueInternal);
         },
     },

@@ -1,5 +1,6 @@
 package dgcd.financier.app.modules.category;
 
+import dgcd.financier.app.modules.category.exception.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,11 @@ public class CategoriesDaoService {
 
     public Category save(Category category) {
         return categoriesRepository.save(category);
+    }
+
+    public Category findByIdOrElseThrow(Long categoryId) {
+        return categoriesRepository.findById(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundException(categoryId));
     }
 
 }

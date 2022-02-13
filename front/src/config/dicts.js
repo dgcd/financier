@@ -5,10 +5,10 @@ const currencies = [
 ];
 
 const operationTypes = [
-    'BASE',
-    'TRANS',
-    'INCOME',
     'EXPENSE',
+    'INCOME',
+    'TRANS',
+    'BASE',
 ];
 
 export default {

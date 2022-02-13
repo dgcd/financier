@@ -12,8 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,25 +57,24 @@ public class Operation {
     private Account account;
 
     @NotNull
-    private BigDecimal amount;
+    private BigDecimal quantity;
 
     @NotNull
-    private Float quantity;
+    private BigDecimal amount;
 
     @NotNull
     @Column(name = "op_type", nullable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private OperationType type;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Max(100)
+    @Size(max = 100)
     private String counterparty;
 
-    @Max(100)
+    @Size(max = 100)
     private String comment;
 
 }

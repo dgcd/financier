@@ -6,13 +6,12 @@
         </tr>
         <tr>
             <td><span>Currency: </span></td>
-            <td><select-list v-model="currency" :valuesList="currencies" /></td>
+            <td><currency-selector v-model="currency"/></td>
         </tr>
     </table>
 </template>
 
 <script>
-import dicts from '@/config/dicts.js';
 
 export default {
     name: 'AccountCreate-NewAccountForm',
@@ -26,7 +25,6 @@ export default {
 
     data() {
         return {
-            currencies: dicts.currencies,
             title: null,
             currency: null,
         };
@@ -52,7 +50,7 @@ export default {
                 title: this.title,
                 currency: this.currency,
             };
-        }
-    }
+        },
+    },
 }
 </script>

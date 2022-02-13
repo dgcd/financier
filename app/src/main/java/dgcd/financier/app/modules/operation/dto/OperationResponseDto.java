@@ -12,9 +12,10 @@ import static java.util.Objects.nonNull;
 public record OperationResponseDto(
         Long id,
         LocalDate date,
+        Long accountId,
         Currency currency,
+        BigDecimal quantity,
         BigDecimal amount,
-        Float quantity,
         OperationType type,
         String group,
         String category,
@@ -27,9 +28,10 @@ public record OperationResponseDto(
         return new OperationResponseDto(
                 operation.getId(),
                 operation.getDate(),
+                operation.getAccount().getId(),
                 operation.getAccount().getCurrency(),
-                operation.getAmount(),
                 operation.getQuantity(),
+                operation.getAmount(),
                 operation.getType(),
                 hasCategory ? operation.getCategory().getParent().getTitle() : null,
                 hasCategory ? operation.getCategory().getTitle() : null,

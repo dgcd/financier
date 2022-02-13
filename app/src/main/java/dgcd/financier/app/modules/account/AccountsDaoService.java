@@ -1,5 +1,6 @@
 package dgcd.financier.app.modules.account;
 
+import dgcd.financier.app.modules.account.exception.AccountNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,11 @@ public class AccountsDaoService {
 
     public Optional<Account> findByTitle(String title) {
         return accountsRepository.findByTitle(title);
+    }
+
+    public Account findByIdOrElseThrow(Long accountId) {
+        return accountsRepository.findById(accountId)
+                .orElseThrow(() -> new AccountNotFoundException(accountId));
     }
 
 }

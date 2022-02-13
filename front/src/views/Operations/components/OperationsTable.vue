@@ -4,10 +4,13 @@
             <th>Id</th>
             <th>Date</th>
             <th>Currency</th>
-            <th>Amount</th>
-            <th>Quantity</th>
-            <th>Summary</th>
+            <th>Account</th>
+
             <th>Type</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+
             <th>Group</th>
             <th>Category</th>
             <th>Counterparty</th>
@@ -17,10 +20,13 @@
             <td>{{ o.id }}</td>
             <td>{{ o.date }}</td>
             <td>{{ o.currency }}</td>
-            <td>{{ o.amount }}</td>
-            <td>{{ o.quantity }}</td>
-            <td>{{ o.amount * o.quantity }}</td>
+            <td>{{ o.accountTitle }}</td>
+
             <td>{{ o.type }}</td>
+            <td>{{ o.amount / o.quantity }}</td>
+            <td>{{ o.quantity }}</td>
+            <td>{{ o.amount }}</td>
+
             <td>{{ o.group }}</td>
             <td>{{ o.category }}</td>
             <td>{{ o.counterparty }}</td>
@@ -40,9 +46,32 @@ export default {
         },
     },
 
+    data() {
+        return {
+            accountsMap: this.makeAccountsMap(),
+        };
+    },
+
     computed: {
         sortedOperations() {
-            return this.operations;
+            return this.operations
+                .map(op => {
+                    return {
+                        ...op,
+                        accountTitle: this.accountsMap[op.accountId].title,
+                    };
+                })
+                .sort((op1,op2) => op2.id - op1.id);
+        },
+    },
+
+    methods: {
+        makeAccountsMap() {
+            const accMap = {};
+            for (var acc of this.$store.state.accounts) {
+                accMap[acc.id] = acc;
+            }
+            return accMap;
         },
     },
 }

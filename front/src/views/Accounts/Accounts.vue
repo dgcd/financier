@@ -7,6 +7,8 @@
             <redirect-button :title="'Create account'" :path="'/accounts/create'" />
         </p>
 
+        <error-message v-if="error" :message="error" />
+
         <AccountsTable :accounts="accounts" />
     </div>
 </template>
@@ -20,6 +22,18 @@ export default {
 
     components: {
         AccountsTable,
+    },
+
+    data() {
+        return {
+            error: null,
+        };
+    },
+
+    created() {
+        if (this.$route.query.reason === 'noaccount') {
+            this.error = 'You can not create operations without at least one account';
+        }
     },
 
     computed: {

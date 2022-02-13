@@ -7,16 +7,18 @@
             <redirect-button :title="'Back'" :path="'/operations'" />
         </p>
 
-        <NewOperationForm v-model="operation" />
+        <NewOperationForm v-if="this.accounts.length" v-model="operation" />
 
         <error-message v-if="error" :message="error" />
 
-        <p><button @click="onCreate">Create</button></p>
+        <p>
+            <button @click="onCreate">Create</button>
+        </p>
     </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import apiRequests from '@/service/apiRequests.js';
 import NewOperationForm from './components/NewOperationForm.vue';
 
@@ -29,15 +31,24 @@ export default {
 
     data() {
         return {
-            operation: {
-                comment: null,
-            },
+            operation: {},
             error: null,
         };
     },
 
+    created() {
+        if (!this.accounts.length) {
+            this.$router.push('/accounts?reason=noaccount');
+            return;
+        }
+    },
+
+    computed: {
+        ...mapState(['accounts']),
+    },
+
     methods: {
-        ...mapMutations(['addOperation']),
+        ...mapMutations(['addOperation', 'updateAccount']),
 
         onCreate() {
             if (!this.operationValid()) {
@@ -45,7 +56,6 @@ export default {
             }
 
             this.error = null;
-            console.log(this.operation);
 
             apiRequests.createOperation(
                 this.operation,
@@ -59,7 +69,8 @@ export default {
         },
 
         requestSuccess(payload) {
-            this.addOperation(payload);
+            this.addOperation(payload.operation);
+            this.updateAccount(payload.account);
             this.$router.push('/operations');
         },
 
