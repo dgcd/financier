@@ -18,11 +18,16 @@ subprojects {
 
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
-    sourceCompatibility = '17'
+    sourceCompatibility = JavaVersion.VERSION_17
 
     repositories {
         maven { url 'https://repo.spring.io/milestone' }
         mavenCentral()
+    }
+
+    configurations {
+        compileOnly.extendsFrom annotationProcessor
+        testCompileOnly.extendsFrom annotationProcessor
     }
 
     dependencies {
@@ -33,7 +38,7 @@ subprojects {
         testAnnotationProcessor 'org.projectlombok:lombok'
     }
 
-    test {
+    tasks.named('test') {
         useJUnitPlatform()
     }
 }

@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Dashboard from '../views/Dashboard.vue';
-import Operations from '../views/Operations.vue';
-import OperationCreate from '../views/OperationCreate.vue';
-import Accounts from '../views/Accounts.vue';
-import AccountCreate from '../views/AccountCreate.vue';
-import Categories from '../views/Categories.vue';
-import CategoryCreate from '../views/CategoryCreate.vue';
+import Dashboard from '../views/Dashboard/Dashboard.vue';
+import Operations from '../views/Operations/Operations.vue';
+import OperationCreate from '../views/OperationCreate/OperationCreate.vue';
+import Accounts from '../views/Accounts/Accounts.vue';
+import AccountCreate from '../views/AccountCreate/AccountCreate.vue';
+import Categories from '../views/Categories/Categories.vue';
+import CategoryCreate from '../views/CategoryCreate/CategoryCreate.vue';
 
 Vue.use(VueRouter)
 
@@ -73,6 +73,6 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
-})
+});
 
-export default router
+export default router;

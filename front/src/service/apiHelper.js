@@ -19,7 +19,7 @@ export default {
 
         let body = await response.json();
         if (body.code == 'OK') {
-            console.log(title + ' request succeed: ', body);
+            console.log(title + ' request succeeded: ', body);
             if (successCallback)
                 successCallback(body.payload);
         } else {
