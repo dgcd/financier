@@ -1,6 +1,5 @@
 package dgcd.financier.app.modules.operation.dto;
 
-import dgcd.financier.app.dictionary.Currency;
 import dgcd.financier.app.dictionary.OperationType;
 import dgcd.financier.app.modules.operation.Operation;
 
@@ -9,12 +8,12 @@ import java.time.LocalDate;
 
 public record OperationCreateRequestDto(
         LocalDate date,
-        Currency currency,
         Long accountId,
-        BigDecimal quantity,
+        Long accountToId,
         BigDecimal amount,
+        BigDecimal quantity,
         OperationType operationType,
-        Long categoryId,
+//        Long categoryId,
         String counterparty,
         String comment
 ) {

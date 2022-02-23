@@ -1,13 +1,18 @@
 <template>
     <div>
         <page-title />
-        <h1>Create operation</h1>
+        <h1>Create {{titleSpec}} operation</h1>
 
         <p>
             <redirect-button :title="'Back'" :path="'/operations'" />
         </p>
 
-        <NewOperationForm v-if="this.accounts.length" v-model="operation" />
+        <NewOperationForm
+            v-if="this.accounts.length"
+            v-model="operation"
+            :isTrans="isTrans"
+            :isIncome="isIncome"
+        />
 
         <error-message v-if="error" :message="error" />
 
@@ -21,6 +26,7 @@
 import { mapMutations, mapState } from 'vuex';
 import apiRequests from '@/service/apiRequests.js';
 import NewOperationForm from './components/NewOperationForm.vue';
+import dicts from '@/config/dicts.js';
 
 export default {
     name: 'OperationCreate',
@@ -33,6 +39,9 @@ export default {
         return {
             operation: {},
             error: null,
+            isTrans: true,
+            isIncome: true,
+            titleSpec: null,
         };
     },
 
@@ -41,6 +50,21 @@ export default {
             this.$router.push('/accounts?reason=noaccount');
             return;
         }
+
+        const type = this.$route.query.type;
+        if (type === dicts.OPERATION_TYPE_TRANS) {
+            this.isTrans = true;
+            this.isIncome = false;
+            this.titleSpec = 'Transfert';
+        } else if (type === dicts.OPERATION_TYPE_EXPENSE) {
+            this.isTrans = false;
+            this.isIncome = false;
+            this.titleSpec = 'Expense';
+        } else {
+            this.isTrans = false;
+            this.isIncome = true;
+            this.titleSpec = 'Income or Base';
+        }
     },
 
     computed: {
@@ -48,15 +72,13 @@ export default {
     },
 
     methods: {
-        ...mapMutations(['addOperation', 'updateAccount']),
+        ...mapMutations(['addOperations', 'updateAccounts']),
 
         onCreate() {
             if (!this.operationValid()) {
                 return;
             }
-
             this.error = null;
-
             apiRequests.createOperation(
                 this.operation,
                 this.requestSuccess,
@@ -69,8 +91,8 @@ export default {
         },
 
         requestSuccess(payload) {
-            this.addOperation(payload.operation);
-            this.updateAccount(payload.account);
+            this.addOperations(payload.newOperations);
+            this.updateAccounts(payload.updatedAccounts);
             this.$router.push('/operations');
         },
 

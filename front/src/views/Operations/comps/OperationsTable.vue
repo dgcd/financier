@@ -22,13 +22,13 @@
             <td>{{ o.currency }}</td>
             <td>{{ o.accountTitle }}</td>
 
-            <td>{{ o.type }}</td>
-            <td>{{ o.amount / o.quantity }}</td>
+            <td>{{ o.type | shortenExpenseType }}</td>
+            <td align="right">{{ (o.amount / o.quantity) | formatMoneyToString }}</td>
             <td>{{ o.quantity }}</td>
-            <td>{{ o.amount }}</td>
+            <td align="right">{{ o.amount | formatMoneyToString }}</td>
 
-            <td>{{ o.group }}</td>
-            <td>{{ o.category }}</td>
+            <td>{{ o.groupTitle }}</td>
+            <td>{{ o.categoryTitle }}</td>
             <td>{{ o.counterparty }}</td>
             <td>{{ o.comment }}</td>
         </tr>
@@ -46,32 +46,13 @@ export default {
         },
     },
 
-    data() {
-        return {
-            accountsMap: this.makeAccountsMap(),
-        };
-    },
-
     computed: {
         sortedOperations() {
             return this.operations
-                .map(op => {
-                    return {
-                        ...op,
-                        accountTitle: this.accountsMap[op.accountId].title,
-                    };
-                })
-                .sort((op1,op2) => op2.id - op1.id);
-        },
-    },
-
-    methods: {
-        makeAccountsMap() {
-            const accMap = {};
-            for (var acc of this.$store.state.accounts) {
-                accMap[acc.id] = acc;
-            }
-            return accMap;
+                .sort((op1, op2) => op2.date === op1.date ?
+                    op2.id - op1.id :
+                    op2.date.localeCompare(op1.date)
+                );
         },
     },
 }

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Dashboard from '../views/Dashboard/Dashboard.vue';
+// import Dashboard from '../views/Dashboard/Dashboard.vue';
 import Operations from '../views/Operations/Operations.vue';
 import OperationCreate from '../views/OperationCreate/OperationCreate.vue';
 import Accounts from '../views/Accounts/Accounts.vue';
@@ -8,19 +8,20 @@ import AccountCreate from '../views/AccountCreate/AccountCreate.vue';
 import Categories from '../views/Categories/Categories.vue';
 import CategoryCreate from '../views/CategoryCreate/CategoryCreate.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: '/',
-        name: 'Dashboard',
-        component: Dashboard,
-        meta: {
-            title: 'Dashboard',
-        },
-    },
+    // {
+    //     path: '/dashboard',
+    //     name: 'Dashboard',
+    //     component: Dashboard,
+    //     meta: {
+    //         title: 'Dashboard',
+    //     },
+    // },
     {
         path: '/operations',
+        alias: '/',
         name: 'Operations',
         component: Operations,
         meta: {
@@ -67,7 +68,7 @@ const routes = [
             title: 'Create category',
         },
     },
-]
+];
 
 const router = new VueRouter({
     mode: 'history',
