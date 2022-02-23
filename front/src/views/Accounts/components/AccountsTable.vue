@@ -21,6 +21,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import dicts from '@/config/dicts.js';
 
 export default {
     name: 'Accounts-AccountsTable',
@@ -30,7 +31,9 @@ export default {
 
         sortedAccounts() {
             return this.accounts
-                .sort((a, b) => b.id - a.id)
+                .sort((a, b) => a.currency === b.currency ?     // b.id -a.id
+                    a.title.localeCompare(b.title) :
+                    dicts.currencies.indexOf(a.currency) - dicts.currencies.indexOf(b.currency))
                 .map(acc => {
                     return {
                         ...acc,

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static java.math.BigDecimal.ONE;
+import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class OperationsFacilityService {
 
     private final OperationsDaoService operationsDaoService;
     private final AccountsDaoService accountsDaoService;
+
 
     @Transactional
     public OperationsCreateResponseDto createOperation(OperationCreateRequestDto dto) {
@@ -42,6 +44,9 @@ public class OperationsFacilityService {
         var accountTo = accountsDaoService.findByIdOrElseThrow(dto.accountToId());
         if (!accountFrom.getCurrency().equals(accountTo.getCurrency())) {
             throw new OperationCreateException("Account from and account to must have the same currency");
+        }
+        if (nonNull(dto.quantity())) {
+            throw new OperationCreateException("Quantity must be null");
         }
 
         var operationFrom = dto.makeOperation();
