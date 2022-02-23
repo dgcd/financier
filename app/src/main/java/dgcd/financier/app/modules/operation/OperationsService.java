@@ -39,6 +39,12 @@ public class OperationsService {
     }
 
     private void validateDtoForCreateOperation(OperationCreateRequestDto dto) {
+        if (isNull(dto.quantity())) {
+            throw new OperationCreateException("Quantity can not be null");
+        }
+        if (ZERO.compareTo(dto.quantity()) >= 0) {
+            throw new OperationCreateException("Quantity must be more then 0");
+        }
     }
 
     //////////////////////////////////////////////////////////////////

@@ -1,5 +1,8 @@
 export default {
     async performApiRequest(url, requestBody, title, successCallback, failCallback) {
+        if (requestBody) {
+            console.log(title + ' request with body: ', requestBody);
+        }
         let response = await fetch(url, {
             method: 'POST',
             headers: {
