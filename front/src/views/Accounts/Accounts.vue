@@ -9,12 +9,11 @@
 
         <error-message v-if="error" :message="error" />
 
-        <AccountsTable :accounts="accounts" />
+        <AccountsTable />
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import AccountsTable from './components/AccountsTable.vue';
 
 export default {
@@ -34,10 +33,6 @@ export default {
         if (this.$route.query.reason === 'noaccount') {
             this.error = 'You can not create operations without at least one account';
         }
-    },
-
-    computed: {
-        ...mapState(['accounts']),
     },
 }
 </script>

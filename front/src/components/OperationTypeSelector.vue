@@ -2,6 +2,7 @@
     <select-list
         v-model="internalOperationType"
         :valuesList="operationTypes"
+        :disabled="disabledList"
     />
 </template>
 
@@ -12,17 +13,32 @@ export default {
     name: 'OperationTypeSelector',
 
     props: {
-        value: {                    // operationType,
+        value: {
             type: String,
             required: false,
+        },
+        operationTypes: {
+            type: Array,
+            required: true,
         },
     },
 
     data() {
         return {
             internalOperationType: this.value,
-            operationTypes: dicts.operationTypes,
+            disabledList: this.operationTypes.length === 1,
         };
+    },
+
+    created() {
+        if (!this.operationTypes.length) {
+            throw new Error("Operations types array must contain elements");
+        }
+        for (let optype of this.operationTypes) {
+            if (!dicts.operationTypesSet.has(optype)) {
+                throw new Error("Unknown operation type");
+            }
+        }
     },
 
     watch: {

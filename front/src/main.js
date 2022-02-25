@@ -14,9 +14,12 @@ import AccountSelector from './components/AccountSelector.vue';
 import CurrencySelector from './components/CurrencySelector.vue';
 import OperationTypeSelector from './components/OperationTypeSelector.vue';
 
+import utils from '@/service/utils.js';
+
 
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
+
 
 Vue.component('date-picker', DatePicker);
 Vue.component('error-message', ErrorMessage);
@@ -27,6 +30,11 @@ Vue.component('select-list', SelectList);
 Vue.component('account-selector', AccountSelector);
 Vue.component('currency-selector', CurrencySelector);
 Vue.component('operation-type-selector', OperationTypeSelector);
+
+
+Vue.filter('formatMoneyToString', utils.formatMoneyToString);
+Vue.filter('shortenExpenseType', utils.shortenExpenseType);
+
 
 OperationTypeSelector
 new Vue({

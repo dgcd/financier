@@ -4,14 +4,23 @@ const currencies = [
     'EUR',
 ];
 
-const operationTypes = [
-    'EXPENSE',
-    'INCOME',
-    'TRANS',
-    'BASE',
-];
+const OPERATION_TYPE_EXPENSE = 'EXPENSE';
+const OPERATION_TYPE_INCOME = 'INCOME';
+const OPERATION_TYPE_TRANS = 'TRANS';
+const OPERATION_TYPE_BASE = 'BASE';
+
+const operationTypesSet = new Set([
+    OPERATION_TYPE_EXPENSE,
+    OPERATION_TYPE_INCOME,
+    OPERATION_TYPE_TRANS,
+    OPERATION_TYPE_BASE,
+]);
 
 export default {
     currencies,
-    operationTypes,
-}
+    operationTypesSet,
+    OPERATION_TYPE_EXPENSE,
+    OPERATION_TYPE_INCOME,
+    OPERATION_TYPE_TRANS,
+    OPERATION_TYPE_BASE,
+};

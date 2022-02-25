@@ -23,17 +23,21 @@ export default new Vuex.Store({
             state.accounts = [newAccount, ...state.accounts];
         },
 
-        updateAccount(state, account) {
-            var accs = state.accounts.filter(a => a.id !== account.id);
-            state.accounts = [account, ...accs];
+        updateAccounts(state, accounts) {
+            const newIds = new Set();
+            for (let acc of accounts) {
+                newIds.add(acc.id);
+            }
+            var accs = state.accounts.filter(a => !newIds.has(a.id));
+            state.accounts = [...accounts, ...accs];
         },
 
         addCategory(state, newCategory) {
             state.categories = [newCategory, ...state.categories];
         },
 
-        addOperation(state, newOperation) {
-            state.operations = [newOperation, ...state.operations];
+        addOperations(state, operations) {
+            state.operations = [...operations, ...state.operations];
         },
     },
 });

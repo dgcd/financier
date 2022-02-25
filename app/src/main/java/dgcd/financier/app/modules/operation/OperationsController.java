@@ -26,8 +26,8 @@ public class OperationsController {
     @HandleException
     @LogControllerData(logResult = true)
     @PostMapping(OPERATIONS_CREATE_PATH)
-    public GeneralResponseDto createOperation(@RequestBody OperationCreateRequestDto dto) {
-        var payload = operationsService.createOperation(dto);
+    public GeneralResponseDto createOperationOrTransfert(@RequestBody OperationCreateRequestDto dto) {
+        var payload = operationsService.createOperationOrTransfert(dto);
         return new GeneralResponseDto(payload);
     }
 

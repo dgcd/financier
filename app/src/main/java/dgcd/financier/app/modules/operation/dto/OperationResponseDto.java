@@ -13,12 +13,14 @@ public record OperationResponseDto(
         Long id,
         LocalDate date,
         Long accountId,
+        String accountTitle,
         Currency currency,
         BigDecimal quantity,
         BigDecimal amount,
         OperationType type,
-        String group,
-        String category,
+        String groupTitle,
+        String categoryTitle,
+        Long categoryId,
         String counterparty,
         String comment
 ) {
@@ -29,12 +31,14 @@ public record OperationResponseDto(
                 operation.getId(),
                 operation.getDate(),
                 operation.getAccount().getId(),
+                operation.getAccount().getTitle(),
                 operation.getAccount().getCurrency(),
                 operation.getQuantity(),
                 operation.getAmount(),
                 operation.getType(),
                 hasCategory ? operation.getCategory().getParent().getTitle() : null,
                 hasCategory ? operation.getCategory().getTitle() : null,
+                hasCategory ? operation.getCategory().getId() : null,
                 operation.getCounterparty(),
                 operation.getComment()
         );
