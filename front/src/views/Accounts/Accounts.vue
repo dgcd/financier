@@ -7,6 +7,8 @@
             <redirect-button :title="'Create account'" :path="'/accounts/create'" />
         </p>
 
+        <exchange-rates />
+
         <error-message v-if="error" :message="error" />
 
         <AccountsTable />
@@ -14,7 +16,7 @@
 </template>
 
 <script>
-import AccountsTable from './components/AccountsTable.vue';
+import AccountsTable from './comps/AccountsTable.vue';
 
 export default {
     name: 'Accounts',

@@ -1,0 +1,17 @@
+<template>
+    <p>
+        <span>Exchange rates: USD: {{rates.USD | formatMoneyToString}}, EUR: {{rates.EUR | formatMoneyToString}}</span>
+    </p>
+</template>
+
+<script>
+import { mapState } from 'vuex';
+
+export default {
+    name: 'ExchageRates',
+
+    computed: {
+        ...mapState(['rates']),
+    },
+}
+</script>

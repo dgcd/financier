@@ -13,6 +13,8 @@ import SelectList from './components/SelectList.vue';
 import AccountSelector from './components/AccountSelector.vue';
 import CurrencySelector from './components/CurrencySelector.vue';
 import OperationTypeSelector from './components/OperationTypeSelector.vue';
+import ExchageRates from './components/ExchageRates.vue';
+import CheckOperationTypes from './components/CheckOperationTypes.vue';
 
 import utils from '@/service/utils.js';
 
@@ -30,6 +32,8 @@ Vue.component('select-list', SelectList);
 Vue.component('account-selector', AccountSelector);
 Vue.component('currency-selector', CurrencySelector);
 Vue.component('operation-type-selector', OperationTypeSelector);
+Vue.component('exchange-rates', ExchageRates);
+Vue.component('check-operation-types', CheckOperationTypes);
 
 
 Vue.filter('formatMoneyToString', utils.formatMoneyToString);

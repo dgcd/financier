@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
     name: 'OperationsTable',
 
@@ -47,8 +48,19 @@ export default {
     },
 
     computed: {
+        ...mapState(['checkedOperationTypes']),
+
         sortedOperations() {
             return this.operations
+                .filter(op => {
+                    if (!this.checkedOperationTypes.showExpense && op.type === "EXPENSE")
+                        return false;
+                    if (!this.checkedOperationTypes.showIncome && (op.type === "INCOME" || op.type === "BASE"))
+                        return false;
+                    if (!this.checkedOperationTypes.showTrans && op.type === "TRANS")
+                        return false;
+                    return true;
+                })
                 .sort((op1, op2) => op2.date === op1.date ?
                     op2.id - op1.id :
                     op2.date.localeCompare(op1.date)
