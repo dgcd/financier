@@ -6,14 +6,14 @@
                 <th>Title</th>
                 <th>Currency</th>
                 <th>Balance</th>
-                <th>Check</th>
+                <th v-if="showChecked">Check !!!</th>
             </tr>
             <tr v-for="a in sortedAccounts" :key="a.id">
                 <td>{{ a.id }}</td>
                 <td align="left">{{ a.title }}</td>
                 <td>{{ a.currency }}</td>
                 <td align="right">{{ a.balance | formatMoneyToString }}</td>
-                <td align="right">{{ a.checkedBalance | formatMoneyToString }}</td>
+                <td align="right" v-if="showChecked">{{ a.checkedBalance | formatMoneyToString }}</td>
             </tr>
         </table>
     </div>
@@ -29,15 +29,25 @@ export default {
     computed: {
         ...mapState(['accounts', 'operations', 'rates']),
 
+        showChecked() {
+            for (let acc of this.sortedAccounts) {
+                if (acc.checkedBalance) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
         sortedAccounts() {
             const result = this.accounts
                 .sort((a, b) => a.currency === b.currency ?
                     a.title.localeCompare(b.title) :
                     dicts.currencies.indexOf(a.currency) - dicts.currencies.indexOf(b.currency))
                 .map(acc => {
+                    const checkedBalance = this.checkedBalance[acc.id];
                     return {
                         ...acc,
-                        checkedBalance: this.checkedBalance[acc.id],
+                        checkedBalance: Math.abs(acc.balance - checkedBalance) < 0.00001 ? null : checkedBalance,
                     }
                 });
 

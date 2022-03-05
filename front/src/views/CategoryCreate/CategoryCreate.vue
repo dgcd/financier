@@ -12,7 +12,7 @@
         <error-message v-if="error" :message="error" />
 
         <p>
-            <button @click="onCreate">Create</button>
+            <button class="btn btn-link" @click="onCreate">Create</button>
         </p>
     </div>
 </template>

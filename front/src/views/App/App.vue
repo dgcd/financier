@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" class="container-fluid m-1">
         <div v-if="isAppReady">
             <Navbar />
 

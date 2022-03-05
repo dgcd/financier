@@ -1,17 +1,3 @@
-body {
-    color: #404040;
-    background-color: #fafafa;
-    margin: 20px;
-}
-
-h1 {
-    font-size: 25px;
-}
-
-.boldtest {
-    font-weight: bold;
-}
-
 table.tbl {
     text-align: center;
     border-collapse: collapse;
