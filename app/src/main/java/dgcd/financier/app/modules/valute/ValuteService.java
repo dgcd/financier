@@ -12,6 +12,7 @@ public class ValuteService {
 
     @Getter
     private final BigDecimal rateUsd = BigDecimal.valueOf(105);
+
     @Getter
     private final BigDecimal rateEur = BigDecimal.valueOf(119);
 

@@ -5,13 +5,16 @@
 
         <p>
             <redirect-button :title="'Create Expense'"   :path="'/operations/create?type=EXPENSE'" />
-            &nbsp;
             <redirect-button :title="'Create Income'"    :path="'/operations/create?type=INCOME'" />
-            &nbsp;
             <redirect-button :title="'Create Transfert'" :path="'/operations/create?type=TRANS'" />
         </p>
 
-        <check-operation-types />
+        <p>
+            <show-expense-checkbox />
+            <show-income-checkbox />
+            <show-trans-checkbox />
+        </p>
+
 
         <OperationsTable :operations="operations" />
     </div>

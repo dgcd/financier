@@ -27,7 +27,7 @@ export default {
     name: 'Accounts-AccountsTable',
 
     computed: {
-        ...mapState(['accounts', 'operations', 'rates']),
+        ...mapState(['accounts', 'operations', 'rates', 'selections']),
 
         showChecked() {
             for (let acc of this.sortedAccounts) {
@@ -39,7 +39,7 @@ export default {
         },
 
         sortedAccounts() {
-            const result = this.accounts
+            let result = this.accounts
                 .sort((a, b) => a.currency === b.currency ?
                     a.title.localeCompare(b.title) :
                     dicts.currencies.indexOf(a.currency) - dicts.currencies.indexOf(b.currency))
@@ -50,6 +50,10 @@ export default {
                         checkedBalance: Math.abs(acc.balance - checkedBalance) < 0.00001 ? null : checkedBalance,
                     }
                 });
+
+            if (!this.selections.showEmptyAccounts) {
+                result = result.filter(acc => this.selections.showEmptyAccounts || !!acc.balance || !!acc.checkedBalance);
+            }
 
             const accRub = result.filter(acc => acc.currency === "RUB").map(a => a.balance).reduce((bal, acc) => bal + acc, 0);
             const accUsd = result.filter(acc => acc.currency === "USD").map(a => a.balance).reduce((bal, acc) => bal + acc, 0);

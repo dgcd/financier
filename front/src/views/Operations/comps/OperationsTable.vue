@@ -13,8 +13,8 @@
 
             <th>Group</th>
             <th>Category</th>
-            <th>Counterparty</th>
             <th>Comment</th>
+            <th>Counterparty</th>
         </tr>
         <tr v-for="o in sortedOperations" :key="o.id">
             <td>{{ o.id }}</td>
@@ -29,8 +29,8 @@
 
             <td>{{ o.groupTitle }}</td>
             <td>{{ o.categoryTitle }}</td>
-            <td>{{ o.counterparty }}</td>
             <td>{{ o.comment }}</td>
+            <td>{{ o.counterparty }}</td>
         </tr>
     </table>
 </template>
@@ -48,16 +48,16 @@ export default {
     },
 
     computed: {
-        ...mapState(['checkedOperationTypes']),
+        ...mapState(['selections']),
 
         sortedOperations() {
             return this.operations
                 .filter(op => {
-                    if (!this.checkedOperationTypes.showExpense && op.type === "EXPENSE")
+                    if (!this.selections.showExpense && op.type === "EXPENSE")
                         return false;
-                    if (!this.checkedOperationTypes.showIncome && (op.type === "INCOME" || op.type === "BASE"))
+                    if (!this.selections.showIncome && (op.type === "INCOME" || op.type === "BASE"))
                         return false;
-                    if (!this.checkedOperationTypes.showTrans && op.type === "TRANS")
+                    if (!this.selections.showTrans && op.type === "TRANS")
                         return false;
                     return true;
                 })

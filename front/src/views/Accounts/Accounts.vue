@@ -7,7 +7,13 @@
             <redirect-button :title="'Create account'" :path="'/accounts/create'" />
         </p>
 
-        <exchange-rates />
+        <p>
+            <exchange-rates />
+        </p>
+
+        <p>
+            <show-empty-accounts-checkbox />
+        </p>
 
         <error-message v-if="error" :message="error" />
 

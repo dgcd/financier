@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import checkedOperationTypes from "./modules/checkedOperationTypes.js";
+import selections from "./modules/selections.js";
 
 
 Vue.use(Vuex);
@@ -47,6 +47,6 @@ export default new Vuex.Store({
     },
 
     modules: {
-        checkedOperationTypes,
+        selections,
     },
 });

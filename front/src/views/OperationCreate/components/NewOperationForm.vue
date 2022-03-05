@@ -37,13 +37,13 @@
             <td><input type="text" :value="price | formatMoneyToString" disabled></td>
         </tr>
         <br>
-        <tr v-if="!isTrans">
-            <td><span>Counterparty: </span></td>
-            <td><input type="text" v-model.trim="counterparty" placeholder="enter counterparty"></td>
-        </tr>
         <tr>
             <td><span>Comment: </span></td>
             <td><input type="text" v-model.trim="comment" placeholder="enter comment"></td>
+        </tr>
+        <tr v-if="!isTrans">
+            <td><span>Counterparty: </span></td>
+            <td><input type="text" v-model.trim="counterparty" placeholder="enter counterparty"></td>
         </tr>
     </table>
 </template>

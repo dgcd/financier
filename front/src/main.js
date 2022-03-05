@@ -16,7 +16,10 @@ import AccountSelector from './components/AccountSelector.vue';
 import CurrencySelector from './components/CurrencySelector.vue';
 import OperationTypeSelector from './components/OperationTypeSelector.vue';
 import ExchageRates from './components/ExchageRates.vue';
-import CheckOperationTypes from './components/CheckOperationTypes.vue';
+import ShowExpenseCheckbox from './components/ShowExpenseCheckbox.vue';
+import ShowIncomeCheckbox from './components/ShowIncomeCheckbox.vue';
+import ShowTransCheckbox from './components/ShowTransCheckbox.vue';
+import ShowEmptyAccountsCheckbox from './components/ShowEmptyAccountsCheckbox.vue';
 
 import utils from '@/service/utils.js';
 
@@ -35,7 +38,10 @@ Vue.component('account-selector', AccountSelector);
 Vue.component('currency-selector', CurrencySelector);
 Vue.component('operation-type-selector', OperationTypeSelector);
 Vue.component('exchange-rates', ExchageRates);
-Vue.component('check-operation-types', CheckOperationTypes);
+Vue.component('show-expense-checkbox', ShowExpenseCheckbox);
+Vue.component('show-income-checkbox', ShowIncomeCheckbox);
+Vue.component('show-trans-checkbox', ShowTransCheckbox);
+Vue.component('show-empty-accounts-checkbox', ShowEmptyAccountsCheckbox);
 
 
 Vue.filter('formatMoneyToString', utils.formatMoneyToString);
