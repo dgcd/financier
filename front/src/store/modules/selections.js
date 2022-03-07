@@ -2,8 +2,8 @@ export default {
     state: {
         showExpense: true,
         showIncome: true,
-        showTrans: false,
-        showEmptyAccounts: false,
+        showTrans: true,
+        showEmptyAccounts: true,
 
         selectedCategoryId: null,
         selectedSubcategoryId: null,

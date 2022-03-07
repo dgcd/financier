@@ -25,38 +25,28 @@ export default {
         };
     },
 
-    // created() {
-    //     this.setInternalValues();
-    // },
-
     computed: {
         ...mapState(['categories']),
 
+        filteredCategories() {
+            return this.parentId ?
+                this.categories.filter(c => c.parentId === this.parentId) :
+                this.categories.filter(c => !c.parentId);
+        },
+
         titles() {
-            return this.categories.map(a => a.title);
+            return this.filteredCategories.map(a => a.title);
         },
     },
 
-    // watch: {
-    //     internalTitle(newInternalTitle) {
-    //         if (!newInternalTitle) {
-    //             return null;
-    //         }
-    //         const account = this.accounts.find(a => a.title === newInternalTitle);
-    //         this.$emit('input', account.id);
-    //     },
-    //     currency() {
-    //         this.setInternalValues();
-    //     },
-    // },
-
-    // methods: {
-    //     setInternalValues() {
-    //         this.internalTitle = null;
-    //         this.filteredAccounts = this.currency ?
-    //             this.accounts.filter(a => a.currency === this.currency) :
-    //             this.accounts;
-    //     },
-    // },
+    watch: {
+        internalTitle(newInternalTitle) {
+            if (!newInternalTitle) {
+                return null;
+            }
+            const category = this.filteredCategories.find(c => c.title === newInternalTitle);
+            this.$emit('input', category.id);
+        },
+    },
 }
 </script>

@@ -3,12 +3,12 @@
         <tr>
             <th>Id</th>
             <th>Title</th>
-            <th><button class="btn btn-link" @click="onClickCreate(null)">add</button></th>
+            <th><button class="btn btn-link" @click="onClickCreate(null)">add parent</button></th>
         </tr>
         <tr v-for="c in sortedCategories" :key="c.id">
             <td>{{ c.id }}</td>
             <td align="left">{{ c.title }}</td>
-            <td><button class="btn btn-link" v-if="!c.parentId" @click="onClickCreate(c.id)">add</button></td>
+            <td><button class="btn btn-link" v-if="!c.parentId" @click="onClickCreate(c.id)">add child</button></td>
         </tr>
     </table>
 </template>

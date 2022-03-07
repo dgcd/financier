@@ -6,9 +6,11 @@ import dgcd.financier.app.modules.operation.exceptions.OperationCreateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static dgcd.financier.app.dictionary.OperationType.BASE;
 import static dgcd.financier.app.dictionary.OperationType.TRANS;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,15 @@ public class OperationsService {
     private void validateDtoCommon(OperationCreateRequestDto dto) {
         if (isNull(dto.amount()) || dto.amount().compareTo(ZERO) == 0) {
             throw new OperationCreateException("Amount can not be " + dto.amount());
+        }
+        if (isNull(dto.operationType())) {
+            throw new OperationCreateException("Operation type can not be null");
+        }
+        if (dto.operationType() == BASE && nonNull(dto.subcategoryId())) {
+            throw new OperationCreateException("Base operation can non have category");
+        }
+        if (dto.operationType() != BASE && isNull(dto.subcategoryId())) {
+            throw new OperationCreateException("Operation must have category");
         }
     }
 

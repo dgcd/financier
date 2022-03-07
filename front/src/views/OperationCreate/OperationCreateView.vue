@@ -51,7 +51,7 @@ export default {
             return;
         }
 
-        if (!this.categories.length) {
+        if (!this.categories.filter(c => c.parentId).length) {
             this.$router.push('/categories?reason=nocategories');
             return;
         }

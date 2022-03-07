@@ -30,4 +30,8 @@ public class CategoriesDaoService {
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId));
     }
 
+    public List<Category> findAllByTitle(String title) {
+        return categoriesRepository.findByTitle(title);
+    }
+
 }

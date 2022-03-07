@@ -20,13 +20,19 @@ export default {
         CategoriesTable,
     },
 
+    data() {
+        return {
+            error: null,
+        };
+    },
+
     computed: {
         ...mapState(['categories']),
     },
 
     created() {
         if (this.$route.query.reason === 'nocategories') {
-            this.error = 'You can not create operations without at least one category';
+            this.error = 'You can not create operations without at least one subcategory';
         }
     },
 }

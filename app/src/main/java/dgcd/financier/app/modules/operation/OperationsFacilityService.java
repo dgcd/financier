@@ -2,6 +2,7 @@ package dgcd.financier.app.modules.operation;
 
 import dgcd.financier.app.modules.account.AccountsDaoService;
 import dgcd.financier.app.modules.account.dto.AccountResponseDto;
+import dgcd.financier.app.modules.category.CategoriesDaoService;
 import dgcd.financier.app.modules.operation.dto.OperationCreateRequestDto;
 import dgcd.financier.app.modules.operation.dto.OperationResponseDto;
 import dgcd.financier.app.modules.operation.dto.OperationsCreateResponseDto;
@@ -12,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static dgcd.financier.app.dictionary.OperationType.BASE;
 import static java.math.BigDecimal.ONE;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -21,14 +24,24 @@ public class OperationsFacilityService {
 
     private final OperationsDaoService operationsDaoService;
     private final AccountsDaoService accountsDaoService;
+    private final CategoriesDaoService categoriesDaoService;
 
 
     @Transactional
     public OperationsCreateResponseDto createOperation(OperationCreateRequestDto dto) {
         var account = accountsDaoService.findByIdOrElseThrow(dto.accountId());
+
         var operation = dto.makeOperation();
         operation.setAccount(account);
         account.setBalance(account.getBalance().add(operation.getAmount()));
+
+        if (dto.operationType() != BASE) {
+            var subcategory = categoriesDaoService.findByIdOrElseThrow(dto.subcategoryId());
+            if (isNull(subcategory.getParent())) {
+                throw new OperationCreateException("Subcategory must have parent category");
+            }
+            operation.setSubcategory(subcategory);
+        }
 
         operation = operationsDaoService.save(operation);
 
@@ -60,6 +73,15 @@ public class OperationsFacilityService {
         operationTo.setAccount(accountTo);
         operationTo.setQuantity(ONE);
         accountTo.setBalance(accountTo.getBalance().add(operationTo.getAmount()));
+
+        if (dto.operationType() != BASE) {
+            var subcategory = categoriesDaoService.findByIdOrElseThrow(dto.subcategoryId());
+            if (isNull(subcategory.getParent())) {
+                throw new OperationCreateException("Subcategory must have parent category");
+            }
+            operationTo.setSubcategory(subcategory);
+            operationFrom.setSubcategory(subcategory);
+        }
 
         operationFrom = operationsDaoService.save(operationFrom);
         operationTo = operationsDaoService.save(operationTo);

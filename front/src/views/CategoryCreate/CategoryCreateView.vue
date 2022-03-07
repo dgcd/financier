@@ -46,8 +46,8 @@ export default {
                 this.error = 'Title must not be empty';
                 return;
             }
-            if (this.category.title.length < 3 || this.category.title.length > 100) {
-                this.error = 'Title length must be 3..100';
+            if (this.category.title.length < 2 || this.category.title.length > 100) {
+                this.error = 'Title length must be 2..100';
                 return;
             }
 

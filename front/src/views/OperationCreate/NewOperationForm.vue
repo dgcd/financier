@@ -37,15 +37,17 @@
             <td><input type="text" :value="price | formatMoneyToString" disabled></td>
         </tr>
         <br>
-        <tr>
+
+        <tr v-if="showCategories">
             <td><span>Category: </span></td>
             <td><category-selector v-model="categoryId"/></td>
         </tr>
-        <tr>
+        <tr v-if="showCategories && categoryId">
             <td><span>Subcategory: </span></td>
             <td><category-selector v-model="subcategoryId" :parentId="categoryId"/></td>
         </tr>
-        <br>
+        <br v-if="showCategories">
+
         <tr>
             <td><span>Comment: </span></td>
             <td><input type="text" v-model.trim="comment" placeholder="enter comment"></td>
@@ -110,6 +112,10 @@ export default {
         price() {
             return Number(this.amount) / Number(this.quantity);
         },
+
+        showCategories() {
+            return this.operationType !== dicts.OPERATION_TYPE_BASE;
+        },
     },
 
     watch: {
@@ -147,13 +153,13 @@ export default {
                         null :
                         qtty,
 
-                subcategoryId: this.subcategoryId,
+                subcategoryId: this.operationType === dicts.OPERATION_TYPE_BASE ? null : this.subcategoryId,
 
                 comment:      this.comment.trim()      ? this.comment.trim()      : null,
                 counterparty: this.counterparty.trim() ? this.counterparty.trim() : null,
             };
             const cleanedOp = utils.removeEmptyFieldsFromObject(operation);
-            console.log('cleanedOp: ', cleanedOp);
+            console.log("op: ", cleanedOp) // todo remove
             this.$emit('input', cleanedOp);
         },
     },
