@@ -47,7 +47,12 @@ export default {
 
     created() {
         if (!this.accounts.length) {
-            this.$router.push('/accounts?reason=noaccount');
+            this.$router.push('/accounts?reason=noaccounts');
+            return;
+        }
+
+        if (!this.categories.length) {
+            this.$router.push('/categories?reason=nocategories');
             return;
         }
 
@@ -68,7 +73,7 @@ export default {
     },
 
     computed: {
-        ...mapState(['accounts']),
+        ...mapState(['accounts', 'categories']),
     },
 
     methods: {

@@ -38,7 +38,7 @@ export default {
     },
 
     created() {
-        if (this.$route.query.reason === 'noaccount') {
+        if (this.$route.query.reason === 'noaccounts') {
             this.error = 'You can not create operations without at least one account';
         }
     },

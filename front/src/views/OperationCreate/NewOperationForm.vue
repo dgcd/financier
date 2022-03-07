@@ -38,6 +38,15 @@
         </tr>
         <br>
         <tr>
+            <td><span>Category: </span></td>
+            <td><category-selector v-model="categoryId"/></td>
+        </tr>
+        <tr>
+            <td><span>Subcategory: </span></td>
+            <td><category-selector v-model="subcategoryId" :parentId="categoryId"/></td>
+        </tr>
+        <br>
+        <tr>
             <td><span>Comment: </span></td>
             <td><input type="text" v-model.trim="comment" placeholder="enter comment"></td>
         </tr>
@@ -76,11 +85,16 @@ export default {
             currency: null,
             accountId: null,
             accountToId: null,
-            quantity: '1',
-            amount: '0',
+
             operationType: null,
-            counterparty: '',
+            amount: '0',
+            quantity: '1',
+
+            categoryId: null,
+            subcategoryId: null,
+
             comment: '',
+            counterparty: '',
 
             operationTypes: this.isTrans ?
                 [dicts.OPERATION_TYPE_TRANS] :
@@ -102,12 +116,13 @@ export default {
         date()          { this.emitOperation(); },
         accountId()     { this.emitOperation(); },
         accountToId()   { this.emitOperation(); },
-        quantity()      { this.emitOperation(); },
-        amount()        { this.emitOperation(); },
         operationType() { this.emitEnabled = true; 
                           this.emitOperation(); },
-        counterparty()  { this.emitOperation(); },
+        amount()        { this.emitOperation(); },
+        quantity()      { this.emitOperation(); },
+        subcategoryId() { this.emitOperation(); },
         comment()       { this.emitOperation(); },
+        counterparty()  { this.emitOperation(); },
     },
 
     methods: {
@@ -119,21 +134,26 @@ export default {
                 date: this.date,
                 accountId: this.accountId,
                 accountToId: this.isTrans ? this.accountToId : null,
-                quantity: this.isTrans ?
-                    null :
-                    Number.isNaN(qtty) ?
-                        null :
-                        qtty,
+
+                operationType: this.operationType,
                 amount: Number.isNaN(amnt) ?
                     null :
                     this.isTrans || this.isIncome ?
                         amnt :
                         -amnt,
-                operationType: this.operationType,
-                counterparty: this.counterparty.trim() ? this.counterparty.trim() : null,
+                quantity: this.isTrans ?
+                    null :
+                    Number.isNaN(qtty) ?
+                        null :
+                        qtty,
+
+                subcategoryId: this.subcategoryId,
+
                 comment:      this.comment.trim()      ? this.comment.trim()      : null,
+                counterparty: this.counterparty.trim() ? this.counterparty.trim() : null,
             };
             const cleanedOp = utils.removeEmptyFieldsFromObject(operation);
+            console.log('cleanedOp: ', cleanedOp);
             this.$emit('input', cleanedOp);
         },
     },

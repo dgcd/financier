@@ -57,24 +57,24 @@ public class Operation {
     private Account account;
 
     @NotNull
-    private BigDecimal quantity;
+    @Column(name = "op_type", nullable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
+    private OperationType type;
 
     @NotNull
     private BigDecimal amount;
 
     @NotNull
-    @Column(name = "op_type", nullable = false, updatable = false)
-    @Enumerated(EnumType.STRING)
-    private OperationType type;
+    private BigDecimal quantity;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-    @Size(max = 100)
-    private String counterparty;
+    @JoinColumn(name = "subcategory_id")
+    private Category subcategory;
 
     @Size(max = 100)
     private String comment;
+
+    @Size(max = 100)
+    private String counterparty;
 
 }

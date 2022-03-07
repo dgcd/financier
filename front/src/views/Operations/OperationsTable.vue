@@ -11,8 +11,8 @@
             <th>Quantity</th>
             <th>Amount</th>
 
-            <th>Group</th>
             <th>Category</th>
+            <th>Subcategory</th>
             <th>Comment</th>
             <th>Counterparty</th>
         </tr>
@@ -27,8 +27,8 @@
             <td>{{ o.quantity }}</td>
             <td align="right">{{ o.amount | formatMoneyToString }}</td>
 
-            <td>{{ o.groupTitle }}</td>
             <td>{{ o.categoryTitle }}</td>
+            <td>{{ o.subcategoryTitle }}</td>
             <td>{{ o.comment }}</td>
             <td>{{ o.counterparty }}</td>
         </tr>

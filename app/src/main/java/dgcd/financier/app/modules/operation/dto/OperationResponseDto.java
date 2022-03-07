@@ -18,15 +18,20 @@ public record OperationResponseDto(
         BigDecimal quantity,
         BigDecimal amount,
         OperationType type,
-        String groupTitle,
-        String categoryTitle,
+
         Long categoryId,
+        String categoryTitle,
+
+        Long subcategoryId,
+        String subcategoryTitle,
+
         String counterparty,
         String comment
 ) {
 
     public static OperationResponseDto of(Operation operation) {
-        var hasCategory = nonNull(operation.getCategory());
+        var hasCategory = nonNull(operation.getSubcategory());
+        var subcat = operation.getSubcategory();
         return new OperationResponseDto(
                 operation.getId(),
                 operation.getDate(),
@@ -36,9 +41,12 @@ public record OperationResponseDto(
                 operation.getQuantity(),
                 operation.getAmount(),
                 operation.getType(),
-                hasCategory ? operation.getCategory().getParent().getTitle() : null,
-                hasCategory ? operation.getCategory().getTitle() : null,
-                hasCategory ? operation.getCategory().getId() : null,
+
+                hasCategory ? subcat.getParent().getId() : null,
+                hasCategory ? subcat.getParent().getTitle() : null,
+                hasCategory ? subcat.getId() : null,
+                hasCategory ? subcat.getTitle() : null,
+
                 operation.getCounterparty(),
                 operation.getComment()
         );

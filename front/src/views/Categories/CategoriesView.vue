@@ -3,6 +3,8 @@
         <page-title />
         <h1>Categories</h1>
 
+        <error-message v-if="error" :message="error" />
+
         <CategoriesTable :categories="categories" />
     </div>
 </template>
@@ -20,6 +22,12 @@ export default {
 
     computed: {
         ...mapState(['categories']),
+    },
+
+    created() {
+        if (this.$route.query.reason === 'nocategories') {
+            this.error = 'You can not create operations without at least one category';
+        }
     },
 }
 </script>

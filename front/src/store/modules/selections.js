@@ -4,6 +4,9 @@ export default {
         showIncome: true,
         showTrans: false,
         showEmptyAccounts: false,
+
+        selectedCategoryId: null,
+        selectedSubcategoryId: null,
     },
 
     mutations: {
@@ -20,8 +23,17 @@ export default {
         },
 
         setShowEmptyAccounts(state, value) {
-            console.log(value)
             state.showEmptyAccounts = !!value;
+        },
+        
+        setSelectedCategoryId(state, value) {
+            console.log(value);
+            state.selectedCategoryId = !!value;
+        },
+
+        setSelectedSubcategoryId(state, value) {
+            console.log(value);
+            state.selectedSubcategoryId = !!value;
         },
     },
 };
