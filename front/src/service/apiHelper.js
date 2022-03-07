@@ -3,6 +3,7 @@ export default {
         if (requestBody) {
             console.log(title + ' request with body: ', requestBody);
         }
+
         let response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -12,23 +13,18 @@ export default {
             body: requestBody ? JSON.stringify(requestBody) : null,
         });
 
-        if (!response.ok) {
-            var message = title + ' request failed with code: ' + response.status;
-            console.warn(message);
-            if (failCallback)
-                failCallback(message);
-            return;
-        }
-
         let body = await response.json();
-        if (body.code == 'OK') {
-            console.log(title + ' request succeeded: ', body);
-            if (successCallback)
+
+        if (response.ok) {
+            console.log(`${title} request succeeded: ${body.payload}`);
+            if (successCallback) {
                 successCallback(body.payload);
+            }
         } else {
-            console.warn(title + ' request failed: ', body);
-            if (failCallback)
-                failCallback(title + ' request failed: ' + body.message);
+            console.warn(`${title} request failed: ${body.message}`);
+            if (failCallback) {
+                failCallback(body.message);
+            }
         }
     },
 }

@@ -7,7 +7,9 @@
             <redirect-button :title="'Back'" :path="'/categories'" />
         </p>
 
-        <NewCategoryForm v-model="category" />
+        <p>
+            <NewCategoryForm v-model="category" />
+        </p>
 
         <error-message v-if="error" :message="error" />
 
@@ -46,8 +48,8 @@ export default {
                 this.error = 'Title must not be empty';
                 return;
             }
-            if (this.category.title.length < 2 || this.category.title.length > 100) {
-                this.error = 'Title length must be 2..100';
+            if (this.category.title.length < 1 || this.category.title.length > 30) {
+                this.error = 'Title length must be 1..30';
                 return;
             }
 

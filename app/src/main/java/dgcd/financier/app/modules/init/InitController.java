@@ -1,6 +1,5 @@
 package dgcd.financier.app.modules.init;
 
-import dgcd.financier.app.commons.mvc.aspects.HandleException;
 import dgcd.financier.app.commons.mvc.aspects.LogControllerData;
 import dgcd.financier.app.commons.mvc.dto.GeneralResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ public class InitController {
 
     private final InitService initService;
 
-    @HandleException
     @LogControllerData
     @PostMapping(INIT_PATH)
     public GeneralResponseDto getInitData() {

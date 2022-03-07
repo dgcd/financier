@@ -1,9 +1,9 @@
 package dgcd.financier.app.modules.category;
 
-import dgcd.financier.app.commons.mvc.aspects.HandleException;
 import dgcd.financier.app.commons.mvc.aspects.LogControllerData;
 import dgcd.financier.app.commons.mvc.dto.GeneralResponseDto;
 import dgcd.financier.app.modules.category.dto.CategoryCreateRequestDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +23,9 @@ public class CategoriesController {
 
     private final CategoriesService categoriesService;
 
-    @HandleException
     @LogControllerData
     @PostMapping(CATEGORIES_CREATE_PATH)
-    public GeneralResponseDto createCategory(@RequestBody CategoryCreateRequestDto dto) {
+    public GeneralResponseDto createCategory(@Valid @RequestBody CategoryCreateRequestDto dto) {
         var payload = categoriesService.createCategory(dto);
         return new GeneralResponseDto(payload);
     }

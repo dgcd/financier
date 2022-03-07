@@ -7,7 +7,9 @@
             <redirect-button :title="'Back'" :path="'/accounts'" />
         </p>
 
-        <NewAccountForm v-model="account" />
+        <p>
+            <NewAccountForm v-model="account" />
+        </p>
 
         <error-message v-if="error" :message="error" />
 
@@ -49,9 +51,8 @@ export default {
                 this.error = 'Title must not be empty';
                 return;
             }
-
-            if (this.account.title.length < 3 || this.account.title.length > 100) {
-                this.error = 'Title length must be 3..100';
+            if (this.account.title.length < 1 || this.account.title.length > 30) {
+                this.error = 'Title length must be 1..30';
                 return;
             }
 

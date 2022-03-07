@@ -1,9 +1,9 @@
 package dgcd.financier.app.modules.account;
 
-import dgcd.financier.app.commons.mvc.aspects.HandleException;
 import dgcd.financier.app.commons.mvc.aspects.LogControllerData;
 import dgcd.financier.app.commons.mvc.dto.GeneralResponseDto;
 import dgcd.financier.app.modules.account.dto.AccountCreateRequestDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +23,9 @@ public class AccountsController {
 
     private final AccountsService accountsService;
 
-    @HandleException
     @LogControllerData
     @PostMapping(ACCOUNTS_CREATE_PATH)
-    public GeneralResponseDto createAccount(@RequestBody AccountCreateRequestDto dto) {
+    public GeneralResponseDto createAccount(@Valid @RequestBody AccountCreateRequestDto dto) {
         var payload = accountsService.createAccount(dto);
         return new GeneralResponseDto(payload);
     }

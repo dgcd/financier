@@ -16,13 +16,11 @@ public class AccountsService {
 
     @Transactional
     public AccountResponseDto createAccount(AccountCreateRequestDto dto) {
-        var newAccount = dto.makeAccount();
-        var dupAccount = accountsDaoService.findByTitle(dto.title());
-        if (dupAccount.isPresent()) {
+        if (accountsDaoService.findByTitle(dto.title()).isPresent()) {
             throw new AccountWithTitleAlreadyExistsException(dto.title());
         }
 
-        var savedAccount = accountsDaoService.save(newAccount);
+        var savedAccount = accountsDaoService.save(dto.makeAccount());
         return AccountResponseDto.of(savedAccount);
     }
 

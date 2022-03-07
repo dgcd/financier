@@ -1,9 +1,9 @@
 package dgcd.financier.app.modules.operation;
 
-import dgcd.financier.app.commons.mvc.aspects.HandleException;
 import dgcd.financier.app.commons.mvc.aspects.LogControllerData;
 import dgcd.financier.app.commons.mvc.dto.GeneralResponseDto;
 import dgcd.financier.app.modules.operation.dto.OperationCreateRequestDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +23,9 @@ public class OperationsController {
 
     private final OperationsService operationsService;
 
-    @HandleException
     @LogControllerData(logResult = true)
     @PostMapping(OPERATIONS_CREATE_PATH)
-    public GeneralResponseDto createOperationOrTransfert(@RequestBody OperationCreateRequestDto dto) {
+    public GeneralResponseDto createOperationOrTransfert(@Valid @RequestBody OperationCreateRequestDto dto) {
         var payload = operationsService.createOperationOrTransfert(dto);
         return new GeneralResponseDto(payload);
     }
