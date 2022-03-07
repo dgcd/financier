@@ -17,7 +17,7 @@
         <error-message v-if="error" :message="error" />
 
         <p>
-            <button @click="onCreate">Create</button>
+            <button class="btn btn-link" @click="onCreate">Create</button>
         </p>
     </div>
 </template>
@@ -25,11 +25,11 @@
 <script>
 import { mapMutations, mapState } from 'vuex';
 import apiRequests from '@/service/apiRequests.js';
-import NewOperationForm from './components/NewOperationForm.vue';
+import NewOperationForm from './NewOperationForm.vue';
 import dicts from '@/config/dicts.js';
 
 export default {
-    name: 'OperationCreate',
+    name: 'OperationCreateView',
 
     components: {
         NewOperationForm,
@@ -47,7 +47,12 @@ export default {
 
     created() {
         if (!this.accounts.length) {
-            this.$router.push('/accounts?reason=noaccount');
+            this.$router.push('/accounts?reason=noaccounts');
+            return;
+        }
+
+        if (!this.categories.filter(c => c.parentId).length) {
+            this.$router.push('/categories?reason=nocategories');
             return;
         }
 
@@ -68,7 +73,7 @@ export default {
     },
 
     computed: {
-        ...mapState(['accounts']),
+        ...mapState(['accounts', 'categories']),
     },
 
     methods: {

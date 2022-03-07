@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" class="container-fluid m-1">
         <div v-if="isAppReady">
             <Navbar />
 
@@ -13,7 +13,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import apiRequests from '@/service/apiRequests.js';
-import Navbar from './components/Navbar.vue';
+import Navbar from './Navbar.vue';
 
 export default {
     name: 'App',

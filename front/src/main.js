@@ -2,6 +2,8 @@ import Vue from 'vue';
 import router from './router';
 import store from './store';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 import App from './views/App/App.vue';
 
 import DatePicker from './components/DatePicker.vue';
@@ -12,7 +14,13 @@ import SelectList from './components/SelectList.vue';
 
 import AccountSelector from './components/AccountSelector.vue';
 import CurrencySelector from './components/CurrencySelector.vue';
+import CategorySelector from './components/CategorySelector.vue';
 import OperationTypeSelector from './components/OperationTypeSelector.vue';
+import ExchageRates from './components/ExchageRates.vue';
+import ShowExpenseCheckbox from './components/ShowExpenseCheckbox.vue';
+import ShowIncomeCheckbox from './components/ShowIncomeCheckbox.vue';
+import ShowTransCheckbox from './components/ShowTransCheckbox.vue';
+import ShowEmptyAccountsCheckbox from './components/ShowEmptyAccountsCheckbox.vue';
 
 import utils from '@/service/utils.js';
 
@@ -29,7 +37,13 @@ Vue.component('select-list', SelectList);
 
 Vue.component('account-selector', AccountSelector);
 Vue.component('currency-selector', CurrencySelector);
+Vue.component('category-selector', CategorySelector);
 Vue.component('operation-type-selector', OperationTypeSelector);
+Vue.component('exchange-rates', ExchageRates);
+Vue.component('show-expense-checkbox', ShowExpenseCheckbox);
+Vue.component('show-income-checkbox', ShowIncomeCheckbox);
+Vue.component('show-trans-checkbox', ShowTransCheckbox);
+Vue.component('show-empty-accounts-checkbox', ShowEmptyAccountsCheckbox);
 
 
 Vue.filter('formatMoneyToString', utils.formatMoneyToString);

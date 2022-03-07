@@ -10,12 +10,15 @@ public record OperationCreateRequestDto(
         LocalDate date,
         Long accountId,
         Long accountToId,
+
+        OperationType operationType,
         BigDecimal amount,
         BigDecimal quantity,
-        OperationType operationType,
-//        Long categoryId,
-        String counterparty,
-        String comment
+
+        Long subcategoryId,
+
+        String comment,
+        String counterparty
 ) {
 
     public Operation makeOperation() {
@@ -23,12 +26,12 @@ public record OperationCreateRequestDto(
                 null,
                 date,
                 null,
-                quantity,
-                amount,
                 operationType,
+                amount,
+                quantity,
                 null,
-                counterparty,
-                comment
+                comment,
+                counterparty
         );
     }
 

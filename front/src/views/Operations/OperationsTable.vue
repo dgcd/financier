@@ -11,10 +11,10 @@
             <th>Quantity</th>
             <th>Amount</th>
 
-            <th>Group</th>
             <th>Category</th>
-            <th>Counterparty</th>
+            <th>Subcategory</th>
             <th>Comment</th>
+            <th>Counterparty</th>
         </tr>
         <tr v-for="o in sortedOperations" :key="o.id">
             <td>{{ o.id }}</td>
@@ -27,15 +27,16 @@
             <td>{{ o.quantity }}</td>
             <td align="right">{{ o.amount | formatMoneyToString }}</td>
 
-            <td>{{ o.groupTitle }}</td>
             <td>{{ o.categoryTitle }}</td>
-            <td>{{ o.counterparty }}</td>
+            <td>{{ o.subcategoryTitle }}</td>
             <td>{{ o.comment }}</td>
+            <td>{{ o.counterparty }}</td>
         </tr>
     </table>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
     name: 'OperationsTable',
 
@@ -47,8 +48,19 @@ export default {
     },
 
     computed: {
+        ...mapState(['selections']),
+
         sortedOperations() {
             return this.operations
+                .filter(op => {
+                    if (!this.selections.showExpense && op.type === "EXPENSE")
+                        return false;
+                    if (!this.selections.showIncome && (op.type === "INCOME" || op.type === "BASE"))
+                        return false;
+                    if (!this.selections.showTrans && op.type === "TRANS")
+                        return false;
+                    return true;
+                })
                 .sort((op1, op2) => op2.date === op1.date ?
                     op2.id - op1.id :
                     op2.date.localeCompare(op1.date)

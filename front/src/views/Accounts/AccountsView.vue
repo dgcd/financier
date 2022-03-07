@@ -7,6 +7,14 @@
             <redirect-button :title="'Create account'" :path="'/accounts/create'" />
         </p>
 
+        <p>
+            <exchange-rates />
+        </p>
+
+        <p>
+            <show-empty-accounts-checkbox />
+        </p>
+
         <error-message v-if="error" :message="error" />
 
         <AccountsTable />
@@ -14,10 +22,10 @@
 </template>
 
 <script>
-import AccountsTable from './components/AccountsTable.vue';
+import AccountsTable from './AccountsTable.vue';
 
 export default {
-    name: 'Accounts',
+    name: 'AccountsView',
 
     components: {
         AccountsTable,
@@ -30,7 +38,7 @@ export default {
     },
 
     created() {
-        if (this.$route.query.reason === 'noaccount') {
+        if (this.$route.query.reason === 'noaccounts') {
             this.error = 'You can not create operations without at least one account';
         }
     },

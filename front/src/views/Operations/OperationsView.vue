@@ -4,11 +4,15 @@
         <h1>Operations</h1>
 
         <p>
-            <redirect-button :title="'Create Income'"    :path="'/operations/create?type=INCOME'" />
-            &nbsp;
             <redirect-button :title="'Create Expense'"   :path="'/operations/create?type=EXPENSE'" />
-            &nbsp;
+            <redirect-button :title="'Create Income'"    :path="'/operations/create?type=INCOME'" />
             <redirect-button :title="'Create Transfert'" :path="'/operations/create?type=TRANS'" />
+        </p>
+
+        <p>
+            <show-expense-checkbox />
+            <show-income-checkbox />
+            <show-trans-checkbox />
         </p>
 
         <OperationsTable :operations="operations" />
@@ -17,10 +21,10 @@
 
 <script>
 import { mapState } from 'vuex';
-import OperationsTable from './comps/OperationsTable.vue';
+import OperationsTable from './OperationsTable.vue';
 
 export default {
-    name: 'Operations',
+    name: 'OperationsView',
 
     components: {
         OperationsTable,

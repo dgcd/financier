@@ -1,72 +1,69 @@
 <template>
     <div>
         <page-title />
-        <h1>Create account</h1>
+        <h1>Create category</h1>
 
         <p>
-            <redirect-button :title="'Back'" :path="'/accounts'" />
+            <redirect-button :title="'Back'" :path="'/categories'" />
         </p>
 
-        <NewAccountForm v-model="account" />
+        <NewCategoryForm v-model="category" />
 
         <error-message v-if="error" :message="error" />
 
         <p>
-            <button @click="onCreate">Create</button>
+            <button class="btn btn-link" @click="onCreate">Create</button>
         </p>
     </div>
 </template>
 
 <script>
 import { mapMutations } from 'vuex';
-import dicts from '@/config/dicts.js';
 import apiRequests from '@/service/apiRequests.js';
-import NewAccountForm from './components/NewAccountForm.vue';
+import NewCategoryForm from './NewCategoryForm.vue';
 
 export default {
-    name: 'AccountCreate',
+    name: 'CategoryCreateView',
 
     components: {
-        NewAccountForm,
+        NewCategoryForm,
     },
 
     data() {
         return {
-            currencies: dicts.currencies,
-            error: null,
-            account: {
-                currency: null,
+            category: {
                 title: null,
             },
+            error: null,
         };
     },
 
     methods: {
-        ...mapMutations(['addAccount']),
+        ...mapMutations(['addCategory']),
 
         onCreate() {
-            if (!this.account.title) {
+            if (!this.category.title) {
                 this.error = 'Title must not be empty';
                 return;
             }
-
-            if (this.account.title.length < 3 || this.account.title.length > 100) {
-                this.error = 'Title length must be 3..100';
+            if (this.category.title.length < 2 || this.category.title.length > 100) {
+                this.error = 'Title length must be 2..100';
                 return;
             }
 
             this.error = null;
+            this.category.parentId = this.$route.query.parentId;
 
-            apiRequests.createAccount(
-                this.account,
+            apiRequests.createCategory(
+                this.category,
                 this.requestSuccess,
                 this.requestError,
             );
         },
 
         requestSuccess(payload) {
-            this.addAccount(payload);
-            this.$router.push('/accounts');
+            this.addCategory(payload);
+            this.$router.push('/categories');
         },
 
         requestError(message) {

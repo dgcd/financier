@@ -1,20 +1,20 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import Dashboard from '../views/Dashboard/Dashboard.vue';
-import Operations from '../views/Operations/Operations.vue';
-import OperationCreate from '../views/OperationCreate/OperationCreate.vue';
-import Accounts from '../views/Accounts/Accounts.vue';
-import AccountCreate from '../views/AccountCreate/AccountCreate.vue';
-import Categories from '../views/Categories/Categories.vue';
-import CategoryCreate from '../views/CategoryCreate/CategoryCreate.vue';
+// import DashboardView from '../views/Dashboard/DashboardView.vue';
+import OperationsView from '../views/Operations/OperationsView.vue';
+import OperationCreateView from '../views/OperationCreate/OperationCreateView.vue';
+import AccountsView from '../views/Accounts/AccountsView.vue';
+import AccountCreateView from '../views/AccountCreate/AccountCreateView.vue';
+import CategoriesView from '../views/Categories/CategoriesView.vue';
+import CategoryCreateView from '../views/CategoryCreate/CategoryCreateView.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
     // {
     //     path: '/dashboard',
-    //     name: 'Dashboard',
-    //     component: Dashboard,
+    //     name: 'DashboardView',
+    //     component: DashboardView,
     //     meta: {
     //         title: 'Dashboard',
     //     },
@@ -22,48 +22,48 @@ const routes = [
     {
         path: '/operations',
         alias: '/',
-        name: 'Operations',
-        component: Operations,
+        name: 'OperationsView',
+        component: OperationsView,
         meta: {
             title: 'Operations',
         },
     },
     {
         path: '/operations/create',
-        name: 'OperationCreate',
-        component: OperationCreate,
+        name: 'OperationCreateView',
+        component: OperationCreateView,
         meta: {
             title: 'Create operation',
         },
     },
     {
         path: '/accounts',
-        name: 'Accounts',
-        component: Accounts,
+        name: 'AccountsView',
+        component: AccountsView,
         meta: {
             title: 'Accounts',
         },
     },
     {
         path: '/accounts/create',
-        name: 'AccountCreate',
-        component: AccountCreate,
+        name: 'AccountCreateView',
+        component: AccountCreateView,
         meta: {
             title: 'Create account',
         },
     },
     {
         path: '/categories',
-        name: 'Categories',
-        component: Categories,
+        name: 'CategoriesView',
+        component: CategoriesView,
         meta: {
             title: 'Categories',
         },
     },
     {
         path: '/categories/create',
-        name: 'CategoryCreate',
-        component: CategoryCreate,
+        name: 'CategoryCreateView',
+        component: CategoryCreateView,
         meta: {
             title: 'Create category',
         },

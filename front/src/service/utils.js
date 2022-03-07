@@ -7,7 +7,7 @@ const utils = {
         if (!amount)
             return '-';
         return amount
-            .toLocaleString('ru-RU', {style: 'decimal', minimumFractionDigits: 2})
+            .toLocaleString('ru-RU', {style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2})
             .replace(',', '.');
     },
 
