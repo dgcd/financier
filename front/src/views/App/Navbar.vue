@@ -9,6 +9,6 @@
 
 <script>
 export default {
-    name: 'App-Navbar',
+    name: 'Navbar',
 }
 </script>

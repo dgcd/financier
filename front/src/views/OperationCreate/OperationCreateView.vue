@@ -25,11 +25,11 @@
 <script>
 import { mapMutations, mapState } from 'vuex';
 import apiRequests from '@/service/apiRequests.js';
-import NewOperationForm from './components/NewOperationForm.vue';
+import NewOperationForm from './NewOperationForm.vue';
 import dicts from '@/config/dicts.js';
 
 export default {
-    name: 'OperationCreate',
+    name: 'OperationCreateView',
 
     components: {
         NewOperationForm,

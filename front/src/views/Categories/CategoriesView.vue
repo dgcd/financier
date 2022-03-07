@@ -9,10 +9,10 @@
 
 <script>
 import { mapState } from 'vuex';
-import CategoriesTable from './components/CategoriesTable.vue';
+import CategoriesTable from './CategoriesTable.vue';
 
 export default {
-    name: 'Categories',
+    name: 'CategoriesView',
 
     components: {
         CategoriesTable,

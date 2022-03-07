@@ -1,13 +1,13 @@
 <template>
     <div>
         <page-title />
-        <h1>Create category</h1>
+        <h1>Create account</h1>
 
         <p>
-            <redirect-button :title="'Back'" :path="'/categories'" />
+            <redirect-button :title="'Back'" :path="'/accounts'" />
         </p>
 
-        <NewCategoryForm v-model="category" />
+        <NewAccountForm v-model="account" />
 
         <error-message v-if="error" :message="error" />
 
@@ -19,51 +19,54 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import dicts from '@/config/dicts.js';
 import apiRequests from '@/service/apiRequests.js';
-import NewCategoryForm from './components/NewCategoryForm.vue';
+import NewAccountForm from './NewAccountForm.vue';
 
 export default {
-    name: 'CategoryCreate',
+    name: 'AccountCreateView',
 
     components: {
-        NewCategoryForm,
+        NewAccountForm,
     },
 
     data() {
         return {
-            category: {
+            currencies: dicts.currencies,
+            error: null,
+            account: {
+                currency: null,
                 title: null,
             },
-            error: null,
         };
     },
 
     methods: {
-        ...mapMutations(['addCategory']),
+        ...mapMutations(['addAccount']),
 
         onCreate() {
-            if (!this.category.title) {
+            if (!this.account.title) {
                 this.error = 'Title must not be empty';
                 return;
             }
-            if (this.category.title.length < 3 || this.category.title.length > 100) {
+
+            if (this.account.title.length < 3 || this.account.title.length > 100) {
                 this.error = 'Title length must be 3..100';
                 return;
             }
 
             this.error = null;
-            this.category.parentId = this.$route.query.parentId;
 
-            apiRequests.createCategory(
-                this.category,
+            apiRequests.createAccount(
+                this.account,
                 this.requestSuccess,
                 this.requestError,
             );
         },
 
         requestSuccess(payload) {
-            this.addCategory(payload);
-            this.$router.push('/categories');
+            this.addAccount(payload);
+            this.$router.push('/accounts');
         },
 
         requestError(message) {

@@ -15,17 +15,16 @@
             <show-trans-checkbox />
         </p>
 
-
         <OperationsTable :operations="operations" />
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import OperationsTable from './comps/OperationsTable.vue';
+import OperationsTable from './OperationsTable.vue';
 
 export default {
-    name: 'Operations',
+    name: 'OperationsView',
 
     components: {
         OperationsTable,

@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import AccountsTable from './comps/AccountsTable.vue';
+import AccountsTable from './AccountsTable.vue';
 
 export default {
-    name: 'Accounts',
+    name: 'AccountsView',
 
     components: {
         AccountsTable,

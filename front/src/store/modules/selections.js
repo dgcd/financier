@@ -3,7 +3,7 @@ export default {
         showExpense: true,
         showIncome: true,
         showTrans: false,
-        showEmptyAccounts: true,
+        showEmptyAccounts: false,
     },
 
     mutations: {
