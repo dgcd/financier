@@ -27,12 +27,10 @@ export default {
         },
         
         setSelectedCategoryId(state, value) {
-            console.log(value);
             state.selectedCategoryId = !!value;
         },
 
         setSelectedSubcategoryId(state, value) {
-            console.log(value);
             state.selectedSubcategoryId = !!value;
         },
     },

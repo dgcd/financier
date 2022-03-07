@@ -159,7 +159,6 @@ export default {
                 counterparty: this.counterparty.trim() ? this.counterparty.trim() : null,
             };
             const cleanedOp = utils.removeEmptyFieldsFromObject(operation);
-            console.log("op: ", cleanedOp) // todo remove
             this.$emit('input', cleanedOp);
         },
     },

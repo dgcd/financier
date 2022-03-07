@@ -23,8 +23,8 @@ public class CategoriesService {
 
     @Transactional
     public CategoryResponseDto createCategory(CategoryCreateRequestDto dto) {
-        var newCategory = dto.makeCategory();
         checkDuplicatedTitles(dto);
+        var newCategory = dto.makeCategory();
         setParentIfPresent(dto, newCategory);
         var savedCategory = categoriesDaoService.save(newCategory);
         return CategoryResponseDto.of(savedCategory);
