@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '3.0.0-M1'
+    id 'org.springframework.boot' version '3.0.0-M2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'idea'
@@ -18,7 +18,8 @@ subprojects {
 
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
-    sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_18
+    targetCompatibility = JavaVersion.VERSION_18
 
     repositories {
         maven { url 'https://repo.spring.io/milestone' }

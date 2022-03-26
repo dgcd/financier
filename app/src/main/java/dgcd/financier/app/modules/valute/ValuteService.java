@@ -11,9 +11,9 @@ import java.math.BigDecimal;
 public class ValuteService {
 
     @Getter
-    private final BigDecimal rateUsd = BigDecimal.valueOf(105);
+    private final BigDecimal rateUsd = BigDecimal.valueOf(96);
 
     @Getter
-    private final BigDecimal rateEur = BigDecimal.valueOf(119);
+    private final BigDecimal rateEur = BigDecimal.valueOf(105);
 
 }
