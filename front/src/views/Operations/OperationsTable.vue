@@ -37,6 +37,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import dicts from '@/config/dicts.js';
+
 export default {
     name: 'OperationsTable',
 
@@ -53,11 +55,11 @@ export default {
         sortedOperations() {
             return this.operations
                 .filter(op => {
-                    if (!this.selections.showExpense && op.type === "EXPENSE")
+                    if (!this.selections.showExpense && op.type === dicts.OPERATION_TYPE_EXPENSE)
                         return false;
-                    if (!this.selections.showIncome && (op.type === "INCOME" || op.type === "BASE"))
+                    if (!this.selections.showIncome && (op.type === dicts.OPERATION_TYPE_INCOME || op.type === dicts.OPERATION_TYPE_BASE))
                         return false;
-                    if (!this.selections.showTrans && op.type === "TRANS")
+                    if (!this.selections.showTrans && (op.type === dicts.OPERATION_TYPE_TRANS || op.type === dicts.OPERATION_TYPE_EXCHANGE))
                         return false;
                     return true;
                 })

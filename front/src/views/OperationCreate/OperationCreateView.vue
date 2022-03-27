@@ -60,7 +60,7 @@ export default {
         if (type === dicts.OPERATION_TYPE_TRANS) {
             this.isTrans = true;
             this.isIncome = false;
-            this.titleSpec = 'Transfert';
+            this.titleSpec = 'Trans or Exchange';
         } else if (type === dicts.OPERATION_TYPE_EXPENSE) {
             this.isTrans = false;
             this.isIncome = false;

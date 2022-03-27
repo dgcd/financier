@@ -1,7 +1,6 @@
 package dgcd.financier.app.modules.operation.dto;
 
 import dgcd.financier.app.dictionary.OperationType;
-import dgcd.financier.app.modules.operation.Operation;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -19,6 +18,7 @@ public record OperationCreateRequestDto(
         OperationType operationType,
         @NotNull
         BigDecimal amount,
+        BigDecimal amountTo,
         BigDecimal quantity,
 
         Long subcategoryId,
@@ -27,20 +27,4 @@ public record OperationCreateRequestDto(
         String comment,
         @Size(min = 1, max = 30, message = "Counterparty length must be 1..30")
         String counterparty
-) {
-
-    public Operation makeOperation() {
-        return new Operation(
-                null,
-                date,
-                null,
-                operationType,
-                amount,
-                quantity,
-                null,
-                comment,
-                counterparty
-        );
-    }
-
-}
+) {}

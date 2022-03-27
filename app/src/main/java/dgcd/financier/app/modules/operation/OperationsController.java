@@ -25,8 +25,8 @@ public class OperationsController {
 
     @LogControllerData(logResult = true)
     @PostMapping(OPERATIONS_CREATE_PATH)
-    public GeneralResponseDto createOperationOrTransfert(@Valid @RequestBody OperationCreateRequestDto dto) {
-        var payload = operationsService.createOperationOrTransfert(dto);
+    public GeneralResponseDto createOperation(@Valid @RequestBody OperationCreateRequestDto dto) {
+        var payload = operationsService.createOperation(dto);
         return new GeneralResponseDto(payload);
     }
 

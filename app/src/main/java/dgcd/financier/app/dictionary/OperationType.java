@@ -5,6 +5,7 @@ public enum OperationType {
     BASE,
     TRANS,
     INCOME,
-    EXPENSE
+    EXPENSE,
+    EXCHANGE,
 
 }

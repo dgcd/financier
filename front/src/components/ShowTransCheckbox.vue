@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span>Trans: </span>
+        <span>Trans/Exchange: </span>
         <input type="checkbox" v-model="internalShowTrans" />
     </div>
 </template>

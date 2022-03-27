@@ -50,7 +50,6 @@ Vue.filter('formatMoneyToString', utils.formatMoneyToString);
 Vue.filter('shortenExpenseType', utils.shortenExpenseType);
 
 
-OperationTypeSelector
 new Vue({
     router,
     store,
