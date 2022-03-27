@@ -21,6 +21,7 @@ import ShowExpenseCheckbox from './components/ShowExpenseCheckbox.vue';
 import ShowIncomeCheckbox from './components/ShowIncomeCheckbox.vue';
 import ShowTransCheckbox from './components/ShowTransCheckbox.vue';
 import ShowEmptyAccountsCheckbox from './components/ShowEmptyAccountsCheckbox.vue';
+import ShowClosedAccountsCheckbox from './components/ShowClosedAccountsCheckbox.vue';
 
 import utils from '@/service/utils.js';
 
@@ -44,6 +45,7 @@ Vue.component('show-expense-checkbox', ShowExpenseCheckbox);
 Vue.component('show-income-checkbox', ShowIncomeCheckbox);
 Vue.component('show-trans-checkbox', ShowTransCheckbox);
 Vue.component('show-empty-accounts-checkbox', ShowEmptyAccountsCheckbox);
+Vue.component('show-closed-accounts-checkbox', ShowClosedAccountsCheckbox);
 
 
 Vue.filter('formatMoneyToString', utils.formatMoneyToString);

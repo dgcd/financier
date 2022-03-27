@@ -20,11 +20,14 @@ export default {
     watch: {
         internalShowEmptyAccounts(newValue) {
             this.setShowEmptyAccounts(newValue);
+            if (!newValue) {
+                this.setShowClosedAccounts(false);
+            }
         },
     },
 
     methods: {
-        ...mapMutations(['setShowEmptyAccounts']),
+        ...mapMutations(['setShowEmptyAccounts', 'setShowClosedAccounts']),
     },
 }
 </script>

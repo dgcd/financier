@@ -9,7 +9,8 @@ public record AccountResponseDto(
         Long id,
         String title,
         Currency currency,
-        BigDecimal balance
+        BigDecimal balance,
+        Boolean isClosed
 ) {
 
     public static AccountResponseDto of(Account account) {
@@ -17,7 +18,8 @@ public record AccountResponseDto(
                 account.getId(),
                 account.getTitle(),
                 account.getCurrency(),
-                account.getBalance()
+                account.getBalance(),
+                account.getIsClosed()
         );
     }
 

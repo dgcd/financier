@@ -20,7 +20,8 @@ public record AccountCreateRequestDto(
                 null,
                 this.title(),
                 this.currency(),
-                ZERO
+                ZERO,
+                false
         );
     }
 

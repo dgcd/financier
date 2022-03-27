@@ -16,12 +16,12 @@ export default {
         let body = await response.json();
 
         if (response.ok) {
-            console.log(`${title} request succeeded: ${body.payload}`);
+            console.log(`${title} request succeeded: `, body.payload);
             if (successCallback) {
                 successCallback(body.payload);
             }
         } else {
-            console.warn(`${title} request failed: ${body.message}`);
+            console.warn(`${title} request failed: `, body.message);
             if (failCallback) {
                 failCallback(body.message);
             }

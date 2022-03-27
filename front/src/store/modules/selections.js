@@ -3,7 +3,9 @@ export default {
         showExpense: true,
         showIncome: true,
         showTrans: true,
-        showEmptyAccounts: true,
+
+        showEmptyAccounts: false,
+        showClosedAccounts: false,
 
         selectedCategoryId: null,
         selectedSubcategoryId: null,
@@ -25,7 +27,14 @@ export default {
         setShowEmptyAccounts(state, value) {
             state.showEmptyAccounts = !!value;
         },
-        
+
+        setShowClosedAccounts(state, value) {
+            state.showClosedAccounts = !!value;
+            if (value) {
+                state.showEmptyAccounts = true;
+            }
+        },
+
         setSelectedCategoryId(state, value) {
             state.selectedCategoryId = !!value;
         },
