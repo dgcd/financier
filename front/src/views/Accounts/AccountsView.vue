@@ -18,7 +18,7 @@
 
         <error-message v-if="error" :message="error" />
 
-        <AccountsTable :closeAccoutHadler="closeAccount" />
+        <AccountsTable :closeAccountHandler="closeAccount" />
     </div>
 </template>
 

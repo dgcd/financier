@@ -12,7 +12,7 @@
                 <td>{{ a.id }}</td>
                 <td align="left">
                     {{ a.title }}
-                    <button class="btn btn-link btn-sm" v-if="a.id && !a.balance && !a.isClosed" @click="closeAccoutHadler(a.id)">X</button>
+                    <button class="btn btn-link btn-sm py-0" v-if="a.id && !a.balance && !a.isClosed" @click="closeAccountHandler(a.id)">X</button>
                 </td>
                 <td>{{ a.currency }}</td>
                 <td align="right">{{ a.balance | formatMoneyToString }}</td>
@@ -30,7 +30,7 @@ export default {
     name: 'Accounts-AccountsTable',
 
     props: {
-        closeAccoutHadler: {
+        closeAccountHandler: {
             type: Function,
             required: true,
         },

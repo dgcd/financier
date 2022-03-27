@@ -30,9 +30,6 @@ export default {
 
         setShowClosedAccounts(state, value) {
             state.showClosedAccounts = !!value;
-            if (value) {
-                state.showEmptyAccounts = true;
-            }
         },
 
         setSelectedCategoryId(state, value) {
