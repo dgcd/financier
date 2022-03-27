@@ -52,7 +52,8 @@ export default {
             const checkedAccounts = this.accounts
                 .sort((a, b) => a.currency === b.currency ?
                     a.title.localeCompare(b.title) :
-                    dicts.currencies.indexOf(a.currency) - dicts.currencies.indexOf(b.currency))
+                    dicts.currencies.indexOf(a.currency) - dicts.currencies.indexOf(b.currency)
+                )
                 .map(acc => {
                     const checkedBalanceSrc = this.checkedBalance[acc.id] || 0;
                     const checkFailed = Math.abs(acc.balance - checkedBalanceSrc) > 0.0001;
