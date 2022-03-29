@@ -1,10 +1,16 @@
 export default {
-    async performApiRequest(url, requestBody, title, successCallback, failCallback) {
+    async performApiRequest(
+        url,
+        requestBody,
+        title,
+        successCallback,    // accepts payload
+        failCallback,       // accepts error message
+    ) {
         if (requestBody) {
             console.log(title + ' request with body: ', requestBody);
         }
 
-        let response = await fetch(url, {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -13,15 +19,15 @@ export default {
             body: requestBody ? JSON.stringify(requestBody) : null,
         });
 
-        let body = await response.json();
+        const body = await response.json();
 
         if (response.ok) {
-            console.log(`${title} request succeeded: ${body.payload}`);
+            console.log(`${title} request succeeded: `, body.payload);
             if (successCallback) {
                 successCallback(body.payload);
             }
         } else {
-            console.warn(`${title} request failed: ${body.message}`);
+            console.warn(`${title} request failed: `, body.message);
             if (failCallback) {
                 failCallback(body.message);
             }

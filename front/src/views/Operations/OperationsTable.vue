@@ -20,7 +20,7 @@
             <td>{{ o.id }}</td>
             <td>{{ o.date }}</td>
             <td>{{ o.currency }}</td>
-            <td>{{ o.accountTitle }}</td>
+            <td>{{ o.accountTitle | removeUnderscores }}</td>
 
             <td>{{ o.type | shortenExpenseType }}</td>
             <td align="right">{{ (o.amount / o.quantity) | formatMoneyToString }}</td>

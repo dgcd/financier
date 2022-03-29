@@ -22,6 +22,16 @@ export default {
         );
     },
 
+    closeAccount(idDto, success, fail) {
+        apiHelper.performApiRequest(
+            apiUrls.accountCloseUrl,
+            idDto,
+            'Close account',
+            success,
+            fail,
+        );
+    },
+
     createCategory(category, success, fail) {
         apiHelper.performApiRequest(
             apiUrls.categoryCreateUrl,

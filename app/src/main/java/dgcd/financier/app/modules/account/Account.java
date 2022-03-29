@@ -51,4 +51,7 @@ public class Account {
     @NotNull
     private BigDecimal balance;
 
+    @NotNull
+    private Boolean isClosed;
+
 }

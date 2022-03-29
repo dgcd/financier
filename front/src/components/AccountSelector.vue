@@ -34,7 +34,10 @@ export default {
         ...mapState(['accounts']),
 
         accountTitles() {
-            return this.filteredAccounts.map(a => a.title);
+            return this.filteredAccounts
+                .filter(acc => !acc.isClosed)
+                .map(a => a.title)
+                .sort((t1, t2) => t1.localeCompare(t2));
         },
     },
 

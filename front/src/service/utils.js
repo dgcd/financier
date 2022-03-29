@@ -22,6 +22,10 @@ const utils = {
         Object.keys(toClean).forEach((k) => toClean[k] == null && delete toClean[k]);
         return toClean;
     },
+
+    removeUnderscores(str) {
+        return str.replace(/_/g, '');
+    },
 };
 
 export default utils;

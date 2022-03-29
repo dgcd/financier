@@ -10,10 +10,13 @@
             </tr>
             <tr v-for="a in sortedAccounts" :key="a.id">
                 <td>{{ a.id }}</td>
-                <td align="left">{{ a.title }}</td>
+                <td align="left">
+                    {{ a.title }}
+                    <button class="btn btn-link btn-sm py-0" v-if="a.id && !a.balance && !a.isClosed" @click="closeAccountHandler(a.id)">X</button>
+                </td>
                 <td>{{ a.currency }}</td>
                 <td align="right">{{ a.balance | formatMoneyToString }}</td>
-                <td align="right" v-if="showChecked">{{ a.checkedBalance | formatMoneyToString }}</td>
+                <td align="right" v-if="showChecked">{{ a.checkedBalance | formatMoneyToString }}{{ a.checkFailed ? " !" : ""}}</td>
             </tr>
         </table>
     </div>
@@ -26,12 +29,19 @@ import dicts from '@/config/dicts.js';
 export default {
     name: 'Accounts-AccountsTable',
 
+    props: {
+        closeAccountHandler: {
+            type: Function,
+            required: true,
+        },
+    },
+
     computed: {
         ...mapState(['accounts', 'operations', 'rates', 'selections']),
 
         showChecked() {
             for (let acc of this.sortedAccounts) {
-                if (acc.checkedBalance) {
+                if (acc.checkFailed) {
                     return true;
                 }
             }
@@ -39,20 +49,32 @@ export default {
         },
 
         sortedAccounts() {
-            let result = this.accounts
+            const checkedAccounts = this.accounts
                 .sort((a, b) => a.currency === b.currency ?
                     a.title.localeCompare(b.title) :
-                    dicts.currencies.indexOf(a.currency) - dicts.currencies.indexOf(b.currency))
+                    dicts.currencies.indexOf(a.currency) - dicts.currencies.indexOf(b.currency)
+                )
                 .map(acc => {
-                    const checkedBalance = this.checkedBalance[acc.id];
+                    const checkedBalanceSrc = this.checkedBalance[acc.id] || 0;
+                    const checkFailed = Math.abs(acc.balance - checkedBalanceSrc) > 0.0001;
+                    const checkedBalance = checkFailed ? checkedBalanceSrc : null;
                     return {
                         ...acc,
-                        checkedBalance: Math.abs(acc.balance - checkedBalance) < 0.00001 ? null : checkedBalance,
+                        checkedBalance,
+                        checkFailed,
                     }
                 });
 
-            if (!this.selections.showEmptyAccounts) {
-                result = result.filter(acc => this.selections.showEmptyAccounts || !!acc.balance || !!acc.checkedBalance);
+            const result = checkedAccounts
+                    .filter(acc => !acc.isClosed)
+                    .filter(acc => this.selections.showEmptyAccounts || !!acc.balance || !!acc.checkedBalance);
+
+            if (this.selections.showEmptyAccounts && this.selections.showClosedAccounts) {
+                result.push({ title: "---", currency: "---"});
+                const closed = checkedAccounts.filter(acc => acc.isClosed);
+                for (let clsd of closed) {
+                    result.push(clsd);
+                }
             }
 
             const accRub = result.filter(acc => acc.currency === "RUB").map(a => a.balance).reduce((bal, acc) => bal + acc, 0);
