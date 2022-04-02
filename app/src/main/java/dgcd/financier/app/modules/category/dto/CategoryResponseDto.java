@@ -12,12 +12,13 @@ public record CategoryResponseDto(
 ) {
 
     public static CategoryResponseDto of(Category category) {
-        boolean hasParent = nonNull(category.getParent());
+        var parent = category.getParent();
+        var hasParent = nonNull(parent);
         return new CategoryResponseDto(
                 category.getId(),
                 category.getTitle(),
-                hasParent ? category.getParent().getId() : null,
-                hasParent ? category.getParent().getTitle() : null
+                hasParent ? parent.getId() : null,
+                hasParent ? parent.getTitle() : null
         );
     }
 

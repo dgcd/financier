@@ -12,16 +12,17 @@ import static java.util.Objects.nonNull;
 public record OperationResponseDto(
         Long id,
         LocalDate date,
+
         Long accountId,
         String accountTitle,
         Currency currency,
+
         BigDecimal quantity,
         BigDecimal amount,
         OperationType type,
 
         Long categoryId,
         String categoryTitle,
-
         Long subcategoryId,
         String subcategoryTitle,
 
@@ -30,22 +31,25 @@ public record OperationResponseDto(
 ) {
 
     public static OperationResponseDto of(Operation operation) {
-        var hasCategory = nonNull(operation.getSubcategory());
         var subcat = operation.getSubcategory();
+        var hasSubcat = nonNull(subcat);
+        var account = operation.getAccount();
         return new OperationResponseDto(
                 operation.getId(),
                 operation.getDate(),
-                operation.getAccount().getId(),
-                operation.getAccount().getTitle(),
-                operation.getAccount().getCurrency(),
+
+                account.getId(),
+                account.getTitle(),
+                account.getCurrency(),
+
                 operation.getQuantity(),
                 operation.getAmount(),
                 operation.getType(),
 
-                hasCategory ? subcat.getParent().getId() : null,
-                hasCategory ? subcat.getParent().getTitle() : null,
-                hasCategory ? subcat.getId() : null,
-                hasCategory ? subcat.getTitle() : null,
+                hasSubcat ? subcat.getParent().getId() : null,
+                hasSubcat ? subcat.getParent().getTitle() : null,
+                hasSubcat ? subcat.getId() : null,
+                hasSubcat ? subcat.getTitle() : null,
 
                 operation.getCounterparty(),
                 operation.getComment()

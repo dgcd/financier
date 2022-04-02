@@ -17,11 +17,11 @@ public class CategoriesDaoService {
         return categoriesRepository.findAll();
     }
 
-    public Optional<Category> findById(Long categoryId) {
+    Optional<Category> findById(Long categoryId) {
         return categoriesRepository.findById(categoryId);
     }
 
-    public Category save(Category category) {
+    Category save(Category category) {
         return categoriesRepository.save(category);
     }
 
@@ -30,7 +30,7 @@ public class CategoriesDaoService {
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId));
     }
 
-    public List<Category> findAllByTitle(String title) {
+    List<Category> findAllByTitle(String title) {
         return categoriesRepository.findByTitle(title);
     }
 

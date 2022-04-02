@@ -1,6 +1,6 @@
-package dgcd.financier.app.commons.mvc.config;
+package dgcd.financier.app.infrastructure.web;
 
-public final class MvcConstants {
+public final class WebConstants {
 
     public static final String API_PATH = "/api";
 

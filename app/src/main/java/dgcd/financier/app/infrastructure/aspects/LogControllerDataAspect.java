@@ -1,7 +1,6 @@
-package dgcd.financier.app.commons.mvc.aspects;
+package dgcd.financier.app.infrastructure.aspects;
 
-import dgcd.financier.app.commons.mvc.dto.GeneralResponseDto;
-import dgcd.financier.app.commons.mvc.dto.ResponseCode;
+import dgcd.financier.app.infrastructure.dto.CommonResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -10,6 +9,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+
+import static java.util.Objects.nonNull;
 
 @Slf4j
 @Aspect
@@ -22,26 +23,26 @@ public class LogControllerDataAspect {
         var annotation = signature.getMethod().getAnnotation(LogControllerData.class);
         var methodName = signature.getName();
 
-        logBefore(annotation, methodName, joinPoint);
+        logBefore(annotation.logParams(), methodName, joinPoint.getArgs());
 
         var startMillis = System.currentTimeMillis();
         var result = joinPoint.proceed();
         var millis = System.currentTimeMillis() - startMillis;
 
-        logAfter(annotation, methodName, result, millis);
+        logAfter(annotation.logResult(), methodName, result, millis);
 
         return result;
     }
 
 
     private void logBefore(
-            LogControllerData annotation,
+            boolean logParams,
             String methodName,
-            ProceedingJoinPoint joinPoint
+            Object[] args
     ) {
-        if (annotation.logParams()) {
-            var args = Arrays.toString(joinPoint.getArgs());
-            log.info(">>> Method {} is called with params: {}", methodName, args);
+        if (logParams) {
+            var argsString = Arrays.toString(args);
+            log.info(">>> Method {} is called with params: {}", methodName, argsString);
         } else {
             log.info(">>> Method {} is called ", methodName);
         }
@@ -49,12 +50,12 @@ public class LogControllerDataAspect {
 
 
     private void logAfter(
-            LogControllerData annotation,
+            boolean logResult,
             String methodName,
             Object result,
             long millis
     ) {
-        if (annotation.logResult() || (result instanceof GeneralResponseDto dto && !ResponseCode.OK.equals(dto.code()))) {
+        if (logResult || (result instanceof CommonResponseDto dto && nonNull(dto.errorMessage()))) {
             log.info("<<< Method {} finished in {} ms with result: {}", methodName, millis, result);
         } else {
             log.info("<<< Method {} finished in {} ms", methodName, millis);

@@ -1,4 +1,4 @@
-package dgcd.financier.app.modules.init;
+package dgcd.financier.app.modules.initData;
 
 import dgcd.financier.app.modules.account.dto.AccountResponseDto;
 import dgcd.financier.app.modules.category.dto.CategoryResponseDto;
@@ -8,9 +8,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-public record InitResponseDto(
+public record InitDataResponseDto(
         Map<String, BigDecimal> rates,
         List<AccountResponseDto> accounts,
         List<CategoryResponseDto> categories,
-        List<OperationResponseDto> operations
+        List<OperationResponseDto> operations,
+        String appVersion,
+        String appBuildtime
 ) {}

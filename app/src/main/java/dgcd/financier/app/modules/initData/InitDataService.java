@@ -1,4 +1,4 @@
-package dgcd.financier.app.modules.init;
+package dgcd.financier.app.modules.initData;
 
 import dgcd.financier.app.modules.account.AccountsDaoService;
 import dgcd.financier.app.modules.account.dto.AccountResponseDto;
@@ -15,23 +15,26 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class InitService {
+public class InitDataService {
 
     private final AccountsDaoService accountsDaoService;
     private final CategoriesDaoService categoriesDaoService;
     private final OperationsDaoService operationsDaoService;
     private final ValuteService valuteService;
+    private final DeploymentProperties deploymentProperties;
 
     @Transactional(readOnly = true)
-    public InitResponseDto getInitData() {
-        return new InitResponseDto(
+    public InitDataResponseDto getInitData() {
+        return new InitDataResponseDto(
                 Map.of(
                         "USD", valuteService.getRateUsd(),
                         "EUR", valuteService.getRateEur()
                 ),
                 accountsDaoService.findAll().stream().map(AccountResponseDto::of).toList(),
                 categoriesDaoService.findAll().stream().map(CategoryResponseDto::of).toList(),
-                operationsDaoService.findAll().stream().map(OperationResponseDto::of).toList()
+                operationsDaoService.findAll().stream().map(OperationResponseDto::of).toList(),
+                deploymentProperties.version(),
+                deploymentProperties.buildtime()
         );
     }
 

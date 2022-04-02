@@ -1,6 +1,6 @@
 package dgcd.financier.app.modules.account;
 
-import dgcd.financier.app.commons.mvc.dto.GeneralIdDto;
+import dgcd.financier.app.infrastructure.dto.CommonIdDto;
 import dgcd.financier.app.modules.account.dto.AccountCreateRequestDto;
 import dgcd.financier.app.modules.account.dto.AccountResponseDto;
 import dgcd.financier.app.modules.account.exception.AccountClosingException;
@@ -24,13 +24,15 @@ public class AccountsService {
             throw new AccountWithTitleAlreadyExistsException(dto.title());
         }
 
-        var savedAccount = accountsDaoService.save(dto.makeAccount());
+        var account = dto.makeAccount();
+
+        var savedAccount = accountsDaoService.save(account);
         return AccountResponseDto.of(savedAccount);
     }
 
 
     @Transactional
-    public AccountResponseDto closeAccount(GeneralIdDto dto) {
+    public AccountResponseDto closeAccount(CommonIdDto dto) {
         var account = accountsDaoService.findByIdOrElseThrow(dto.id());
         if (account.getIsClosed()) {
             throw new AccountClosingException("Account with id '" + dto.id() + "' is already closed");

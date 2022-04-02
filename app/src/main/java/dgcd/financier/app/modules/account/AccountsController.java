@@ -1,8 +1,8 @@
 package dgcd.financier.app.modules.account;
 
-import dgcd.financier.app.commons.mvc.aspects.LogControllerData;
-import dgcd.financier.app.commons.mvc.dto.GeneralIdDto;
-import dgcd.financier.app.commons.mvc.dto.GeneralResponseDto;
+import dgcd.financier.app.infrastructure.aspects.LogControllerData;
+import dgcd.financier.app.infrastructure.dto.CommonIdDto;
+import dgcd.financier.app.infrastructure.dto.CommonResponseDto;
 import dgcd.financier.app.modules.account.dto.AccountCreateRequestDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static dgcd.financier.app.commons.mvc.config.MvcConstants.ACCOUNTS_CLOSE_PATH;
-import static dgcd.financier.app.commons.mvc.config.MvcConstants.ACCOUNTS_CREATE_PATH;
+import static dgcd.financier.app.infrastructure.web.WebConstants.ACCOUNTS_CLOSE_PATH;
+import static dgcd.financier.app.infrastructure.web.WebConstants.ACCOUNTS_CREATE_PATH;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -25,19 +25,24 @@ public class AccountsController {
 
     private final AccountsService accountsService;
 
+
     @LogControllerData
     @PostMapping(ACCOUNTS_CREATE_PATH)
-    public GeneralResponseDto createAccount(@Valid @RequestBody AccountCreateRequestDto dto) {
+    public CommonResponseDto createAccount(
+            @Valid @RequestBody AccountCreateRequestDto dto
+    ) {
         var payload = accountsService.createAccount(dto);
-        return new GeneralResponseDto(payload);
+        return CommonResponseDto.ok(payload);
     }
 
 
     @LogControllerData
     @PostMapping(ACCOUNTS_CLOSE_PATH)
-    public GeneralResponseDto closeAccount(@Valid @RequestBody GeneralIdDto dto) {
+    public CommonResponseDto closeAccount(
+            @Valid @RequestBody CommonIdDto dto
+    ) {
         var payload = accountsService.closeAccount(dto);
-        return new GeneralResponseDto(payload);
+        return CommonResponseDto.ok(payload);
     }
 
 }

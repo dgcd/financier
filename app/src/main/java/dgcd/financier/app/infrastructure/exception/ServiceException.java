@@ -1,4 +1,4 @@
-package dgcd.financier.app.commons.service.exception;
+package dgcd.financier.app.infrastructure.exception;
 
 public class ServiceException extends RuntimeException {
 

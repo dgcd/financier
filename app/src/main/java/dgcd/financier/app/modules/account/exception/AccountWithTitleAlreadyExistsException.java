@@ -1,6 +1,6 @@
 package dgcd.financier.app.modules.account.exception;
 
-import dgcd.financier.app.commons.service.exception.ServiceException;
+import dgcd.financier.app.infrastructure.exception.ServiceException;
 
 public class AccountWithTitleAlreadyExistsException extends ServiceException {
 

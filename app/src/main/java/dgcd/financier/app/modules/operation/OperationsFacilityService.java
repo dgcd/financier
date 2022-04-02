@@ -66,10 +66,10 @@ public class OperationsFacilityService {
         var accountFrom = accountsDaoService.findByIdOrElseThrow(dto.accountId());
         var accountTo = accountsDaoService.findByIdOrElseThrow(dto.accountToId());
 
-        Category subcategory = getSubcategoryAndCheckParent(dto);
+        var subcategory = getSubcategoryAndCheckParent(dto);
 
         BigDecimal amountTo;
-        boolean equalCurrencies = accountFrom.getCurrency().equals(accountTo.getCurrency());
+        var equalCurrencies = accountFrom.getCurrency().equals(accountTo.getCurrency());
         if (TRANS.equals(dto.operationType())) {
             if (!equalCurrencies) {
                 throw new OperationCreateException("Account from and account to must have the same currency");
@@ -113,8 +113,14 @@ public class OperationsFacilityService {
         operationTo = operationsDaoService.save(operationTo);
 
         return new OperationsCreateResponseDto(
-                List.of(OperationResponseDto.of(operationFrom), OperationResponseDto.of(operationTo)),
-                List.of(AccountResponseDto.of(accountFrom), AccountResponseDto.of(accountTo))
+                List.of(
+                        OperationResponseDto.of(operationFrom),
+                        OperationResponseDto.of(operationTo)
+                ),
+                List.of(
+                        AccountResponseDto.of(accountFrom),
+                        AccountResponseDto.of(accountTo)
+                )
         );
     }
 

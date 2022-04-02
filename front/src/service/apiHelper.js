@@ -27,9 +27,9 @@ export default {
                 successCallback(body.payload);
             }
         } else {
-            console.warn(`${title} request failed: `, body.message);
+            console.warn(`${title} request failed: `, body.errorMessage);
             if (failCallback) {
-                failCallback(body.message);
+                failCallback(body.errorMessage);
             }
         }
     },

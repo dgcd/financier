@@ -1,4 +1,4 @@
-package dgcd.financier.app.commons.mvc.aspects;
+package dgcd.financier.app.infrastructure.aspects;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

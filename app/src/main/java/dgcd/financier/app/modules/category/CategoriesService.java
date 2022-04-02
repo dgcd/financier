@@ -23,36 +23,42 @@ public class CategoriesService {
 
     @Transactional
     public CategoryResponseDto createCategory(CategoryCreateRequestDto dto) {
-        checkDuplicatedTitles(dto);
+        checkDuplicatedTitles(dto.title(), dto.parentId());
         var newCategory = dto.makeCategory();
-        setParentIfPresent(dto, newCategory);
+        setParentIfPresent(newCategory, dto.parentId());
         var savedCategory = categoriesDaoService.save(newCategory);
         return CategoryResponseDto.of(savedCategory);
     }
 
 
-    private void checkDuplicatedTitles(CategoryCreateRequestDto dto) {
-        var categoriesWithSameTitle = categoriesDaoService.findAllByTitle(dto.title());
+    private void checkDuplicatedTitles(
+            String title,
+            Long parentId
+    ) {
+        var categoriesWithSameTitle = categoriesDaoService.findAllByTitle(title);
         for (var cat : categoriesWithSameTitle) {
             if (isNull(cat.getParent())) {
-                if (isNull(dto.parentId())) {
-                    throw new DuplicatedCategoryTitleException(dto.title(), dto.parentId());
+                if (isNull(parentId)) {
+                    throw new DuplicatedCategoryTitleException(title, parentId);
                 }
-            } else if (Objects.equals(cat.getParent().getId(), dto.parentId())) {
-                throw new DuplicatedCategoryTitleException(dto.title(), dto.parentId());
+            } else if (Objects.equals(cat.getParent().getId(), parentId)) {
+                throw new DuplicatedCategoryTitleException(title, parentId);
             }
         }
     }
 
 
-    private void setParentIfPresent(CategoryCreateRequestDto dto, Category newCategory) {
-        if (nonNull(dto.parentId())) {
-            var parentOpt = categoriesDaoService.findById(dto.parentId());
+    private void setParentIfPresent(
+            Category newCategory,
+            Long parentId
+    ) {
+        if (nonNull(parentId)) {
+            var parentOpt = categoriesDaoService.findById(parentId);
             if (parentOpt.isEmpty()) {
-                throw new ParentCategoryNotFoundException(dto.parentId());
+                throw new ParentCategoryNotFoundException(parentId);
             }
             if (nonNull(parentOpt.get().getParent())) {
-                throw new CategoryCanNotBeParentException(dto.parentId());
+                throw new CategoryCanNotBeParentException(parentId);
             }
             newCategory.setParent(parentOpt.get());
         }

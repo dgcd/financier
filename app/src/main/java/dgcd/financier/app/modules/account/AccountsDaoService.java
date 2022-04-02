@@ -18,11 +18,11 @@ public class AccountsDaoService {
         return accountsRepository.findAll();
     }
 
-    public Account save(Account account) {
+    Account save(Account account) {
         return accountsRepository.save(account);
     }
 
-    public Optional<Account> findByTitle(String title) {
+    Optional<Account> findByTitle(String title) {
         return accountsRepository.findByTitle(title);
     }
 
