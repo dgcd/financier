@@ -25,7 +25,7 @@
             <td>{{ o.type | shortenExpenseType }}</td>
             <td align="right">{{ (o.amount / o.quantity) | formatMoneyToString }}</td>
             <td>{{ o.quantity }}</td>
-            <td align="right">{{ o.amount | formatMoneyToString }}</td>
+            <td align="right" style="font-weight: bold">{{ o.amount | formatMoneyToString }}</td>
 
             <td>{{ o.categoryTitle }}</td>
             <td>{{ o.subcategoryTitle }}</td>

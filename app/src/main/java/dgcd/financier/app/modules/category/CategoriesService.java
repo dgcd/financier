@@ -16,7 +16,7 @@ import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
-public class CategoriesService {
+class CategoriesService {
 
     private final CategoriesDaoService categoriesDaoService;
 

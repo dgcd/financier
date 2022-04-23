@@ -1,12 +1,17 @@
 <template>
     <div>
         <table class="tbl">
+            <!-- <tr>
+                <th :colspan="4 + (showChecked ? 1 : 0)" scope="colgroup"></th>
+                <th :colspan="getHistoryColumns.length" scope="colgroup">History</th>
+            </tr> -->
             <tr>
                 <th>Id</th>
                 <th>Title</th>
                 <th>Currency</th>
                 <th>Balance</th>
                 <th v-if="showChecked">Check !!!</th>
+                <th v-for="c in getHistoryColumns" :key="c">{{c}}</th>
             </tr>
             <tr v-for="a in sortedAccounts" :key="a.id">
                 <td>{{ a.id }}</td>
@@ -15,8 +20,9 @@
                     <button class="btn btn-link btn-sm py-0" v-if="a.id && !a.balance && !a.isClosed" @click="closeAccountHandler(a.id)">X</button>
                 </td>
                 <td>{{ a.currency }}</td>
-                <td align="right">{{ a.balance | formatMoneyToString }}</td>
+                <td align="right" style="font-weight: bold">{{ a.balance | formatMoneyToString }}</td>
                 <td align="right" v-if="showChecked">{{ a.checkedBalance | formatMoneyToString }}{{ a.checkFailed ? " !" : ""}}</td>
+                <td align="right" v-for="c in getHistoryColumns" :key="c">{{getHistoryValue(a, c) | formatMoneyToString }}</td>
             </tr>
         </table>
     </div>
@@ -102,6 +108,39 @@ export default {
                 map[op.accountId] += op.amount;
             }
             return map;
+        },
+
+        getHistoryColumns() {
+            const colsSet = new Set();
+            for (let op of this.operations) {
+                const col = this.dateToHistoryColumn(op.date);
+                colsSet.add(col);
+            }
+            const colsArray = [...colsSet].sort((s1,s2) => s2.localeCompare(s1));
+            colsArray.push('BASE');
+            return colsArray;
+        },
+    },
+
+    methods: {
+        dateToHistoryColumn(date) {
+            return date.substring(5,7) + "/" + date.substring(2,4);
+        },
+
+        getHistoryValue(account, column) {
+            if (!account.id) {
+                return "";
+            }
+            return this.operations
+                .filter(op => op.accountId === account.id)
+                .filter(op => {
+                    if (column === 'BASE') {
+                        return column === op.type;
+                    }
+                    return column.localeCompare(this.dateToHistoryColumn(op.date)) >= 0;
+                })
+                .map(op => op.amount)
+                .reduce((amount, accumulator) => amount + accumulator, 0);
         },
     },
 }

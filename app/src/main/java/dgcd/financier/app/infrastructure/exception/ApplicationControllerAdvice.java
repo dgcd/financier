@@ -20,11 +20,21 @@ public class ApplicationControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<CommonResponseDto> validationException(MethodArgumentNotValidException exception) {
-        var error = exception.getBindingResult().getAllErrors().iterator().next();
+        var firstError = exception.getBindingResult().getAllErrors().iterator().next();
         return makeResponse(
                 exception,
-                error.getDefaultMessage(),
+                firstError.getDefaultMessage(),
                 BAD_REQUEST
+        );
+    }
+
+
+    @ExceptionHandler(ServiceException.class)
+    protected ResponseEntity<CommonResponseDto> serviceException(ServiceException exception) {
+        return makeResponse(
+                exception,
+                exception.getMessage(),
+                NOT_ACCEPTABLE
         );
     }
 
@@ -34,7 +44,7 @@ public class ApplicationControllerAdvice {
         return makeResponse(
                 exception,
                 exception.getMessage(),
-                NOT_ACCEPTABLE
+                INTERNAL_SERVER_ERROR
         );
     }
 

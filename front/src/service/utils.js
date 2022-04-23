@@ -4,7 +4,7 @@ const utils = {
     },
 
     formatMoneyToString(amount) {
-        if (!amount)
+        if (!amount || Math.abs(amount) < 0.0000001)
             return '-';
         return amount
             .toLocaleString('ru-RU', {style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2})

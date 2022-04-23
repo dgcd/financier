@@ -22,7 +22,7 @@ import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
-public class OperationsFacilityService {
+class OperationsFacilityService {
 
     private final OperationsDaoService operationsDaoService;
     private final AccountsDaoService accountsDaoService;

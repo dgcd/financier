@@ -19,7 +19,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
         produces = APPLICATION_JSON_VALUE
 )
 @RequiredArgsConstructor
-public class CategoriesController {
+class CategoriesController {
 
     private final CategoriesService categoriesService;
 

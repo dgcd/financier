@@ -13,7 +13,7 @@ import static java.math.BigDecimal.ZERO;
 
 @Service
 @RequiredArgsConstructor
-public class AccountsService {
+class AccountsService {
 
     private final AccountsDaoService accountsDaoService;
 

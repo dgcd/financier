@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class InitDataService {
+class InitDataService {
 
     private final AccountsDaoService accountsDaoService;
     private final CategoriesDaoService categoriesDaoService;

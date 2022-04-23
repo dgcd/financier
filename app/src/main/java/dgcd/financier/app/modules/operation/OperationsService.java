@@ -15,7 +15,7 @@ import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
-public class OperationsService {
+class OperationsService {
 
     private final OperationsFacilityService operationsFacilityService;
 
