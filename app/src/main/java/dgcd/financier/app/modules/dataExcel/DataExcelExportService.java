@@ -16,13 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
-public class DataExcelService {
+class DataExcelExportService {
 
     private final static String SHEET_ACCOUNTS = "Accounts";
     private final static String SHEET_CATEGORIES = "Categories";
@@ -36,24 +37,31 @@ public class DataExcelService {
 
     @Transactional(readOnly = true)
     public void exportAllDataToExcel(ServletOutputStream outputStream) throws IOException {
-        try (outputStream; var workbook = new XSSFWorkbook()) {
-            writeAccounts(workbook);
-            writeCategories(workbook);
-            writeOperations(workbook);
+        var accounts = getAndSortAccounts();
+        var categories = getAndSortCategories();
+        var operations = getAndSortOperations();
+
+        try (var workbook = new XSSFWorkbook()) {
+            writeAccounts(workbook, accounts);
+            writeCategories(workbook, categories);
+            writeOperations(workbook, operations);
             workbook.write(outputStream);
         }
     }
 
     /////////////////////////////////////////////////////////////////////////////
 
-    private void writeAccounts(XSSFWorkbook workbook) {
-        var accounts = accountsDaoService.findAll()
+    private List<Account> getAndSortAccounts() {
+        return accountsDaoService.findAll()
                 .stream()
                 .sorted((a1, a2) -> a1.getCurrency().equals(a2.getCurrency()) ?
                         a1.getTitle().compareTo(a2.getTitle()) :
                         a1.getCurrency().compareTo(a2.getCurrency())
                 )
                 .toList();
+    }
+
+    private void writeAccounts(XSSFWorkbook workbook, List<Account> accounts) {
         var sheet = workbook.createSheet(SHEET_ACCOUNTS);
         var rowInx = 0;
         for (var account : accounts) {
@@ -72,8 +80,8 @@ public class DataExcelService {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    private void writeCategories(XSSFWorkbook workbook) {
-        var categories = categoriesDaoService.findAll()
+    private List<Category> getAndSortCategories() {
+        return categoriesDaoService.findAll()
                 .stream()
                 .sorted((c1, c2) -> {
                     if (isNull(c1.getParent()) && nonNull(c2.getParent())) {
@@ -94,6 +102,9 @@ public class DataExcelService {
                     return c1.getParent().getTitle().compareTo(c2.getParent().getTitle());
                 })
                 .toList();
+    }
+
+    private void writeCategories(XSSFWorkbook workbook, List<Category> categories) {
         var sheet = workbook.createSheet(SHEET_CATEGORIES);
         var rowInx = 0;
         for (var category : categories) {
@@ -111,14 +122,17 @@ public class DataExcelService {
 
     /////////////////////////////////////////////////////////////////////////////
 
-    private void writeOperations(XSSFWorkbook workbook) {
-        var operations = operationsDaoService.findAll()
+    private List<Operation> getAndSortOperations() {
+        return operationsDaoService.findAll()
                 .stream()
                 .sorted((o1, o2) -> o1.getDate().equals(o2.getDate()) ?
                         o1.getId().compareTo(o2.getId()) :
                         o1.getDate().compareTo(o2.getDate())
                 )
                 .toList();
+    }
+
+    private void writeOperations(XSSFWorkbook workbook, List<Operation> operations) {
         var sheet = workbook.createSheet(SHEET_OPERATIONS);
         var rowInx = 0;
         for (var operation : operations) {

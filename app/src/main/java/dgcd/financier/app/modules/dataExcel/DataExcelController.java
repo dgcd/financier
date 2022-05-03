@@ -17,20 +17,20 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(consumes = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class DataExcelController {
+class DataExcelController {
 
-    private final DataExcelService dataExcelService;
+    private final DataExcelExportService dataExcelExportService;
 
     @SneakyThrows
     @LogControllerData(logParams = false)
     @PostMapping(DATA_EXCEL_EXPORT_PATH)
-    public void createCategory(HttpServletResponse response) {
-        try (var outputStream = response.getOutputStream()) {
-            dataExcelService.exportAllDataToExcel(outputStream);
-        }
+    public void exportAllData(HttpServletResponse response) {
         response.setContentType(X_APPLICATION_XLSX_VALUE);
         var desposition = String.format("attachment;filename=financier_data_%s.xlsx", LocalDate.now());
         response.setHeader("Content-Disposition", desposition);
+        try (var outputStream = response.getOutputStream()) {
+            dataExcelExportService.exportAllDataToExcel(outputStream);
+        }
     }
 
 }
