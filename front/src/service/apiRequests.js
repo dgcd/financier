@@ -51,4 +51,14 @@ export default {
             fail,
         );
     },
+
+    exportAllData(success, fail) {
+        apiHelper.performDownloadRequest(
+            apiUrls.dataExportUrl,
+            null,
+            'Export all data',
+            success,
+            fail,
+        );
+    },
 }
