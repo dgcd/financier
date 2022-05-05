@@ -6,9 +6,7 @@ export default {
         successCallback,    // accepts payload
         failCallback,       // accepts error message
     ) {
-        if (requestBody) {
-            console.log(title + ' request with body: ', requestBody);
-        }
+        logBefore(title, requestBody);
 
         const response = await fetch(url, {
             method: 'POST',
@@ -33,4 +31,52 @@ export default {
             }
         }
     },
+
+
+    async performDownloadRequest(
+        url,
+        requestBody,
+        title,
+        successCallback,    // accepts nothing
+        failCallback,       // accepts error message
+    ) {
+        logBefore(title, requestBody);
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+            },
+            body: requestBody ? JSON.stringify(requestBody) : null,
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const filename = response.headers.get("content-disposition").split('filename=')[1];
+            console.log(`${title} request succeeded:`, filename);
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            if (successCallback) {
+                successCallback();
+            }
+        } else {
+            const body = await response.json();
+            console.warn(`${title} request failed: `, body.errorMessage);
+            if (failCallback) {
+                failCallback(body.errorMessage);
+            }
+        }
+    },
+}
+
+function logBefore(title, requestBody) {
+    if (requestBody) {
+        console.log(title + ' request with body:', requestBody);
+    } else {
+        console.log(title + ' request');
+    }
 }

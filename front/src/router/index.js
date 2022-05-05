@@ -7,6 +7,7 @@ import AccountsView from '../views/Accounts/AccountsView.vue';
 import AccountCreateView from '../views/AccountCreate/AccountCreateView.vue';
 import CategoriesView from '../views/Categories/CategoriesView.vue';
 import CategoryCreateView from '../views/CategoryCreate/CategoryCreateView.vue';
+import MiscView from '../views/Misc/MiscView.vue';
 
 Vue.use(VueRouter);
 
@@ -66,6 +67,14 @@ const routes = [
         component: CategoryCreateView,
         meta: {
             title: 'Create category',
+        },
+    },
+    {
+        path: '/misc',
+        name: 'MiscView',
+        component: MiscView,
+        meta: {
+            title: 'Miscellaneous',
         },
     },
 ];
