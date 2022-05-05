@@ -43,11 +43,15 @@ subprojects {
         useJUnitPlatform()
     }
 
+    // enable preview features
+    final PREVIEW_OPTION = '--enable-preview'
     tasks.withType(JavaCompile).each {
-        it.options.compilerArgs.add('--enable-preview')
+        it.options.compilerArgs.add(PREVIEW_OPTION)
     }
-
-    bootRun {
-        jvmArgs(['--enable-preview'])
+    tasks.withType(JavaExec).each {
+        it.jvmArgs([PREVIEW_OPTION])
+    }
+    tasks.withType(Test).each {
+        it.jvmArgs([PREVIEW_OPTION])
     }
 }
