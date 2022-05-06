@@ -13,5 +13,5 @@ record InitDataResponseDto(
         List<AccountResponseDto> accounts,
         List<CategoryResponseDto> categories,
         List<OperationResponseDto> operations,
-        Map<String, String> teshInfo
+        Map<String, String> techInfo
 ) {}

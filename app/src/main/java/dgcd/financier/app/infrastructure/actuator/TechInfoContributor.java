@@ -29,6 +29,7 @@ public class TechInfoContributor implements InfoContributor {
     private final String javaVersion;
     private final String javaVmInfo;
 
+
     @SneakyThrows
     public TechInfoContributor(
             @Value("${spring.application.name}") String appName,
@@ -56,6 +57,7 @@ public class TechInfoContributor implements InfoContributor {
     public void contribute(Info.Builder builder) {
         builder.withDetail("techInfo", getTechInfo());
     }
+
 
     public Map<String, String> getTechInfo() {
         return Map.of(
