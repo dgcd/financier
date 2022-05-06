@@ -1,5 +1,6 @@
 package dgcd.financier.app.modules.initData;
 
+import dgcd.financier.app.infrastructure.actuator.TechInfoContributor;
 import dgcd.financier.app.modules.account.AccountsDaoService;
 import dgcd.financier.app.modules.account.dto.AccountResponseDto;
 import dgcd.financier.app.modules.category.CategoriesDaoService;
@@ -21,7 +22,7 @@ class InitDataService {
     private final CategoriesDaoService categoriesDaoService;
     private final OperationsDaoService operationsDaoService;
     private final ValuteService valuteService;
-    private final DeploymentProperties deploymentProperties;
+    private final TechInfoContributor techInfoContributor;
 
     @Transactional(readOnly = true)
     public InitDataResponseDto getInitData() {
@@ -33,8 +34,7 @@ class InitDataService {
                 accountsDaoService.findAll().stream().map(AccountResponseDto::of).toList(),
                 categoriesDaoService.findAll().stream().map(CategoryResponseDto::of).toList(),
                 operationsDaoService.findAll().stream().map(OperationResponseDto::of).toList(),
-                deploymentProperties.version(),
-                deploymentProperties.buildtime()
+                techInfoContributor.getTechInfo()
         );
     }
 

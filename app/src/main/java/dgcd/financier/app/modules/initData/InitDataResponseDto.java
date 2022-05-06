@@ -13,6 +13,5 @@ record InitDataResponseDto(
         List<AccountResponseDto> accounts,
         List<CategoryResponseDto> categories,
         List<OperationResponseDto> operations,
-        String appVersion,
-        String appBuildtime
+        Map<String, String> teshInfo
 ) {}
