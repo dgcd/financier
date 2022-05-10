@@ -1,4 +1,4 @@
-package dgcd.financier.app.modules.initData;
+package dgcd.financier.app.infrastructure.actuator;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
