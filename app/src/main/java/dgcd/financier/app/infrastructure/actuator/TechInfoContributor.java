@@ -12,6 +12,7 @@ import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
@@ -60,17 +61,17 @@ public class TechInfoContributor implements InfoContributor {
 
 
     public Map<String, String> getTechInfo() {
-        return Map.of(
-                "appName", appName,
-                "appVersion", appVersion,
-                "appBuildtime", appBuildtime,
-                "springProfiles", springProfiles,
-                "springBootVersion", springBootVersion,
-                "hostname", hostname,
-                "javaVersion", javaVersion,
-                "javaVmInfo", javaVmInfo,
-                "currentTime", LocalDateTime.now().format(FORMATTER)
-        );
+        var map = new LinkedHashMap<String, String>();
+        map.put("appName", appName);
+        map.put("appVersion", appVersion);
+        map.put("appBuildtime", appBuildtime);
+        map.put("springProfiles", springProfiles);
+        map.put("springBootVersion", springBootVersion);
+        map.put("hostname", hostname);
+        map.put("javaVersion", javaVersion);
+        map.put("javaVmInfo", javaVmInfo);
+        map.put("currentTime", LocalDateTime.now().format(FORMATTER));
+        return map;
     }
 
 }
