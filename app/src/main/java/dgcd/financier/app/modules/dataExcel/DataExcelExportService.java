@@ -18,17 +18,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static dgcd.financier.app.modules.dataExcel.DataExcelConstants.SHEET_ACCOUNTS;
+import static dgcd.financier.app.modules.dataExcel.DataExcelConstants.SHEET_CATEGORIES;
+import static dgcd.financier.app.modules.dataExcel.DataExcelConstants.SHEET_OPERATIONS;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
 class DataExcelExportService {
-
-    private final static String SHEET_ACCOUNTS = "Accounts";
-    private final static String SHEET_CATEGORIES = "Categories";
-    private final static String SHEET_OPERATIONS = "Operations";
-
 
     private final AccountsDaoService accountsDaoService;
     private final CategoriesDaoService categoriesDaoService;

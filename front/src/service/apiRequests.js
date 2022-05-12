@@ -12,6 +12,8 @@ export default {
         );
     },
 
+    // ----------------------------------------------------
+
     createAccount(account, success, fail) {
         apiHelper.performApiRequest(
             apiUrls.accountCreateUrl,
@@ -32,6 +34,8 @@ export default {
         );
     },
 
+    // ----------------------------------------------------
+
     createCategory(category, success, fail) {
         apiHelper.performApiRequest(
             apiUrls.categoryCreateUrl,
@@ -41,6 +45,8 @@ export default {
             fail,
         );
     },
+
+    // ----------------------------------------------------
 
     createOperation(operation, success, fail) {
         apiHelper.performApiRequest(
@@ -52,11 +58,23 @@ export default {
         );
     },
 
+    // ----------------------------------------------------
+
     exportAllData(success, fail) {
         apiHelper.performDownloadRequest(
             apiUrls.dataExportUrl,
             null,
             'Export all data',
+            success,
+            fail,
+        );
+    },
+
+    importAllData(request, success, fail) {
+        apiHelper.performUploadRequest(
+            apiUrls.dataImportUrl,
+            request,
+            'Import all data',
             success,
             fail,
         );

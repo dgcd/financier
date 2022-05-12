@@ -8,17 +8,23 @@
         <p>
             <ExportButton :errorHandler="(msg) => { error = msg }"/>
         </p>
+
+        <p>
+            <ImportButton :errorHandler="(msg) => { error = msg }"/>
+        </p>
     </div>
 </template>
 
 <script>
 import ExportButton from './ExportButton.vue';
+import ImportButton from './ImportButton.vue';
 
 export default {
     name: 'MiscView',
 
     components: {
         ExportButton,
+        ImportButton,
     },
 
     data() {

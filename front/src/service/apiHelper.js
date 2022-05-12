@@ -71,7 +71,46 @@ export default {
             }
         }
     },
+
+
+    async performUploadRequest(
+        url,
+        requestBody,
+        title,
+        successCallback,    // accepts payload
+        failCallback,       // accepts error message
+    ) {
+        logBefore(title, requestBody);
+
+        const reqBody = new FormData();
+        for (let name in requestBody) {
+            reqBody.append(name, requestBody[name]);
+        }
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json;charset=UTF-8',
+            },
+            body: reqBody,
+        });
+
+        const body = await response.json();
+
+        if (response.ok) {
+            console.log(`${title} request succeeded: `, body.payload);
+            if (successCallback) {
+                successCallback(body.payload);
+            }
+        } else {
+            console.warn(`${title} request failed: `, body.errorMessage);
+            if (failCallback) {
+                failCallback(body.errorMessage);
+            }
+        }
+    },
 }
+
 
 function logBefore(title, requestBody) {
     if (requestBody) {
