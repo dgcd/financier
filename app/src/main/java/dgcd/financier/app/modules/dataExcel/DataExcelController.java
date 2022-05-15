@@ -22,8 +22,7 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RequiredArgsConstructor
 class DataExcelController {
 
-    private final DataExcelExportService dataExcelExportService;
-    private final DataExcelImportService dataExcelImportService;
+    private final DataExcelService dataExcelService;
 
 
     @SneakyThrows
@@ -36,7 +35,7 @@ class DataExcelController {
                 String.format("attachment;filename=financier_data_%s.xlsx", LocalDate.now())
         );
         try (var outputStream = response.getOutputStream()) {
-            dataExcelExportService.exportAllDataToExcel(outputStream);
+            dataExcelService.exportAllDataToExcel(outputStream);
         }
     }
 
@@ -44,7 +43,7 @@ class DataExcelController {
     @LogControllerData
     @PostMapping(value = DATA_EXCEL_IMPORT_PATH, consumes = MULTIPART_FORM_DATA_VALUE)
     public CommonResponseDto importAllData(@Valid ImportDataRequestDto dto) {
-        var payload = dataExcelImportService.importAllDataFromExcel(dto);
+        var payload = dataExcelService.importAllDataFromExcel(dto);
         return CommonResponseDto.ok(payload);
     }
 

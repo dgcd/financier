@@ -31,4 +31,8 @@ public class AccountsDaoService {
                 .orElseThrow(() -> new AccountNotFoundException(accountId));
     }
 
+    public List<Account> saveAll(List<Account> accounts) {
+        return accountsRepository.saveAll(accounts);
+    }
+
 }
