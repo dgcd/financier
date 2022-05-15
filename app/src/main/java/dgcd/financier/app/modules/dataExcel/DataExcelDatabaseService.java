@@ -11,8 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
@@ -89,15 +90,17 @@ class DataExcelDatabaseService {
 
         var savedAccounts = saveAccounts(parsedData.accounts());
         var savedCategories = saveCategories(parsedData.categories());
+        var savedOperations = saveOperations(parsedData.operations(), savedAccounts, savedCategories);
 
         // todo: delete
         savedAccounts.forEach(System.out::println);
         savedCategories.forEach(System.out::println);
+        savedOperations.forEach(System.out::println);
 
         return new AllData(
                 savedAccounts,
                 savedCategories,
-                List.of()
+                savedOperations
         );
     }
 
@@ -143,7 +146,8 @@ class DataExcelDatabaseService {
                 ))
                 .toList();
         var savedParentCategories = categoriesDaoService.saveAll(parentCategories);
-        var parentsMap = savedParentCategories.stream().collect(Collectors.toMap(Category::getTitle, c -> c));
+        var parentsMap = savedParentCategories.stream()
+                .collect(Collectors.toMap(Category::getTitle, c -> c));
 
         var subcategories = parsedCategories.stream()
                 .filter(c -> nonNull(c.parentTitle()))
@@ -155,9 +159,48 @@ class DataExcelDatabaseService {
                 .toList();
         var savedSubcategories = categoriesDaoService.saveAll(subcategories);
 
-        var allCategories = new ArrayList<>(savedParentCategories);
+        var allCategories = new LinkedList<>(savedParentCategories);
         allCategories.addAll(savedSubcategories);
         return allCategories;
+    }
+
+
+    private List<Operation> saveOperations(
+            List<ParsedData.ParsedOperation> parsedOperations,
+            List<Account> savedAccounts,
+            List<Category> savedCategories
+    ) {
+        var accountsMap = savedAccounts.stream()
+                .collect(Collectors.toMap(Account::getTitle, account -> account));
+        var subcategories = savedCategories.stream()
+                .filter(c -> nonNull(c.getParent()))
+                .toList();
+
+        var operations = parsedOperations.stream()
+                .map(op -> {
+                    System.out.println(op);
+                    Category subcategory = subcategories.stream()
+                            .filter(sc -> Objects.equals(sc.getTitle(), op.subcategoryTitle()) &&
+                                    Objects.equals(sc.getParent().getTitle(), op.parentCategoryTitle())
+                            )
+                            .findFirst()
+                            .orElse(null);
+                    System.out.println(subcategory);
+                    return new Operation(
+                            null,
+                            op.date(),
+                            accountsMap.get(op.accountTitle()),
+                            op.type(),
+                            op.amount(),
+                            op.quantity(),
+                            subcategory,
+                            op.comment(),
+                            op.counterparty()
+                    );
+                })
+                .toList();
+
+        return operationsDaoService.saveAll(operations);
     }
 
 }

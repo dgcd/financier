@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,12 +97,14 @@ class DataExcelParseService {
             }
             var cellNum = 0;
             var parsedOperation = new ParsedData.ParsedOperation(
-                    readString(row, cellNum++),
+                    readLocalDate(row, cellNum++),
                     readString(row, cellNum++),
                     readBigDecimal(row, cellNum++),
                     readBigDecimal(row, cellNum++),
                     readEnum(row, cellNum++, OperationType.class),
                     readString(row, cellNum++),
+                    readString(row, cellNum),
+                    readString(row, cellNum),
                     readString(row, cellNum)
             );
             operations.add(parsedOperation);
@@ -144,6 +147,23 @@ class DataExcelParseService {
             var stringValue = cell.getStringCellValue();
             return hasText(stringValue) ?
                     stringValue.trim() :
+                    null;
+        } catch (RuntimeException exception) {
+            log.warn("Parsing error: " + exception.getMessage());
+            throw new ImportingException("Parsing error: " + exception.getMessage());
+        }
+    }
+
+
+    private LocalDate readLocalDate(XSSFRow row, int cellNum) {
+        var cell = row.getCell(cellNum);
+        if (isNull(cell) || BLANK.equals(cell.getCellType())) {
+            return null;
+        }
+        try {
+            var stringValue = cell.getStringCellValue();
+            return hasText(stringValue) ?
+                    LocalDate.parse(stringValue.trim()) :
                     null;
         } catch (RuntimeException exception) {
             log.warn("Parsing error: " + exception.getMessage());

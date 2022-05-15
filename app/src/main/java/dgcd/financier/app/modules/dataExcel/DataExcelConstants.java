@@ -8,6 +8,6 @@ class DataExcelConstants {
 
     public final static int ACCOUNT_COLUMNS_COUNT = 4;
     public final static int CATEGORIY_COLUMNS_COUNT = 2;
-    public final static int OPERATION_COLUMNS_COUNT = 7;
+    public final static int OPERATION_COLUMNS_COUNT = 9;
 
 }
