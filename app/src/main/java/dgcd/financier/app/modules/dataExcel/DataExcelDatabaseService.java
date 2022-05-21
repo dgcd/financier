@@ -92,11 +92,6 @@ class DataExcelDatabaseService {
         var savedCategories = saveCategories(parsedData.categories());
         var savedOperations = saveOperations(parsedData.operations(), savedAccounts, savedCategories);
 
-        // todo: delete
-        savedAccounts.forEach(System.out::println);
-        savedCategories.forEach(System.out::println);
-        savedOperations.forEach(System.out::println);
-
         return new AllData(
                 savedAccounts,
                 savedCategories,
