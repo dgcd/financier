@@ -16,7 +16,7 @@ dependencies {
 }
 
 tasks.named('bootJar') {
-    archiveFileName = 'financier-app.jar'
+    archiveFileName = 'financier.jar'
     exclude('application.properties')
 }
 

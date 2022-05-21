@@ -87,7 +87,6 @@ class DataExcelDatabaseService {
     /////////////////////////////////////////////////////////////////////////////
 
     @Transactional
-
     public void saveParsedData(ParsedData parsedData) {
         checkDatabaseEmptiness();
         var savedAccounts = saveAccounts(parsedData.accounts());

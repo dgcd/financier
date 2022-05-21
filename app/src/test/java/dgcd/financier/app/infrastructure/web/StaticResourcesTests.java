@@ -1,7 +1,6 @@
 package dgcd.financier.app.infrastructure.web;
 
 import dgcd.financier.app.testSupport.FinancierDatabaseTest;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,8 +20,7 @@ class StaticResourcesTests {
     private MockMvc mockMvc;
 
     @Test
-    @SneakyThrows
-    void getIndexHtml() {
+    void getIndexHtml() throws Exception {
         mockMvc
                 .perform(get("/index.html"))
                 .andExpect(status().isOk())
@@ -31,8 +29,7 @@ class StaticResourcesTests {
     }
 
     @Test
-    @SneakyThrows
-    void getFavicon() {
+    void getFavicon() throws Exception {
         mockMvc
                 .perform(get("/favicon.ico"))
                 .andExpect(status().isOk())

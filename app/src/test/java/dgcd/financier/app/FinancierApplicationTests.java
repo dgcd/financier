@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * Test loads whole context and distorts coverage
+ * This test loads whole context and distorts coverage
  */
 @SpringBootTest
 class FinancierApplicationTests {

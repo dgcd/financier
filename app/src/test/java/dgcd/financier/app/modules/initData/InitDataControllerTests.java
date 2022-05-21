@@ -1,7 +1,6 @@
 package dgcd.financier.app.modules.initData;
 
 import dgcd.financier.app.testSupport.FinancierDatabaseTest;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -23,9 +22,8 @@ class InitDataControllerTests {
     private MockMvc mockMvc;
 
     @Test
-    @SneakyThrows
     @Sql("/modules/initData/getInitData.sql")
-    void getInitData() {
+    void getInitData() throws Exception {
         mockMvc
                 .perform(post(INIT_PATH)
                         .contentType(APPLICATION_JSON)
