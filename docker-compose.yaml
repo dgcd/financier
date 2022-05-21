@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  postgres_financier:
+    image: postgres:alpine
+    restart: 'unless-stopped'
+    ports:
+      - "54321:5432"
+    environment:
+      - POSTGRES_DB=financier
+      - POSTGRES_USER=${POSTGRES_FINANCIER_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_FINANCIER_PASSWORD}
