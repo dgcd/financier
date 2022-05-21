@@ -48,6 +48,7 @@ class DataExcelDatabaseService {
                 .toList();
     }
 
+
     private List<Category> getAndSortCategories() {
         return categoriesDaoService.findAll()
                 .stream()
@@ -72,6 +73,7 @@ class DataExcelDatabaseService {
                 .toList();
     }
 
+
     private List<Operation> getAndSortOperations() {
         return operationsDaoService.findAll()
                 .stream()
@@ -85,23 +87,12 @@ class DataExcelDatabaseService {
     /////////////////////////////////////////////////////////////////////////////
 
     @Transactional
-    public AllData saveParsedData(ParsedData parsedData) {
-        checkDatabaseEmptiness();
 
+    public void saveParsedData(ParsedData parsedData) {
+        checkDatabaseEmptiness();
         var savedAccounts = saveAccounts(parsedData.accounts());
         var savedCategories = saveCategories(parsedData.categories());
-        var savedOperations = saveOperations(parsedData.operations(), savedAccounts, savedCategories);
-
-        // todo: delete
-        savedAccounts.forEach(System.out::println);
-        savedCategories.forEach(System.out::println);
-        savedOperations.forEach(System.out::println);
-
-        return new AllData(
-                savedAccounts,
-                savedCategories,
-                savedOperations
-        );
+        saveOperations(parsedData.operations(), savedAccounts, savedCategories);
     }
 
 
@@ -131,7 +122,6 @@ class DataExcelDatabaseService {
                         a.isClosed()
                 ))
                 .toList();
-
         return accountsDaoService.saveAll(accounts);
     }
 
@@ -165,7 +155,7 @@ class DataExcelDatabaseService {
     }
 
 
-    private List<Operation> saveOperations(
+    private void saveOperations(
             List<ParsedData.ParsedOperation> parsedOperations,
             List<Account> savedAccounts,
             List<Category> savedCategories
@@ -178,14 +168,12 @@ class DataExcelDatabaseService {
 
         var operations = parsedOperations.stream()
                 .map(op -> {
-                    System.out.println(op);
-                    Category subcategory = subcategories.stream()
+                    var subcategory = subcategories.stream()
                             .filter(sc -> Objects.equals(sc.getTitle(), op.subcategoryTitle()) &&
                                     Objects.equals(sc.getParent().getTitle(), op.parentCategoryTitle())
                             )
                             .findFirst()
                             .orElse(null);
-                    System.out.println(subcategory);
                     return new Operation(
                             null,
                             op.date(),
@@ -200,7 +188,7 @@ class DataExcelDatabaseService {
                 })
                 .toList();
 
-        return operationsDaoService.saveAll(operations);
+        operationsDaoService.saveAll(operations);
     }
 
 }

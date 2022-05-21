@@ -57,9 +57,8 @@ export default {
         },
 
 
-        onSuccessHandler(payload) {
-            this.flushFileValue();
-            this.errorHandler(null);
+        onSuccessHandler() {
+            window.location.reload();
         },
 
         onErrorHandler(message) {
