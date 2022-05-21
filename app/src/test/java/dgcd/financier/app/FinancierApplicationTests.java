@@ -1,10 +1,11 @@
 package dgcd.financier.app;
 
-import dgcd.financier.app.test.FinancierTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@FinancierTest
+/**
+ * Test loads whole context and distorts coverage
+ */
 @SpringBootTest
 class FinancierApplicationTests {
 
