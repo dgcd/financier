@@ -34,4 +34,8 @@ public class CategoriesDaoService {
         return categoriesRepository.findByTitle(title);
     }
 
+    public List<Category> saveAll(List<Category> categories) {
+        return categoriesRepository.saveAll(categories);
+    }
+
 }

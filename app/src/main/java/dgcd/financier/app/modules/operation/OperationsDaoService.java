@@ -19,4 +19,8 @@ public class OperationsDaoService {
         return operationsRepository.save(operation);
     }
 
+    public List<Operation> saveAll(List<Operation> operations) {
+        return operationsRepository.saveAll(operations);
+    }
+
 }
