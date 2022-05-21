@@ -48,6 +48,7 @@ class DataExcelDatabaseService {
                 .toList();
     }
 
+
     private List<Category> getAndSortCategories() {
         return categoriesDaoService.findAll()
                 .stream()
@@ -71,6 +72,7 @@ class DataExcelDatabaseService {
                 })
                 .toList();
     }
+
 
     private List<Operation> getAndSortOperations() {
         return operationsDaoService.findAll()
