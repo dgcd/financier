@@ -103,8 +103,8 @@ class DataExcelParseService {
                     readBigDecimal(row, cellNum++),
                     readEnum(row, cellNum++, OperationType.class),
                     readString(row, cellNum++),
-                    readString(row, cellNum),
-                    readString(row, cellNum),
+                    readString(row, cellNum++),
+                    readString(row, cellNum++),
                     readString(row, cellNum)
             );
             operations.add(parsedOperation);
