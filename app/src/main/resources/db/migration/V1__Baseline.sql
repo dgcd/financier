@@ -1,4 +1,4 @@
-create type main.operation_type     as enum ('BASE', 'TRANS', 'INCOME', 'EXPENSE');
+create type main.operation_type     as enum ('BASE', 'TRANS', 'INCOME', 'EXPENSE', 'EXCHANGE');
 create type main.currency           as enum ('RUB', 'USD', 'EUR');
 
 
@@ -7,6 +7,7 @@ create table main.accounts (
     title       varchar(100)            not null,
     currency    main.currency           not null,
     balance     numeric(15, 2)          not null    default 0,
+    is_closed   bool                    not null    default false,
 
     constraint  accounts_pkey           primary key (id),
     constraint  accounts_title_key      unique (title)
@@ -19,7 +20,6 @@ create table main.categories (
     title       varchar(100)            not null,
 
     constraint  categories_pkey             primary key (id),
-    constraint  categories_title_key        unique (title),
     constraint  categories_parent_id_fkey   foreign key (parent_id) references main.categories(id)
 );
 
@@ -31,11 +31,11 @@ create table main.operations (
     quantity        numeric(15, 6)      not null,
     amount          numeric(15, 2)      not null,
     op_type         main.operation_type not null,
-    category_id     int8                null,
+    subcategory_id  int8                null,
     counterparty    varchar(100)        null,
     "comment"       varchar(100)        null,
 
     constraint operations_pkey              primary key (id),
     constraint operations_account_id_fkey   foreign key (account_id)  references main.accounts(id),
-    constraint operations_category_id_fkey  foreign key (category_id) references main.categories(id)
+    constraint operations_category_id_fkey  foreign key (subcategory_id) references main.categories(id)
 );
