@@ -78,7 +78,9 @@ class DataExcelDatabaseService {
         return operationsDaoService.findAll()
                 .stream()
                 .sorted((o1, o2) -> o1.getDate().equals(o2.getDate()) ?
-                        o1.getId().compareTo(o2.getId()) :
+                        o1.getType().equals(o2.getType()) ?
+                                o1.getId().compareTo(o2.getId()) :
+                                o1.getType().compareTo(o2.getType()) :
                         o1.getDate().compareTo(o2.getDate())
                 )
                 .toList();
