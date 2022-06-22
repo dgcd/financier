@@ -1,0 +1,9 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation(project(':domain'))
+}
+
+tasks.named('jar') {
+    archivesBaseName = 'financier-usecase.jar'
+}

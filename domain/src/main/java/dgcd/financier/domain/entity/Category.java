@@ -1,4 +1,4 @@
-package dgcd.financier.app.modules.category;
+package dgcd.financier.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,8 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 @Getter
 @Setter
@@ -27,15 +25,6 @@ public class Category {
 
     @Id
     @GeneratedValue(generator = "categories_id_generator")
-    @GenericGenerator(
-            name = "categories_id_generator",
-            strategy = "enhanced-sequence",
-            parameters = {
-                    @Parameter(name = "sequence_name", value = "categories_id_seq"),
-                    @Parameter(name = "increment_size", value = "1"),
-                    @Parameter(name = "optimizer", value = "pooled-lo"),
-            }
-    )
     private Long id;
 
     @NotNull

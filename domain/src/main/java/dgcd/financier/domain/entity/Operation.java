@@ -1,8 +1,6 @@
-package dgcd.financier.app.modules.operation;
+package dgcd.financier.domain.entity;
 
-import dgcd.financier.app.dictionary.OperationType;
-import dgcd.financier.app.modules.account.Account;
-import dgcd.financier.app.modules.category.Category;
+import dgcd.financier.domain.dictionary.OperationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -19,8 +17,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,15 +33,6 @@ public class Operation {
 
     @Id
     @GeneratedValue(generator = "operations_id_generator")
-    @GenericGenerator(
-            name = "operations_id_generator",
-            strategy = "enhanced-sequence",
-            parameters = {
-                    @Parameter(name = "sequence_name", value = "operations_id_seq"),
-                    @Parameter(name = "increment_size", value = "1"),
-                    @Parameter(name = "optimizer", value = "pooled-lo"),
-            }
-    )
     private Long id;
 
     @Column(name = "op_date", updatable = false, nullable = false)
