@@ -1,0 +1,13 @@
+//package dgcd.financier.modules.category.exception;
+//
+//import dgcd.financier.infrastructure.exception.ServiceException;
+//
+//public class DuplicatedCategoryTitleException extends ServiceException {
+//
+//    private static final String MSG = "Duplicated category title '%s' with parent id '%d'";
+//
+//    public DuplicatedCategoryTitleException(String title, Long parentId) {
+//        super(String.format(MSG, title, parentId));
+//    }
+//
+//}

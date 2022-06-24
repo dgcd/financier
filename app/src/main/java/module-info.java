@@ -10,7 +10,7 @@ module dgcd.financier.app {
     requires spring.data.jpa;
 
     requires jakarta.validation;
-//    requires jakarta.persistence;
+    requires jakarta.persistence;
 
     requires org.aspectj.weaver;
     requires org.hibernate.orm.core;
@@ -20,5 +20,6 @@ module dgcd.financier.app {
 
     requires lombok;
 
+    requires financier.domain;
     requires financier.usecase;
 }

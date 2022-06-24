@@ -2,6 +2,13 @@ apply plugin: 'java-library'
 
 dependencies {
     implementation(project(':domain'))
+    implementation 'org.springframework:spring-tx'
+
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
 }
 
 tasks.named('jar') {
