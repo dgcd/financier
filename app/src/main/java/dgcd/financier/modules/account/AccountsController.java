@@ -2,7 +2,7 @@ package dgcd.financier.modules.account;
 
 import dgcd.financier.infrastructure.dto.CommonResponseDto;
 import dgcd.financier.infrastructure.web.WebConstants;
-import dgcd.financier.usecase.AccountCreate;
+import dgcd.financier.usecase.AccountCreateCase;
 import dgcd.financier.usecase.dto.AccountCreateRequestDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 class AccountsController {
 
-    private final AccountCreate createAccount;
+    private final AccountCreateCase createAccount;
 
 
     //    @LogControllerData

@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static java.math.BigDecimal.ZERO;
 
 @RequiredArgsConstructor
-public class AccountCreate {
+public class AccountCreateCase {
 
     private final AccountsRepository accountsRepository;
 
