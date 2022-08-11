@@ -17,7 +17,7 @@
                 <td>{{ a.id }}</td>
                 <td align="left">
                     {{ a.title }}
-                    <button class="btn btn-link btn-sm py-0" v-if="a.id && !a.balance && !a.isClosed" @click="closeAccountHandler(a.id)">X</button>
+                    <button class="btn btn-link btn-sm py-0" v-if="a.id && !a.balance && !a.isClosed" @click="closeAccountHandler(a)">X</button>
                 </td>
                 <td>{{ a.currency }}</td>
                 <td align="right" style="font-weight: bold">{{ a.balance | formatMoneyToString }}</td>

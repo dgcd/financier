@@ -53,12 +53,12 @@ export default {
     methods: {
         ...mapMutations(['updateAccounts']),
 
-        closeAccount(id) {
-            if (!window.confirm(`Close account '${id}'?`)) {
+        closeAccount(account) {
+            if (!window.confirm(`Close account '${account.title} (${account.id})'?`)) {
                 return;
             }
             apiRequests.closeAccount(
-                { id },
+                { id: account.id },
                 this.requestSuccess,
                 this.requestError,
             );
