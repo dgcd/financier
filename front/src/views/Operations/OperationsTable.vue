@@ -18,9 +18,9 @@
         </tr>
         <tr v-for="o in sortedOperations" :key="o.id">
             <td>{{ o.id }}</td>
-            <td>{{ o.date }}</td>
+            <td style="min-width:100px">{{ o.date }}</td>
             <td>{{ o.currency }}</td>
-            <td>{{ o.accountTitle | removeUnderscores }}</td>
+            <td style="min-width:120px">{{ o.accountTitle | removeUnderscores }}</td>
 
             <td>{{ o.type | shortenExpenseType }}</td>
             <td align="right">{{ (o.amount / o.quantity) | formatMoneyToString }}</td>

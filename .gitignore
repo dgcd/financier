@@ -10,3 +10,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### misc ###
+logs/
+*.log

@@ -2,14 +2,16 @@
 
 ## Prerequisites
 
-- Add environment variables to Gradle template run configuration:
+- Add environment variables to Gradle run configuration template:
+
 ```
-POSTGRES_FINANCIER_PASSWORD=###;POSTGRES_FINANCIER_USERNAME=######
+POSTGRES_FINANCIER_USERNAME=###;POSTGRES_FINANCIER_PASSWORD=######
 ```
 
 - Add `financierhost` to `hosts` file
 
 - Run PostgreSQL in Docker on `financierhost` host:
+
 ```shell
 docker run -d \
   --restart unless-stopped \
@@ -20,3 +22,5 @@ docker run -d \
   -p 54321:5432 \
   postgres:alpine
 ```
+
+- Additionally create databases: financier_dev, financier_test
