@@ -41,9 +41,11 @@ class DataExcelDatabaseService {
     private List<Account> getAndSortAccounts() {
         return accountsDaoService.findAll()
                 .stream()
-                .sorted((a1, a2) -> a1.getCurrency().equals(a2.getCurrency()) ?
-                        a1.getTitle().compareTo(a2.getTitle()) :
-                        a1.getCurrency().compareTo(a2.getCurrency())
+                .sorted((a1, a2) -> a1.getIsClosed().equals(a2.getIsClosed()) ?
+                        a1.getCurrency().equals(a2.getCurrency()) ?
+                                a1.getTitle().compareTo(a2.getTitle()) :
+                                a1.getCurrency().compareTo(a2.getCurrency()) :
+                        a1.getIsClosed() ? 1 : -1
                 )
                 .toList();
     }

@@ -104,7 +104,7 @@ class DataExcelGenerateService {
         var cell = row.createCell(colInx);
         switch (value) {
             case null -> cell.setBlank();
-            case Enum enumValue -> cell.setCellValue(enumValue.name());
+            case Enum<?> enumValue -> cell.setCellValue(enumValue.name());
             case Boolean boolValue -> cell.setCellValue(boolValue);
             case LocalDate dateValue -> cell.setCellValue(dateValue);
             case Number numberValue -> cell.setCellValue(numberValue.doubleValue());

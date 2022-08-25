@@ -32,8 +32,8 @@ create table main.operations (
     amount          numeric(15, 2)      not null,
     op_type         main.operation_type not null,
     subcategory_id  int8                null,
-    counterparty    varchar(100)        null,
     "comment"       varchar(100)        null,
+    counterparty    varchar(100)        null,
 
     constraint operations_pkey              primary key (id),
     constraint operations_account_id_fkey   foreign key (account_id)  references main.accounts(id),
