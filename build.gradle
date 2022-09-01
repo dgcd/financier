@@ -58,4 +58,14 @@ subprojects {
     tasks.withType(Test).each {
         it.jvmArgs([PREVIEW_OPTION])
     }
+
+    // JVM memory tuning
+    tasks.withType(JavaExec).each {
+        it.jvmArgs([
+                '-XX:+HeapDumpOnOutOfMemoryError',
+                '-XX:MaxMetaspaceSize=128m',
+                '-XX:+UseShenandoahGC',
+                '-Xmx256m',
+        ])
+    }
 }

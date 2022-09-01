@@ -1,9 +1,9 @@
 ### Gradle ###
-.gradle
+.gradle/
 build/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -14,3 +14,5 @@ build/
 ### misc ###
 logs/
 *.log
+*.hprof
+*.hprof.*
