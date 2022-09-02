@@ -38,11 +38,11 @@ subprojects {
         testAnnotationProcessor 'org.projectlombok:lombok'
     }
 
+    // tests configuration
     tasks.named('test') {
         useJUnitPlatform()
         finalizedBy jacocoTestReport
     }
-
     tasks.named('jacocoTestReport') {
         dependsOn test
     }
@@ -65,7 +65,7 @@ subprojects {
                 '-XX:+HeapDumpOnOutOfMemoryError',
                 '-XX:MaxMetaspaceSize=128m',
                 '-XX:+UseShenandoahGC',
-                '-Xmx256m',
+                '-Xmx512m',
         ])
     }
 }
