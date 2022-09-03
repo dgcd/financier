@@ -8,11 +8,21 @@ build/
 *.iml
 *.ipr
 
-### VS Code ###
-.vscode/
+### Java ###
+*.hprof
+*.hprof.*
 
 ### misc ###
 logs/
 *.log
-*.hprof
-*.hprof.*
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### VS Code ###
+.vscode/
+
+### Front ###
+node_modules/
+dist/
