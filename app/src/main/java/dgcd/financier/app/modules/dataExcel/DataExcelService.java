@@ -26,7 +26,7 @@ class DataExcelService {
 
     public void exportAllDataToExcel(ServletOutputStream outputStream) throws IOException {
         var allDateForExport = dataExcelDatabaseService.readDataForExport();
-        dataExcelGenerateService.generateExcelExcel(outputStream, allDateForExport);
+        dataExcelGenerateService.generateExcel(outputStream, allDateForExport);
     }
 
 
@@ -78,7 +78,8 @@ record ParsedData(
             String parentCategoryTitle,
             String subcategoryTitle,
             String comment,
-            String counterparty
+            String counterparty,
+            String correlationId
     ) {}
 
 }

@@ -105,6 +105,7 @@ class DataExcelParseService {
                     readString(row, cellNum++),
                     readString(row, cellNum++),
                     readString(row, cellNum++),
+                    readString(row, cellNum++),
                     readString(row, cellNum)
             );
             operations.add(parsedOperation);

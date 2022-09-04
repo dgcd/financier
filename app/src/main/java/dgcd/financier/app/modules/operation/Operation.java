@@ -77,4 +77,10 @@ public class Operation {
     @Size(max = 100)
     private String counterparty;
 
+    @NotNull
+    private Boolean isCanceled;
+
+    @Size(max = 38)
+    private String correlationId;
+
 }

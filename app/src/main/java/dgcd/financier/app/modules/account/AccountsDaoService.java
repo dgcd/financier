@@ -18,7 +18,7 @@ public class AccountsDaoService {
         return accountsRepository.findAll();
     }
 
-    Account save(Account account) {
+    public Account save(Account account) {
         return accountsRepository.save(account);
     }
 

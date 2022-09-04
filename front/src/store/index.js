@@ -28,13 +28,13 @@ export default new Vuex.Store({
             state.accounts = [newAccount, ...state.accounts];
         },
 
-        updateAccounts(state, accounts) {
-            const newIds = new Set();
-            for (let acc of accounts) {
-                newIds.add(acc.id);
-            }
-            var accs = state.accounts.filter(a => !newIds.has(a.id));
-            state.accounts = [...accounts, ...accs];
+        updateAccounts(state, updatedAccounts) {
+            const updIds = new Set(updatedAccounts.map(a => a.id));
+            const restAccounts = state.accounts.filter(a => !updIds.has(a.id));
+            state.accounts = [
+                ...updatedAccounts,
+                ...restAccounts,
+            ];
         },
 
         addCategory(state, newCategory) {
@@ -42,7 +42,16 @@ export default new Vuex.Store({
         },
 
         addOperations(state, operations) {
-            state.operations = [...operations, ...state.operations];
+            state.operations = [
+                ...operations.map(op => { op.thisSession = true; return op; }),
+                ...state.operations,
+            ];
+        },
+
+        removeOperationsByIds(state, operationsIds) {
+            const ids = new Set(operationsIds);
+            console.log(ids)
+            state.operations = state.operations.filter(op => !ids.has(op.id));
         },
     },
 
