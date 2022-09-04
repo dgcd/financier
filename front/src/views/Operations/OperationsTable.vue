@@ -15,6 +15,7 @@
             <th>Subcategory</th>
             <th>Comment</th>
             <th>Counterparty</th>
+            <th>Cancel</th>
         </tr>
         <tr v-for="o in sortedOperations" :key="o.id">
             <td>{{ o.id }}</td>
@@ -31,6 +32,7 @@
             <td>{{ o.subcategoryTitle }}</td>
             <td>{{ o.comment }}</td>
             <td>{{ o.counterparty }}</td>
+            <td><button v-if="o.thisSession" class="btn btn-link btn-sm py-0" @click="cancelOperationHandler(o)">X</button></td>
         </tr>
     </table>
 </template>
@@ -45,6 +47,10 @@ export default {
     props: {
         operations: {
             type: Array,
+            required: true,
+        },
+        cancelOperationHandler: {
+            type: Function,
             required: true,
         },
     },

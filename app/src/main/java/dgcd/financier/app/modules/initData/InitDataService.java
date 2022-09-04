@@ -33,7 +33,7 @@ class InitDataService {
                 ),
                 accountsDaoService.findAll().stream().map(AccountResponseDto::of).toList(),
                 categoriesDaoService.findAll().stream().map(CategoryResponseDto::of).toList(),
-                operationsDaoService.findAll().stream().map(OperationResponseDto::of).toList(),
+                operationsDaoService.findAllNotCanceled().stream().map(OperationResponseDto::of).toList(),
                 techInfoContributor.getTechInfo()
         );
     }
