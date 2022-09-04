@@ -167,7 +167,6 @@ class OperationsFacilityService {
         var operationsIds = new ArrayList<Long>(2);
         var updatedAccounts = new ArrayList<AccountResponseDto>(2);
         for (var op : operations) {
-            System.out.println(op);
             if (op.getIsCanceled()) {
                 throw new IllegalStateException(String.format("Operation with id '%d' is already canceled", op.getId()));
             }

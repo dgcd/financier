@@ -8,8 +8,6 @@ import dgcd.financier.app.modules.operation.exceptions.OperationCreateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 import static dgcd.financier.app.dictionary.OperationType.BASE;
 import static dgcd.financier.app.dictionary.OperationType.EXCHANGE;
 import static dgcd.financier.app.dictionary.OperationType.TRANS;
@@ -98,8 +96,7 @@ class OperationsService {
 
 
     public OperationsCancelResponseDto cancelOperation(CommonIdDto dto) {
-     return    operationsFacilityService.cancelOperation(dto);
-
+        return operationsFacilityService.cancelOperation(dto);
     }
 
 }

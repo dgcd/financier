@@ -50,7 +50,6 @@ export default {
         ...mapMutations(['updateAccounts', 'removeOperationsByIds']),
 
         cancelOperation(operation) {
-            console.log(operation)
             if (!window.confirm(`Cancel operation '${operation.amount} (${operation.accountTitle})'?`)) {
                 return;
             }
