@@ -27,7 +27,9 @@ public record OperationResponseDto(
         String subcategoryTitle,
 
         String counterparty,
-        String comment
+        String comment,
+
+        String correlationId
 ) {
 
     public static OperationResponseDto of(Operation operation) {
@@ -52,7 +54,9 @@ public record OperationResponseDto(
                 hasSubcat ? subcat.getTitle() : null,
 
                 operation.getCounterparty(),
-                operation.getComment()
+                operation.getComment(),
+
+                operation.getCorrelationId()
         );
     }
 

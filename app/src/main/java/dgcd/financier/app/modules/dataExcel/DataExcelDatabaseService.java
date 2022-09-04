@@ -77,7 +77,7 @@ class DataExcelDatabaseService {
 
 
     private List<Operation> getAndSortOperations() {
-        return operationsDaoService.findAll()
+        return operationsDaoService.findAllNotCanceled()
                 .stream()
                 .sorted((o1, o2) -> o1.getDate().equals(o2.getDate()) ?
                         o1.getType().equals(o2.getType()) ?
@@ -186,7 +186,9 @@ class DataExcelDatabaseService {
                             op.quantity(),
                             subcategory,
                             op.comment(),
-                            op.counterparty()
+                            op.counterparty(),
+                            false,
+                            op.correlationId()
                     );
                 })
                 .toList();

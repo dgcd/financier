@@ -1,19 +1,24 @@
 package dgcd.financier.app.modules.operation;
 
+import dgcd.financier.app.infrastructure.dto.CommonIdDto;
 import dgcd.financier.app.modules.account.AccountsDaoService;
 import dgcd.financier.app.modules.account.dto.AccountResponseDto;
 import dgcd.financier.app.modules.category.CategoriesDaoService;
 import dgcd.financier.app.modules.category.Category;
 import dgcd.financier.app.modules.operation.dto.OperationCreateRequestDto;
 import dgcd.financier.app.modules.operation.dto.OperationResponseDto;
+import dgcd.financier.app.modules.operation.dto.OperationsCancelResponseDto;
 import dgcd.financier.app.modules.operation.dto.OperationsCreateResponseDto;
 import dgcd.financier.app.modules.operation.exceptions.OperationCreateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static dgcd.financier.app.dictionary.OperationType.BASE;
 import static dgcd.financier.app.dictionary.OperationType.TRANS;
@@ -47,7 +52,9 @@ class OperationsFacilityService {
                 dto.quantity(),
                 subcategory,
                 dto.comment(),
-                dto.counterparty()
+                dto.counterparty(),
+                false,
+                null
         );
 
         account.setBalance(account.getBalance().add(operation.getAmount()));
@@ -82,6 +89,8 @@ class OperationsFacilityService {
             amountTo = dto.amountTo();
         }
 
+        var correlationId = UUID.randomUUID().toString();
+
         var operationFrom = new Operation(
                 null,
                 dto.date(),
@@ -91,7 +100,9 @@ class OperationsFacilityService {
                 ONE,
                 subcategory,
                 dto.comment(),
-                dto.counterparty()
+                dto.counterparty(),
+                false,
+                correlationId.concat("_1")
         );
 
         var operationTo = new Operation(
@@ -103,7 +114,9 @@ class OperationsFacilityService {
                 ONE,
                 subcategory,
                 dto.comment(),
-                dto.counterparty()
+                dto.counterparty(),
+                false,
+                correlationId.concat("_2")
         );
 
         accountTo.setBalance(accountTo.getBalance().add(operationTo.getAmount()));
@@ -131,6 +144,44 @@ class OperationsFacilityService {
             throw new OperationCreateException("Subcategory must have parent category");
         }
         return subcategory;
+    }
+
+
+    @Transactional
+    public OperationsCancelResponseDto cancelOperation(CommonIdDto dto) {
+        var operation = operationsDaoService.findByIdOrElseThrow(dto.id());
+        var corrId = operation.getCorrelationId();
+
+        List<Operation> operations;
+        if (isNull(corrId)) {
+            operations = List.of(operation);
+        } else {
+            var length = corrId.length() - 2;
+            Assert.isTrue(length >= 2 && length <= 36, "Wrong correlation id length");
+            var suffix = corrId.substring(0, length - 1);
+            operations = operationsDaoService.findByCorrelationIdStartingWith(suffix);
+            Assert.isTrue(operations.size() == 2, "Wrong number of correlated operations: " + operations.size());
+        }
+
+        var operationsIds = new ArrayList<Long>(2);
+        var updatedAccounts = new ArrayList<AccountResponseDto>(2);
+        for (var op : operations) {
+            if (op.getIsCanceled()) {
+                throw new IllegalStateException(String.format("Operation with id '%d' is already canceled", op.getId()));
+            }
+            var acc = op.getAccount();
+            acc.setBalance(acc.getBalance().subtract(op.getAmount()));
+            op.setIsCanceled(true);
+            operationsDaoService.save(op);
+
+            operationsIds.add(op.getId());
+            updatedAccounts.add(AccountResponseDto.of(acc));
+        }
+
+        return new OperationsCancelResponseDto(
+                operationsIds,
+                updatedAccounts
+        );
     }
 
 }

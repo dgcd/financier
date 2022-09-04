@@ -58,6 +58,16 @@ export default {
         );
     },
 
+    cancelOperation(idDto, success, fail) {
+        apiHelper.performApiRequest(
+            apiUrls.operationCancelUrl,
+            idDto,
+            'Cancel operation',
+            success,
+            fail,
+        );
+    },
+
     // ----------------------------------------------------
 
     exportAllData(success, fail) {

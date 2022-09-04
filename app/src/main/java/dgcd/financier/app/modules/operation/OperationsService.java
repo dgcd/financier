@@ -1,6 +1,8 @@
 package dgcd.financier.app.modules.operation;
 
+import dgcd.financier.app.infrastructure.dto.CommonIdDto;
 import dgcd.financier.app.modules.operation.dto.OperationCreateRequestDto;
+import dgcd.financier.app.modules.operation.dto.OperationsCancelResponseDto;
 import dgcd.financier.app.modules.operation.dto.OperationsCreateResponseDto;
 import dgcd.financier.app.modules.operation.exceptions.OperationCreateException;
 import lombok.RequiredArgsConstructor;
@@ -87,6 +89,14 @@ class OperationsService {
         if (EXCHANGE.equals(dto.operationType()) && (isNull(dto.amountTo()) || dto.amountTo().compareTo(ZERO) == 0)) {
             throw new OperationCreateException("Exchange operation must have second amount");
         }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public OperationsCancelResponseDto cancelOperation(CommonIdDto dto) {
+        return operationsFacilityService.cancelOperation(dto);
     }
 
 }

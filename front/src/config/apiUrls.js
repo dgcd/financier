@@ -5,6 +5,7 @@ const accountCloseUrl = apiUrl + '/accounts/close';
 const accountCreateUrl = apiUrl + '/accounts/create';
 const categoryCreateUrl = apiUrl + '/categories/create';
 const operationCreateUrl = apiUrl + '/operations/create';
+const operationCancelUrl = apiUrl + '/operations/cancel';
 const dataExportUrl = apiUrl + '/data/export';
 const dataImportUrl = apiUrl + '/data/import';
 
@@ -14,6 +15,7 @@ export default {
     accountCreateUrl,
     categoryCreateUrl,
     operationCreateUrl,
+    operationCancelUrl,
     dataExportUrl,
     dataImportUrl,
 }

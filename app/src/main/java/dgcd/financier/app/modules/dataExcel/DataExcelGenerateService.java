@@ -23,7 +23,7 @@ import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 class DataExcelGenerateService {
 
-    public void generateExcelExcel(
+    public void generateExcel(
             ServletOutputStream outputStream,
             AllData allDataForExport
     ) throws IOException {
@@ -95,7 +95,8 @@ class DataExcelGenerateService {
         createCell(row, colInx++, nonNull(parentCategory) ? parentCategory.getTitle() : null);
         createCell(row, colInx++, nonNull(subcategory) ? subcategory.getTitle() : null);
         createCell(row, colInx++, operation.getComment());
-        createCell(row, colInx, operation.getCounterparty());
+        createCell(row, colInx++, operation.getCounterparty());
+        createCell(row, colInx, operation.getCorrelationId());
     }
 
     /////////////////////////////////////////////////////////////////////////////
