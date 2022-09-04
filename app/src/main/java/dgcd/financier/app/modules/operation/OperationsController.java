@@ -42,7 +42,6 @@ class OperationsController {
     ) {
         var payload = operationsService.cancelOperation(dto);
         return CommonResponseDto.ok(payload);
-
     }
 
 }

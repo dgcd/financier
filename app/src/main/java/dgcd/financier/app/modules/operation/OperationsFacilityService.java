@@ -159,7 +159,6 @@ class OperationsFacilityService {
             var length = corrId.length() - 2;
             Assert.isTrue(length >= 2 && length <= 36, "Wrong correlation id length");
             var suffix = corrId.substring(0, length - 1);
-            System.out.println(suffix);
             operations = operationsDaoService.findByCorrelationIdStartingWith(suffix);
             Assert.isTrue(operations.size() == 2, "Wrong number of correlated operations: " + operations.size());
         }

@@ -39,7 +39,7 @@ export default new Vuex.Store({
         },
 
         addOperations(state, operations) {
-            operations.forEach(op => op.thisSession);
+            operations.forEach(op => op.thisSession = true);
             state.operations = [...operations, ...state.operations];
         },
 
