@@ -7,3 +7,7 @@ table.tbl td,th {
     padding: 0 5px;
     border: 1px solid #909090;
 }
+
+tr.boldRow {
+    font-weight: bold;
+}

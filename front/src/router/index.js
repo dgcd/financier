@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import DashboardView from '../views/Dashboard/DashboardView.vue';
+import DashboardView from '../views/Dashboard/DashboardView.vue';
 import OperationsView from '../views/Operations/OperationsView.vue';
 import OperationCreateView from '../views/OperationCreate/OperationCreateView.vue';
 import AccountsView from '../views/Accounts/AccountsView.vue';
@@ -12,17 +12,17 @@ import MiscView from '../views/Misc/MiscView.vue';
 Vue.use(VueRouter);
 
 const routes = [
-    // {
-    //     path: '/dashboard',
-    //     name: 'DashboardView',
-    //     component: DashboardView,
-    //     meta: {
-    //         title: 'Dashboard',
-    //     },
-    // },
+    {
+        path: '/',
+        alias: '/dashboard',
+        name: 'DashboardView',
+        component: DashboardView,
+        meta: {
+            title: 'Dashboard',
+        },
+    },
     {
         path: '/operations',
-        alias: '/',
         name: 'OperationsView',
         component: OperationsView,
         meta: {

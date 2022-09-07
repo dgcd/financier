@@ -89,7 +89,7 @@ class OperationsFacilityService {
             amountTo = dto.amountTo();
         }
 
-        var correlationId = UUID.randomUUID().toString();
+        var correlationId = UUID.randomUUID().toString().substring(0, 8);
 
         var operationFrom = new Operation(
                 null,

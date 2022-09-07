@@ -3,9 +3,17 @@ const utils = {
         return new Date().toISOString().slice(0, 10);
     },
 
+    monthsNames: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'],
+
+    getMonthTokenByIsoDate(date) {
+        const monthIndex = parseInt(date.substring(5,7)) - 1;
+        return this.monthsNames[monthIndex] + date.substring(2,4);
+    },
+
     formatMoneyToString(amount) {
-        if (!amount || Math.abs(amount) < 0.0000001)
+        if (!amount || Math.abs(amount) < 0.0000001) {
             return '-';
+        }
         return amount
             .toLocaleString('ru-RU', {style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2})
             .replace(',', '.');
