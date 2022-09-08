@@ -47,8 +47,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import utils from '@/service/utils.js';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'OverallSubview',
@@ -66,15 +65,10 @@ export default {
 
 
     computed: {
-        ...mapState(['operations']),
-
         preparedOverall() {
-            const preparedOps = this.prepareOperations(this.operations);
-            // console.log("preparedOps: ", preparedOps);
-            const monthsSpace = this.makeMonthsSpace(preparedOps.minDate, preparedOps.maxDate);
-            // console.log("monthsSpace: ", monthsSpace);
-            const tableData = this.makeTableData(monthsSpace, preparedOps.opsHolder, this.currency);
-            // console.log("tableData: ", tableData);
+            const preparedOps = this.getPreparedOperations();
+            const monthsSpace = this.makeMonthsSpace();
+            const tableData = this.makeTableData(monthsSpace, preparedOps, this.currency);
             if (this.showOnlyYears) {
                 return tableData.filter(row => !row.isMonthRow);
             }
@@ -84,80 +78,11 @@ export default {
 
 
     methods: {
-        prepareOperations(operations) {
-            let minDate = utils.getTodayDateString();
-            let maxDate = utils.getTodayDateString();
-            let basePerCurrencyOps = {};
-            let perMonthPerCurrencyOps = {};
+        ...mapGetters(['getPreparedOperations', 'makeMonthsSpace']),
 
-            for (let op of operations) {
-                if (minDate.localeCompare(op.date) > 0) {
-                    minDate = op.date;
-                }
-                if (maxDate.localeCompare(op.date) < 0) {
-                    maxDate = op.date;
-                }
-
-                if (op.type == 'BASE') {
-                    if (!basePerCurrencyOps[op.currency]) {
-                        basePerCurrencyOps[op.currency] = [];
-                    }
-                    basePerCurrencyOps[op.currency].push(op);
-                } else {
-                    const monthToken = utils.getMonthTokenByIsoDate(op.date);
-                    if (!perMonthPerCurrencyOps[monthToken]) {
-                        perMonthPerCurrencyOps[monthToken] = {};
-                    }
-                    if (!perMonthPerCurrencyOps[monthToken][op.currency]) {
-                        perMonthPerCurrencyOps[monthToken][op.currency] = [];
-                    }
-                    perMonthPerCurrencyOps[monthToken][op.currency].push(op);
-                }
-            }
-            return { 
-                minDate, maxDate, 
-                opsHolder: { basePerCurrencyOps, perMonthPerCurrencyOps },
-            };
-        },
-
-
-        makeMonthsSpace(minDate, maxDate) {
-            const minMonth = parseInt(minDate.substring(5,7));
-            const minYear = parseInt(minDate.substring(0,4));
-            const maxMonth = parseInt(maxDate.substring(5,7));
-            const maxYear = parseInt(maxDate.substring(0,4));
-
+        makeTableData(monthsSpace, preparedOps, currency) {
             const result = [];
-            let year = minYear;
-            let month = minMonth;
-            let subresult = {};
-            while(true) {
-                if (!subresult.yearToken) {
-                    subresult.yearToken = year;
-                    subresult.monthsTokens = [];
-                    result.push(subresult);
-                }
-                const monthToken = utils.monthsNames[month - 1] + year.toString().substring(2);
-                subresult.monthsTokens.push(monthToken);
-
-                if (month === maxMonth && year === maxYear) {
-                    break;
-                }
-
-                if (++month > 12) {
-                    year++;
-                    month = 1;
-                    subresult = {};
-                } 
-            }
-
-            return result;
-        },
-
-
-        makeTableData(monthsSpace, opsHolder, currency) {
-            const result = [];
-            let lastMonthRow = this.makeMonthlyRow("base", opsHolder.basePerCurrencyOps[currency]);
+            let lastMonthRow = this.makeMonthlyRow("base", preparedOps.basePerCurrencyOps[currency]);
             let lastYearRow = lastMonthRow;
             result.push(lastMonthRow);
 
@@ -168,7 +93,7 @@ export default {
             for (let year of monthsSpace) {
                 const monthRows = [];
                 for (let monthToken of year.monthsTokens) {
-                    const perCurrencyOps = opsHolder.perMonthPerCurrencyOps[monthToken] || { [currency]: [] }
+                    const perCurrencyOps = preparedOps.perMonthPerCurrencyOps[monthToken] || { [currency]: [] }
                     const monthRow = this.makeMonthlyRow(monthToken, perCurrencyOps[currency] || []);
                     monthRows.push(monthRow);
                     result.push(monthRow);
@@ -269,8 +194,7 @@ export default {
                 balance, deposit, invest,
                 summ: balance + deposit + invest,
             }; 
-        }
-
+        },
     },
 }
 </script>

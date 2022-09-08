@@ -5,14 +5,22 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex';
+import utils from '@/service/utils.js';
+
 export default {
     name: 'ByCategorySubview',
-    data() {
-        return {
-        };
+
+    props: {
+        currency: {
+            type: String,
+            required: true,
+        },
+        showOnlyYears: {
+            type: Boolean,
+            required: true,
+        },
     },
 
-    components: {
-    },
 }
 </script>

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import selections from "./modules/selections.js";
+import dashboard from "./modules/dashboard.js";
 
 
 Vue.use(Vuex);
@@ -51,5 +52,6 @@ export default new Vuex.Store({
 
     modules: {
         selections,
+        dashboard,
     },
 });
