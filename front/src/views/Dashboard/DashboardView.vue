@@ -13,6 +13,7 @@
                 <tr><td>Currency:</td><td><currency-selector v-model="currency" /></td></tr>
                 <!-- <tr><td>Include all currencies:&nbsp;</td><td><input type="checkbox" v-model="includeAllCurrencies" /></td></tr> -->
                 <tr><td>Show only years:&nbsp;</td><td><input type="checkbox" v-model="showOnlyYears" /></td></tr>
+                <tr v-if="!isOverallSubview"><td>Show subcategories:&nbsp;</td><td><input type="checkbox" v-model="showSubcategories" /></td></tr>
             </table>
 
             <div v-if="isOverallSubview">
@@ -23,7 +24,11 @@
             </div>
 
             <div v-if="!isOverallSubview">
-                <ByCategorySubview />
+                <ByCategorySubview
+                    :currency="currency"
+                    :showOnlyYears="showOnlyYears"
+                    :showSubcategories="showSubcategories"
+                />
             </div>
         </div>
     </div>
@@ -36,13 +41,15 @@ import { mapState } from 'vuex';
 
 export default {
     name: 'DashboardView',
+
     data() {
         return {
             currency: 'RUB',
             // includeAllCurrencies: false,
             showOnlyYears: false,
+            showSubcategories: true,
 
-            isOverallSubview: true,
+            isOverallSubview: false,
         };
     },
 

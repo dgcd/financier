@@ -25,21 +25,21 @@
                 <th>Delta</th>
             </tr>
 
-            <tr v-for="po in preparedOverall" :key="po.month" :class="po.isMonthRow ? '' : 'boldRow'">
-                <td>{{ po.month }}</td>
+            <tr v-for="row in preparedTableData" :key="row.month" :class="row.isMonthRow ? '' : 'boldRow'">
+                <td>{{ row.month }}</td>
 
-                <td>{{ po.income | formatMoneyToString }}</td>
-                <td>{{ po.expense | formatMoneyToString }}</td>
-                <td>{{ po.trans | formatMoneyToString }}</td>
-                <td>{{ po.result | formatMoneyToString }}</td>
-                <td>{{ po.avgIncome | formatMoneyToString }}</td>
-                <td>{{ po.avgExpense | formatMoneyToString }}</td>
+                <td>{{ row.income | formatMoneyToString }}</td>
+                <td>{{ row.expense | formatMoneyToString }}</td>
+                <td>{{ row.trans | formatMoneyToString }}</td>
+                <td>{{ row.result | formatMoneyToString }}</td>
+                <td>{{ row.avgIncome | formatMoneyToString }}</td>
+                <td>{{ row.avgExpense | formatMoneyToString }}</td>
 
-                <td>{{ po.balance | formatMoneyToString }}</td>
-                <td>{{ po.deposit | formatMoneyToString }}</td>
-                <td>{{ po.invest | formatMoneyToString }}</td>
-                <td>{{ po.summ | formatMoneyToString }}</td>
-                <td>{{ po.delta | formatMoneyToString }}</td>
+                <td>{{ row.balance | formatMoneyToString }}</td>
+                <td>{{ row.deposit | formatMoneyToString }}</td>
+                <td>{{ row.invest | formatMoneyToString }}</td>
+                <td>{{ row.summ | formatMoneyToString }}</td>
+                <td>{{ row.delta | formatMoneyToString }}</td>
             </tr>
 
         </table>
@@ -63,10 +63,10 @@ export default {
         },
     },
 
-
     computed: {
-        preparedOverall() {
-            const preparedOps = this.getPreparedOperations();
+        preparedTableData() {
+            console.log("preparedTableData (overall)");
+            const preparedOps = this.groupOpsAndBaseByMonthByCurrency();
             const monthsSpace = this.makeMonthsSpace();
             const tableData = this.makeTableData(monthsSpace, preparedOps, this.currency);
             if (this.showOnlyYears) {
@@ -76,9 +76,8 @@ export default {
         },
     },
 
-
     methods: {
-        ...mapGetters(['getPreparedOperations', 'makeMonthsSpace']),
+        ...mapGetters(['groupOpsAndBaseByMonthByCurrency', 'makeMonthsSpace']),
 
         makeTableData(monthsSpace, preparedOps, currency) {
             const result = [];
@@ -116,10 +115,8 @@ export default {
                 yearRow.delta = yearRow.summ - lastYearRow.summ;
                 lastYearRow = yearRow;
             }
-
             return result.reverse();
         },
-
 
         makeMonthlyRow(monthToken, monthlyOps) {
             let income = 0;
@@ -130,7 +127,7 @@ export default {
             let deposit = 0;
             let invest = 0;
 
-            for (let op of monthlyOps) {
+            for (let op of monthlyOps || []) {
                 switch (op.type) {
                     case 'INCOME':
                     case 'BASE':
@@ -162,7 +159,6 @@ export default {
                 summ: balance + deposit + invest,
             };
         },
-
 
         makeYearRow(yearToken, monthRows) {
             let income = 0;

@@ -5,10 +5,10 @@ export default {
     },
 
     getters: {
-        getPreparedOperations(state, getters, rootState) {
+        groupOpsAndBaseByMonthByCurrency(state, getters, rootState) {
+            console.log("groupOpsAndBaseByMonthByCurrency()");
             let basePerCurrencyOps = {};
             let perMonthPerCurrencyOps = {};
-
             for (let op of rootState.operations) {
                 if (op.type == 'BASE') {
                     if (!basePerCurrencyOps[op.currency]) {
@@ -33,10 +33,36 @@ export default {
         },
 
 
+        groupOpsByMonthByCurrencyByCategories(state, getters, rootState) {
+            console.log("groupOpsByMonthByCurrencyByCategories()");
+            const src = getters.groupOpsAndBaseByMonthByCurrency.perMonthPerCurrencyOps;
+            const result = {};
+            for (let month of Object.keys(src)) {
+                if (!result[month]) {
+                    result[month] = {};
+                }
+                for (let currency of Object.keys(src[month])) {
+                    const byCat = {};
+                    for (let op of src[month][currency]) {
+                        if (!byCat[op.categoryTitle]) {
+                            byCat[op.categoryTitle] = {};
+                        }
+                        if (!byCat[op.categoryTitle][op.subcategoryTitle]) {
+                            byCat[op.categoryTitle][op.subcategoryTitle] = [];
+                        }
+                        byCat[op.categoryTitle][op.subcategoryTitle].push(op);
+                    }
+                    result[month][currency] = byCat;
+                }
+            }
+            return result;
+        },
+
+
         makeMonthsSpace(state, getters, rootState) {
+            console.log("makeMonthsSpace()");
             let minDate = utils.getTodayDateString();
             let maxDate = utils.getTodayDateString();
-
             for (let op of rootState.operations) {
                 if (minDate.localeCompare(op.date) > 0) {
                     minDate = op.date;
@@ -50,7 +76,6 @@ export default {
             const minYear = parseInt(minDate.substring(0,4));
             const maxMonth = parseInt(maxDate.substring(5,7));
             const maxYear = parseInt(maxDate.substring(0,4));
-
             const result = [];
             let year = minYear;
             let month = minMonth;
@@ -63,11 +88,9 @@ export default {
                 }
                 const monthToken = utils.monthsNames[month - 1] + year.toString().substring(2);
                 subresult.monthsTokens.push(monthToken);
-
                 if (month === maxMonth && year === maxYear) {
                     break;
                 }
-
                 if (++month > 12) {
                     year++;
                     month = 1;
@@ -77,5 +100,26 @@ export default {
             return result;
         },
 
+
+        getCategoriesTree(state, getters, rootState) {
+            console.log("getCategoriesTree()");
+            const tree = {};
+            for (let op of rootState.operations) {
+                const categoryTitle = op.categoryTitle || 'n/a';
+                if (!tree[categoryTitle]) {
+                    tree[categoryTitle] = new Set();
+                }
+                tree[categoryTitle].add(op.subcategoryTitle || 'n/a');
+            }
+
+            const result = [];
+            for (let key of Object.keys(tree).sort()) {
+                result.push({
+                    category: key,
+                    subcategories: Array.from(tree[key].values()),
+                });
+            }
+            return result;
+        },
     },
 };
