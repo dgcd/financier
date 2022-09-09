@@ -14,9 +14,9 @@
                 <th>Income</th>
                 <th>Expense</th>
                 <th>Trans</th>
-                <th>Result</th>
                 <th>Avg inc</th>
                 <th>Avg exp</th>
+                <th>Result</th>
 
                 <th>Balance</th>
                 <th>Deposit</th>
@@ -25,23 +25,22 @@
                 <th>Delta</th>
             </tr>
 
-            <tr v-for="row in preparedTableData" :key="row.month" :class="row.isMonthRow ? '' : 'boldRow'">
+            <tr v-for="row in preparedTableData" :key="row.month" :class="!row.isMonthRow && !showOnlyYears ? 'boldRow' : ''">
                 <td>{{ row.month }}</td>
 
                 <td>{{ row.income | formatMoneyToString }}</td>
                 <td>{{ row.expense | formatMoneyToString }}</td>
                 <td>{{ row.trans | formatMoneyToString }}</td>
-                <td>{{ row.result | formatMoneyToString }}</td>
                 <td>{{ row.avgIncome | formatMoneyToString }}</td>
                 <td>{{ row.avgExpense | formatMoneyToString }}</td>
+                <td :class="'boldRow'">{{ row.result | formatMoneyToString }}</td>
 
                 <td>{{ row.balance | formatMoneyToString }}</td>
                 <td>{{ row.deposit | formatMoneyToString }}</td>
                 <td>{{ row.invest | formatMoneyToString }}</td>
-                <td>{{ row.summ | formatMoneyToString }}</td>
+                <td :class="'boldRow'">{{ row.summ | formatMoneyToString }}</td>
                 <td>{{ row.delta | formatMoneyToString }}</td>
             </tr>
-
         </table>
     </div>
 </template>
@@ -91,7 +90,7 @@ export default {
             for (let year of monthsSpace) {
                 const monthRows = [];
                 for (let monthToken of year.monthsTokens) {
-                    const perCurrencyOps = preparedOps.perMonthPerCurrencyOps[monthToken] || { [currency]: [] }
+                    const perCurrencyOps = preparedOps.perMonthPerCurrencyOps[monthToken] || { [currency]: [] };
                     const monthRow = this.makeMonthlyRow(monthToken, perCurrencyOps[currency] || []);
                     monthRows.push(monthRow);
                     result.push(monthRow);
@@ -153,7 +152,7 @@ export default {
             return {
                 month: monthToken,
                 income, expense, trans,
-                result: income + expense,
+                result: income + expense + trans,
                 balance, deposit, invest,
                 summ: balance + deposit + invest,
             };
@@ -183,7 +182,7 @@ export default {
             return {
                 month: yearToken,
                 income, expense, trans,
-                result: income + expense,
+                result: income + expense + trans,
                 avgIncome: income / months,
                 avgExpense: expense / months,
                 balance, deposit, invest,

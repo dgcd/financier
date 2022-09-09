@@ -2,7 +2,7 @@
     <div>
         <h2>By category</h2>
 
-        <table class="tbl">
+        <table class="tbl" v-if="preparedData.length">
             <tr>
                 <th>Category</th>
                 <th v-if="showSubcategories">Subcategory</th>
@@ -11,7 +11,7 @@
             <tr
                 v-for="row in preparedRows"
                 :key="row.id"
-                :class="!row.isSubcat && showSubcategories ? 'boldRow' : ''"
+                :class="row.isSummary || !row.isSubcat && showSubcategories ? 'boldRow' : ''"
             >
                 <td>{{ row.isSubcat ? '' : row.categoryTitle }}</td>
                 <td v-if="showSubcategories">{{ row.subcategoryTitle }}</td>
@@ -59,21 +59,17 @@ export default {
             return columns.reverse();
         },
 
-        monthsSpaceLength() {
-            let length = this.makeMonthsSpace().length;
-            for (let year of this.makeMonthsSpace()) {
-                length += year.monthsTokens.length;
-            }
-            return length;
-        },
 
         preparedData() {
             const preparedOps = this.groupOpsByMonthByCurrencyByCategories();
             const monthsSpace = this.makeMonthsSpace();
+            const monthsSpaceLength = this.monthsSpaceLength();
             const categoriesTree = this.getCategoriesTree();
-            const tableData = this.makeTableData(monthsSpace, preparedOps, categoriesTree, this.currency);
+            const tableData = this.makeTableData(monthsSpace, monthsSpaceLength, preparedOps, categoriesTree, this.currency);
+            console.log("preparedData: ", tableData);
             return tableData;
         },
+
 
         preparedRows() {
             let tableData = this.preparedData;
@@ -87,79 +83,154 @@ export default {
                     return newRow;
                 });
             }
+            console.log("preparedRows: ", tableData);
             return tableData;
         },
     },
 
     methods: {
-        ...mapGetters(['groupOpsByMonthByCurrencyByCategories', 'makeMonthsSpace', 'getCategoriesTree']),
+        ...mapGetters([
+            'groupOpsByMonthByCurrencyByCategories',
+            'makeMonthsSpace',
+            'getCategoriesTree',
+            'monthsSpaceLength',
+        ]),
 
-        makeTableData(monthsSpace, preparedOps, categoriesTree, currency) {
-            const resultRows = [];
-            let rowId = 1;
-            for (let cat of categoriesTree) {
-                const categoryTitle = cat.category;
-                const catRow = {
-                    categoryTitle,
-                    id: rowId++,
-                    columns: [],
-                };
-                const catRows = [];
-                resultRows.push(catRow);
-                for (let subcategoryTitle of cat.subcategories) {
-                    const subCatRow = {
-                        categoryTitle,
-                        subcategoryTitle,
-                        isSubcat: true,
-                        id: rowId++,
-                        columns: [],
-                    }
-                    let columnsId = 1;
-                    resultRows.push(subCatRow);
-                    catRows.push(subCatRow);
-                    for (let year of monthsSpace) {
-                        let yearAmount = 0;
-                        for (let month of year.monthsTokens) {
-                            let monthAmount = 0;
-                            if (preparedOps[month] &&
-                                preparedOps[month][currency] &&
-                                preparedOps[month][currency][categoryTitle] &&
-                                preparedOps[month][currency][categoryTitle][subcategoryTitle]
-                            ) {
-                                for (let op of preparedOps[month][currency][categoryTitle][subcategoryTitle]) {
-                                    monthAmount += op.amount;
-                                }
-                            }
-                            subCatRow.columns.push({
-                                amount: monthAmount,
-                                isMonth: true,
-                                id: columnsId++,
-                            });
-                            yearAmount += monthAmount;
-                        }
-                        subCatRow.columns.push({
-                            amount: yearAmount,
-                            id: columnsId++,
-                        });
-                    }
-                    subCatRow.columns = subCatRow.columns.reverse();
-                }
 
-                for (let i = 0; i < this.monthsSpaceLength; i++) {
-                    let amountSumm = 0;
-                    let isMonth;
-                    for (let row of catRows) {
-                        amountSumm += row.columns[i].amount;
-                        isMonth = row.columns[i].isMonth;
-                    }
-                    catRow.columns.push({
-                        amount: amountSumm,
-                        isMonth,
-                        id: i,
-                    });
-                }
+        makeTableData(monthsSpace, monthsSpaceLength, preparedOps, categoriesTree, currency) {
+            let resultRows = [];
+            for (let category of categoriesTree) {
+                const categoryRows = this.getCategoryRows(category, monthsSpace, monthsSpaceLength, preparedOps, currency);
+                resultRows = resultRows.concat(categoryRows);
             }
+            if (!resultRows.length) {
+                return [];
+            }
+            resultRows.push(this.getSummaryRow(resultRows, monthsSpaceLength));
             return resultRows;
+        },
+
+
+        getSummaryRow(resultRows, monthsSpaceLength) {
+            const onlyCatRows = resultRows.filter(row => !row.isSubcat);
+            const columns = [];
+            for (let i = 0; i < monthsSpaceLength; i++) {
+                let amountSumm = 0;
+                let isMonth;
+                let id;
+                for (let row of onlyCatRows) {
+                    const column = row.columns[i];
+                    amountSumm += column.amount;
+                    isMonth = column.isMonth;
+                    id = column.id;
+                }
+                columns.push({
+                    amount: amountSumm,
+                    isMonth,
+                    id: id + '_summary',
+                });
+            }
+            return {
+                categoryTitle: 'Summary',
+                id: 'Summary',
+                isSummary: true,
+                isSubcat: false,
+                columns,
+            };
+        },
+
+
+        getCategoryRows(category, monthsSpace, monthsSpaceLength, preparedOps, currency) {
+            const subcategoriesRows = this.getSubcategoriesRows(category, monthsSpace, preparedOps, currency);
+            const notEmptyRows = this.filterEmptySubcategoryRows(subcategoriesRows);
+            if (!notEmptyRows.length) {
+                return [];
+            }
+            const categoryRow = {
+                categoryTitle: category.category,
+                id: category.category,
+                columns: [],
+            };
+            for (let i = 0; i < monthsSpaceLength; i++) {
+                let amountSumm = 0;
+                let isMonth;
+                let id;
+                for (let row of notEmptyRows) {
+                    const column = row.columns[i];
+                    amountSumm += column.amount;
+                    isMonth = column.isMonth;
+                    id = column.id;
+                }
+                categoryRow.columns.push({
+                    amount: amountSumm,
+                    isMonth,
+                    id: id + '_year',
+                });
+            }
+            return [categoryRow].concat(notEmptyRows);
+        },
+
+
+        filterEmptySubcategoryRows(subcategoriesRows) {
+            return subcategoriesRows
+                .filter(row => {
+                    for (let column of row.columns) {
+                        if (column.isMonth && column.amount !== 0) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+        },
+
+
+        getSubcategoriesRows(category, monthsSpace, preparedOps, currency) {
+            return category.subcategories
+                .map(subcategoryTitle => { return {
+                    categoryTitle: category.category,
+                    subcategoryTitle,
+                    isSubcat: true,
+                    id: category.category + '_' + subcategoryTitle,
+                    columns: this.getYearsColumns(monthsSpace, preparedOps, currency, category.category, subcategoryTitle).reverse(),
+                }})
+        },
+
+
+        getYearsColumns(monthsSpace, preparedOps, currency, categoryTitle, subcategoryTitle) {
+            let allColumns = [];
+            for (let year of monthsSpace) {
+                const monthsColumns = this.getMonthsColumns(year, preparedOps, currency, categoryTitle, subcategoryTitle);
+                const yearAmount = monthsColumns
+                    .map(col => col.amount)
+                    .reduce((acc, amount) => acc + amount, 0);
+
+                monthsColumns.push({
+                    amount: yearAmount,
+                    id: year.yearToken,
+                });
+                allColumns = allColumns.concat(monthsColumns);
+            }
+            return allColumns;
+        },
+
+
+        getMonthsColumns(year, preparedOps, currency, categoryTitle, subcategoryTitle) {
+            return year.monthsTokens
+                .map(monthToken => { return {
+                        amount: this.getMonthlyAmount(monthToken, preparedOps, currency, categoryTitle, subcategoryTitle),
+                        isMonth: true,
+                        id: monthToken,
+                }});
+        },
+
+        getMonthlyAmount(monthToken, preparedOps, currency, categoryTitle, subcategoryTitle) {
+            if (!preparedOps[monthToken]) return 0;
+            if (!preparedOps[monthToken][currency]) return 0;
+            if (!preparedOps[monthToken][currency][categoryTitle]) return 0;
+            if (!preparedOps[monthToken][currency][categoryTitle][subcategoryTitle]) return 0;
+            return preparedOps[monthToken][currency][categoryTitle][subcategoryTitle]
+                .map(op => op.amount)
+                .reduce((acc, amount) => acc + amount, 0);
         },
     },
 }

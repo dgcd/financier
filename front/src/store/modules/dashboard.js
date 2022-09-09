@@ -98,6 +98,15 @@ export default {
         },
 
 
+        monthsSpaceLength(state, getters, rootState) {
+            let length = getters.makeMonthsSpace.length;
+            for (let year of getters.makeMonthsSpace) {
+                length += year.monthsTokens.length;
+            }
+            return length;
+        },
+
+
         getCategoriesTree(state, getters, rootState) {
             const tree = {};
             for (let op of rootState.operations) {
