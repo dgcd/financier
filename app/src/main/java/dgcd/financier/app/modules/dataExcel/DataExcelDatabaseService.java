@@ -11,12 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -118,10 +117,11 @@ class DataExcelDatabaseService {
 
     private List<Category> saveCategories(List<ParsedData.ParsedCategory> parsedCategories) {
         var parentCategories = parsedCategories.stream()
-                .filter(c -> isNull(c.parentTitle()))
-                .map(c -> new Category(
+                .map(ParsedData.ParsedCategory::parentTitle)
+                .distinct()
+                .map(title -> new Category(
                         null,
-                        c.ownTitle(),
+                        title,
                         null
                 ))
                 .toList();
@@ -139,7 +139,8 @@ class DataExcelDatabaseService {
                 .toList();
         var savedSubcategories = categoriesDaoService.saveAll(subcategories);
 
-        var allCategories = new LinkedList<>(savedParentCategories);
+        var allCategories = new ArrayList<Category>(savedParentCategories.size() + savedSubcategories.size());
+        allCategories.addAll(savedParentCategories);
         allCategories.addAll(savedSubcategories);
         return allCategories;
     }
