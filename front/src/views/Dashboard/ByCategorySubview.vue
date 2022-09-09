@@ -2,7 +2,7 @@
     <div>
         <h2>By category</h2>
 
-        <table class="tbl">
+        <table class="tbl" v-if="preparedData.length">
             <tr>
                 <th>Category</th>
                 <th v-if="showSubcategories">Subcategory</th>
@@ -102,6 +102,9 @@ export default {
             for (let category of categoriesTree) {
                 const categoryRows = this.getCategoryRows(category, monthsSpace, monthsSpaceLength, preparedOps, currency);
                 resultRows = resultRows.concat(categoryRows);
+            }
+            if (!resultRows.length) {
+                return [];
             }
             resultRows.push(this.getSummaryRow(resultRows, monthsSpaceLength));
             return resultRows;

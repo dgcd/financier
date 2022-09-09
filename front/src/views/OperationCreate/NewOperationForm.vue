@@ -68,11 +68,11 @@
         </tr>
         <br v-if="showCategories">
 
-        <tr>
+        <tr v-if="operationType !== 'BASE'">
             <td><span>Comment: </span></td>
             <td><input type="text" v-model.trim="comment" placeholder="enter comment"></td>
         </tr>
-        <tr v-if="!isTrans">
+        <tr v-if="!isTrans && operationType !== 'BASE'">
             <td><span>Counterparty: </span></td>
             <td><input type="text" v-model.trim="counterparty" placeholder="enter counterparty"></td>
         </tr>

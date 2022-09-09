@@ -45,7 +45,11 @@ export default new Vuex.Store({
         },
 
         addOperations(state, operations) {
-            operations.forEach(op => op.thisSession = true);
+            operations.forEach(op => {
+                op.thisSession = true;
+                if (!op.categoryTitle) op.categoryTitle = 'n/a';
+                if (!op.subcategoryTitle) op.subcategoryTitle = 'n/a';
+            });
             state.operations = [...operations, ...state.operations];
         },
 
