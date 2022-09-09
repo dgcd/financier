@@ -11,12 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -54,24 +53,11 @@ class DataExcelDatabaseService {
     private List<Category> getAndSortCategories() {
         return categoriesDaoService.findAll()
                 .stream()
-                .sorted((c1, c2) -> {
-                    if (isNull(c1.getParent()) && nonNull(c2.getParent())) {
-                        return -1;
-                    }
-                    if (nonNull(c1.getParent()) && isNull(c2.getParent())) {
-                        return 1;
-                    }
-                    return 0;
-                })
-                .sorted((c1, c2) -> {
-                    if (isNull(c1.getParent()) && isNull(c2.getParent())) {
-                        return c1.getTitle().compareTo(c2.getTitle());
-                    }
-                    if (isNull(c1.getParent()) || isNull(c2.getParent())) {
-                        return 0;
-                    }
-                    return c1.getParent().getTitle().compareTo(c2.getParent().getTitle());
-                })
+                .filter(c -> nonNull(c.getParent()))
+                .sorted((c1, c2) ->
+                        c1.getParent().getTitle().equals(c2.getParent().getTitle()) ?
+                                c1.getTitle().compareTo(c2.getTitle()) :
+                                c1.getParent().getTitle().compareTo(c2.getParent().getTitle()))
                 .toList();
     }
 
@@ -131,10 +117,11 @@ class DataExcelDatabaseService {
 
     private List<Category> saveCategories(List<ParsedData.ParsedCategory> parsedCategories) {
         var parentCategories = parsedCategories.stream()
-                .filter(c -> isNull(c.parentTitle()))
-                .map(c -> new Category(
+                .map(ParsedData.ParsedCategory::parentTitle)
+                .distinct()
+                .map(title -> new Category(
                         null,
-                        c.ownTitle(),
+                        title,
                         null
                 ))
                 .toList();
@@ -152,7 +139,8 @@ class DataExcelDatabaseService {
                 .toList();
         var savedSubcategories = categoriesDaoService.saveAll(subcategories);
 
-        var allCategories = new LinkedList<>(savedParentCategories);
+        var allCategories = new ArrayList<Category>(savedParentCategories.size() + savedSubcategories.size());
+        allCategories.addAll(savedParentCategories);
         allCategories.addAll(savedSubcategories);
         return allCategories;
     }
