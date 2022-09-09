@@ -1,10 +1,6 @@
 <template>
     <div>
         <table class="tbl">
-            <!-- <tr>
-                <th :colspan="4 + (showChecked ? 1 : 0)" scope="colgroup"></th>
-                <th :colspan="getHistoryColumns.length" scope="colgroup">History</th>
-            </tr> -->
             <tr>
                 <th>Id</th>
                 <th>Title</th>

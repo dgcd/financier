@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import selections from "./modules/selections.js";
+import dashboard from "./modules/dashboard.js";
 
 
 Vue.use(Vuex);
@@ -20,7 +21,12 @@ export default new Vuex.Store({
             state.rates = initData.rates;
             state.accounts = initData.accounts;
             state.categories = initData.categories;
-            state.operations = initData.operations;
+            state.operations = initData.operations
+                .map(op => {
+                    if (!op.categoryTitle) op.categoryTitle = 'n/a';
+                    if (!op.subcategoryTitle) op.subcategoryTitle = 'n/a';
+                    return op;
+                });
             state.isAppReady = true;
         },
 
@@ -51,5 +57,6 @@ export default new Vuex.Store({
 
     modules: {
         selections,
+        dashboard,
     },
 });
