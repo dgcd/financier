@@ -11,3 +11,7 @@ table.tbl td,th {
 tr.boldRow {
     font-weight: bold;
 }
+
+td.boldRow {
+    font-weight: bold;
+}

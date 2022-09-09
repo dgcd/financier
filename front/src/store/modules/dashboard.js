@@ -6,7 +6,6 @@ export default {
 
     getters: {
         groupOpsAndBaseByMonthByCurrency(state, getters, rootState) {
-            console.log("groupOpsAndBaseByMonthByCurrency()");
             let basePerCurrencyOps = {};
             let perMonthPerCurrencyOps = {};
             for (let op of rootState.operations) {
@@ -34,7 +33,6 @@ export default {
 
 
         groupOpsByMonthByCurrencyByCategories(state, getters, rootState) {
-            console.log("groupOpsByMonthByCurrencyByCategories()");
             const src = getters.groupOpsAndBaseByMonthByCurrency.perMonthPerCurrencyOps;
             const result = {};
             for (let month of Object.keys(src)) {
@@ -60,7 +58,6 @@ export default {
 
 
         makeMonthsSpace(state, getters, rootState) {
-            console.log("makeMonthsSpace()");
             let minDate = utils.getTodayDateString();
             let maxDate = utils.getTodayDateString();
             for (let op of rootState.operations) {
@@ -102,14 +99,13 @@ export default {
 
 
         getCategoriesTree(state, getters, rootState) {
-            console.log("getCategoriesTree()");
             const tree = {};
             for (let op of rootState.operations) {
-                const categoryTitle = op.categoryTitle || 'n/a';
+                const categoryTitle = op.categoryTitle;
                 if (!tree[categoryTitle]) {
                     tree[categoryTitle] = new Set();
                 }
-                tree[categoryTitle].add(op.subcategoryTitle || 'n/a');
+                tree[categoryTitle].add(op.subcategoryTitle);
             }
 
             const result = [];

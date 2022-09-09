@@ -8,10 +8,18 @@
                 <th v-if="showSubcategories">Subcategory</th>
                 <th v-for="col in monthsAndYearsColumns" :key="col">{{ col }}</th>
             </tr>
-            <tr v-for="row in preparedRows" :key="row.id" :class="row.isSubcat ? '' : 'boldRow'">
+            <tr
+                v-for="row in preparedRows"
+                :key="row.id"
+                :class="!row.isSubcat && showSubcategories ? 'boldRow' : ''"
+            >
                 <td>{{ row.isSubcat ? '' : row.categoryTitle }}</td>
                 <td v-if="showSubcategories">{{ row.subcategoryTitle }}</td>
-                <td v-for="col in row.columns" :key="col.id">{{ col.amount | formatMoneyToString }}</td>
+                <td
+                    v-for="col in row.columns"
+                    :key="col.id"
+                    :class="!col.isMonth && !showOnlyYears ? 'boldRow' : ''"
+                >{{ col.amount | formatMoneyToString }}</td>
             </tr>
         </table>
     </div>
@@ -40,7 +48,6 @@ export default {
 
     computed: {
         monthsAndYearsColumns() {
-            console.log("monthsAndYearsColumns");
             const monthsSpace = this.makeMonthsSpace();
             let columns = [];
             for (let year of monthsSpace) {
@@ -61,20 +68,14 @@ export default {
         },
 
         preparedData() {
-            console.log("preparedData (by cat)");
             const preparedOps = this.groupOpsByMonthByCurrencyByCategories();
-            // console.log("preparedOps: ", preparedOps)
             const monthsSpace = this.makeMonthsSpace();
-            // console.log("monthsSpace: ", monthsSpace)
             const categoriesTree = this.getCategoriesTree();
-            // console.log("categoriesTree: ", categoriesTree)
             const tableData = this.makeTableData(monthsSpace, preparedOps, categoriesTree, this.currency);
-            // console.log("tableData: ", tableData)
             return tableData;
         },
 
         preparedRows() {
-            console.log("preparedRows (by cat)");
             let tableData = this.preparedData;
             if (!this.showSubcategories) {
                 tableData = tableData.filter(row => !row.isSubcat);
@@ -97,17 +98,18 @@ export default {
             const resultRows = [];
             let rowId = 1;
             for (let cat of categoriesTree) {
+                const categoryTitle = cat.category;
                 const catRow = {
-                    categoryTitle: cat.category,
+                    categoryTitle,
                     id: rowId++,
                     columns: [],
                 };
                 const catRows = [];
                 resultRows.push(catRow);
-                for (let subCat of cat.subcategories) {
+                for (let subcategoryTitle of cat.subcategories) {
                     const subCatRow = {
-                        categoryTitle: cat.category,
-                        subcategoryTitle: subCat,
+                        categoryTitle,
+                        subcategoryTitle,
                         isSubcat: true,
                         id: rowId++,
                         columns: [],
@@ -121,10 +123,10 @@ export default {
                             let monthAmount = 0;
                             if (preparedOps[month] &&
                                 preparedOps[month][currency] &&
-                                preparedOps[month][currency][cat.category] &&
-                                preparedOps[month][currency][cat.category][subCat]
+                                preparedOps[month][currency][categoryTitle] &&
+                                preparedOps[month][currency][categoryTitle][subcategoryTitle]
                             ) {
-                                for (let op of preparedOps[month][currency][cat.category][subCat]) {
+                                for (let op of preparedOps[month][currency][categoryTitle][subcategoryTitle]) {
                                     monthAmount += op.amount;
                                 }
                             }
