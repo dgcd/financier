@@ -65,7 +65,6 @@ export default {
 
     computed: {
         preparedTableData() {
-            console.log("preparedTableData (overall)");
             const preparedOps = this.groupOpsAndBaseByMonthByCurrency();
             const monthsSpace = this.makeMonthsSpace();
             const tableData = this.makeTableData(monthsSpace, preparedOps, this.currency);
