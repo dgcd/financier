@@ -54,24 +54,11 @@ class DataExcelDatabaseService {
     private List<Category> getAndSortCategories() {
         return categoriesDaoService.findAll()
                 .stream()
-                .sorted((c1, c2) -> {
-                    if (isNull(c1.getParent()) && nonNull(c2.getParent())) {
-                        return -1;
-                    }
-                    if (nonNull(c1.getParent()) && isNull(c2.getParent())) {
-                        return 1;
-                    }
-                    return 0;
-                })
-                .sorted((c1, c2) -> {
-                    if (isNull(c1.getParent()) && isNull(c2.getParent())) {
-                        return c1.getTitle().compareTo(c2.getTitle());
-                    }
-                    if (isNull(c1.getParent()) || isNull(c2.getParent())) {
-                        return 0;
-                    }
-                    return c1.getParent().getTitle().compareTo(c2.getParent().getTitle());
-                })
+                .filter(c -> nonNull(c.getParent()))
+                .sorted((c1, c2) ->
+                        c1.getParent().getTitle().equals(c2.getParent().getTitle()) ?
+                                c1.getTitle().compareTo(c2.getTitle()) :
+                                c1.getParent().getTitle().compareTo(c2.getParent().getTitle()))
                 .toList();
     }
 
