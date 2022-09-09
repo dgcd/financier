@@ -152,7 +152,7 @@ export default {
             return {
                 month: monthToken,
                 income, expense, trans,
-                result: income + expense,
+                result: income + expense + trans,
                 balance, deposit, invest,
                 summ: balance + deposit + invest,
             };
@@ -182,7 +182,7 @@ export default {
             return {
                 month: yearToken,
                 income, expense, trans,
-                result: income + expense,
+                result: income + expense + trans,
                 avgIncome: income / months,
                 avgExpense: expense / months,
                 balance, deposit, invest,

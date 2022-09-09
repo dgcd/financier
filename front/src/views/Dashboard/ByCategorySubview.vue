@@ -11,7 +11,7 @@
             <tr
                 v-for="row in preparedRows"
                 :key="row.id"
-                :class="!row.isSubcat && showSubcategories ? 'boldRow' : ''"
+                :class="row.isSummary || !row.isSubcat && showSubcategories ? 'boldRow' : ''"
             >
                 <td>{{ row.isSubcat ? '' : row.categoryTitle }}</td>
                 <td v-if="showSubcategories">{{ row.subcategoryTitle }}</td>
@@ -60,27 +60,13 @@ export default {
         },
 
 
-        // monthsSpaceLength() {
-        //     let length = this.makeMonthsSpace().length;
-        //     for (let year of this.makeMonthsSpace()) {
-        //         length += year.monthsTokens.length;
-        //     }
-        //     return length;
-        // },
-
-
         preparedData() {
             const preparedOps = this.groupOpsByMonthByCurrencyByCategories();
             const monthsSpace = this.makeMonthsSpace();
-            console.log("monthsSpace: ", monthsSpace)
-            const categoriesTree = this.getCategoriesTree();
-            console.log("categoriesTree: ", categoriesTree)
-    
             const monthsSpaceLength = this.monthsSpaceLength();
-            console.log("monthsSpaceLength: ", monthsSpaceLength)
-            
+            const categoriesTree = this.getCategoriesTree();
             const tableData = this.makeTableData(monthsSpace, monthsSpaceLength, preparedOps, categoriesTree, this.currency);
-            console.log("tableData: ", tableData)
+            console.log("preparedData: ", tableData);
             return tableData;
         },
 
@@ -97,6 +83,7 @@ export default {
                     return newRow;
                 });
             }
+            console.log("preparedRows: ", tableData);
             return tableData;
         },
     },
@@ -108,6 +95,7 @@ export default {
             'getCategoriesTree',
             'monthsSpaceLength',
         ]),
+
 
         makeTableData(monthsSpace, monthsSpaceLength, preparedOps, categoriesTree, currency) {
             let resultRows = [];
@@ -122,11 +110,7 @@ export default {
 
         getSummaryRow(resultRows, monthsSpaceLength) {
             const onlyCatRows = resultRows.filter(row => !row.isSubcat);
-            console.log("onlyCatRows: ", onlyCatRows);
-            console.log("monthsSpaceLength: ", monthsSpaceLength);
-
             const columns = [];
-
             for (let i = 0; i < monthsSpaceLength; i++) {
                 let amountSumm = 0;
                 let isMonth;
@@ -143,9 +127,6 @@ export default {
                     id: id + '_summary',
                 });
             }
-
-            
-
             return {
                 categoryTitle: 'Summary',
                 id: 'Summary',
@@ -186,6 +167,7 @@ export default {
             return [categoryRow].concat(notEmptyRows);
         },
 
+
         filterEmptySubcategoryRows(subcategoriesRows) {
             return subcategoriesRows
                 .filter(row => {
@@ -198,6 +180,7 @@ export default {
                 });
         },
 
+
         getSubcategoriesRows(category, monthsSpace, preparedOps, currency) {
             return category.subcategories
                 .map(subcategoryTitle => { return {
@@ -208,6 +191,7 @@ export default {
                     columns: this.getYearsColumns(monthsSpace, preparedOps, currency, category.category, subcategoryTitle).reverse(),
                 }})
         },
+
 
         getYearsColumns(monthsSpace, preparedOps, currency, categoryTitle, subcategoryTitle) {
             let allColumns = [];
@@ -225,6 +209,7 @@ export default {
             }
             return allColumns;
         },
+
 
         getMonthsColumns(year, preparedOps, currency, categoryTitle, subcategoryTitle) {
             return year.monthsTokens
