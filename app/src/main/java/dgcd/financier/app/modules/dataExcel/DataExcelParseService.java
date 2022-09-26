@@ -4,13 +4,13 @@ import dgcd.financier.app.dictionary.Currency;
 import dgcd.financier.app.dictionary.OperationType;
 import dgcd.financier.app.modules.dataExcel.exceptions.ImportingException;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -32,7 +32,6 @@ import static org.springframework.util.StringUtils.hasText;
 @RequiredArgsConstructor
 class DataExcelParseService {
 
-    @SneakyThrows
     ParsedData parseDataFromExcel(InputStream inputStream) {
         try (var workbook = new XSSFWorkbook(inputStream)) {
             return new ParsedData(
@@ -40,6 +39,8 @@ class DataExcelParseService {
                     parseCategories(workbook),
                     parseOperations(workbook)
             );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

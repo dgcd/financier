@@ -1,6 +1,5 @@
 package dgcd.financier.app.infrastructure.actuator;
 
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.actuate.info.Info;
@@ -9,6 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -31,7 +31,6 @@ public class TechInfoContributor implements InfoContributor {
     private final String javaVmInfo;
 
 
-    @SneakyThrows
     public TechInfoContributor(
             @Value("${spring.application.name}") String appName,
             DeploymentProperties deploymentProperties,
@@ -42,7 +41,11 @@ public class TechInfoContributor implements InfoContributor {
         this.appBuildtime = deploymentProperties.buildtime();
         this.springProfiles = Arrays.toString(env.getActiveProfiles());
         this.springBootVersion = SpringBootVersion.getVersion();
-        this.hostname = InetAddress.getLocalHost().getHostName();
+        try {
+            this.hostname = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
         this.javaVersion = System.getProperty("java.version");
         this.javaVmInfo = String.format(
                 "%s - %s (build %s, %s)",

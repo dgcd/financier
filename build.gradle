@@ -18,8 +18,8 @@ subprojects {
 
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
-    sourceCompatibility = JavaVersion.VERSION_18
-    targetCompatibility = JavaVersion.VERSION_18
+    sourceCompatibility = JavaVersion.VERSION_19
+    targetCompatibility = JavaVersion.VERSION_19
 
     repositories {
         maven { url 'https://repo.spring.io/milestone' }
@@ -64,7 +64,6 @@ subprojects {
         it.jvmArgs([
                 '-XX:+HeapDumpOnOutOfMemoryError',
                 '-XX:MaxMetaspaceSize=128m',
-                '-XX:+UseShenandoahGC',
                 '-Xmx512m',
         ])
     }

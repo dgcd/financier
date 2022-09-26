@@ -5,10 +5,10 @@ import dgcd.financier.app.infrastructure.dto.CommonResponseDto;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import static dgcd.financier.app.infrastructure.web.WebConstants.DATA_EXCEL_EXPORT_PATH;
@@ -25,7 +25,6 @@ class DataExcelController {
     private final DataExcelService dataExcelService;
 
 
-    @SneakyThrows
     @LogControllerData(logParams = false)
     @PostMapping(value = DATA_EXCEL_EXPORT_PATH, consumes = APPLICATION_JSON_VALUE)
     public void exportAllData(HttpServletResponse response) {
@@ -36,6 +35,8 @@ class DataExcelController {
         );
         try (var outputStream = response.getOutputStream()) {
             dataExcelService.exportAllDataToExcel(outputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
