@@ -5,11 +5,15 @@
         <table class="tbl">
             <tr>
                 <th colspan="1" scope="colgroup"></th>
+                <th colspan="1" scope="colgroup"></th>
                 <th colspan="6" scope="colgroup">Movement</th>
+                <th colspan="1" scope="colgroup"></th>
                 <th colspan="5" scope="colgroup">Balance</th>
             </tr>
             <tr>
                 <th>Month</th>
+
+                <th></th>
 
                 <th>Income</th>
                 <th>Expense</th>
@@ -17,6 +21,8 @@
                 <th>Avg inc</th>
                 <th>Avg exp</th>
                 <th>Result</th>
+
+                <th></th>
 
                 <th>Balance</th>
                 <th>Deposit</th>
@@ -28,12 +34,16 @@
             <tr v-for="row in preparedTableData" :key="row.month" :class="!row.isMonthRow && !showOnlyYears ? 'boldRow' : ''">
                 <td>{{ row.month }}</td>
 
+                <td></td>
+
                 <td>{{ row.income | formatMoneyToString }}</td>
                 <td>{{ row.expense | formatMoneyToString }}</td>
                 <td>{{ row.trans | formatMoneyToString }}</td>
                 <td>{{ row.avgIncome | formatMoneyToString }}</td>
                 <td>{{ row.avgExpense | formatMoneyToString }}</td>
                 <td :class="'boldRow'">{{ row.result | formatMoneyToString }}</td>
+
+                <td></td>
 
                 <td>{{ row.balance | formatMoneyToString }}</td>
                 <td>{{ row.deposit | formatMoneyToString }}</td>
