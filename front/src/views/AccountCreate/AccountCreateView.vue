@@ -51,8 +51,8 @@ export default {
                 this.error = 'Title must not be empty';
                 return;
             }
-            if (this.account.title.length < 1 || this.account.title.length > 30) {
-                this.error = 'Title length must be 1..30';
+            if (this.account.title.length < 1 || this.account.title.length > 40) {
+                this.error = 'Title length must be 1..40';
                 return;
             }
 

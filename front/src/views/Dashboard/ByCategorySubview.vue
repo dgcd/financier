@@ -186,13 +186,13 @@ export default {
 
         getSubcategoriesRows(category, monthsSpace, preparedOps, currency) {
             return category.subcategories
-                .map(subcategoryTitle => { return {
+                .map(subcategoryTitle => ({
                     categoryTitle: category.category,
                     subcategoryTitle,
                     isSubcat: true,
                     id: category.category + '_' + subcategoryTitle,
                     columns: this.getYearsColumns(monthsSpace, preparedOps, currency, category.category, subcategoryTitle).reverse(),
-                }})
+                }));
         },
 
 
@@ -216,11 +216,11 @@ export default {
 
         getMonthsColumns(year, preparedOps, currency, categoryTitle, subcategoryTitle) {
             return year.monthsTokens
-                .map(monthToken => { return {
+                .map(monthToken => ({
                         amount: this.getMonthlyAmount(monthToken, preparedOps, currency, categoryTitle, subcategoryTitle),
                         isMonth: true,
                         id: monthToken,
-                }});
+                }));
         },
 
         getMonthlyAmount(monthToken, preparedOps, currency, categoryTitle, subcategoryTitle) {

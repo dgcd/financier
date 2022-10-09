@@ -7,7 +7,6 @@ import dgcd.financier.app.modules.category.Category;
 import dgcd.financier.app.modules.operation.Operation;
 import jakarta.servlet.ServletOutputStream;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -30,11 +29,12 @@ class DataExcelService {
     }
 
 
-    @SneakyThrows
     public ImportDataResponseDto importAllDataFromExcel(ImportDataRequestDto dto) {
         ParsedData parsedData;
         try (var inputStream = dto.file().getInputStream()) {
             parsedData = dataExcelParseService.parseDataFromExcel(inputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         dataExcelDatabaseService.saveParsedData(parsedData);
