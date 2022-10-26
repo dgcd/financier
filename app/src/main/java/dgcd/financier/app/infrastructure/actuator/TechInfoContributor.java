@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.boot.actuate.info.InfoContributor;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -19,7 +21,6 @@ import java.util.Map;
 public class TechInfoContributor implements InfoContributor {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-
 
     private final String appName;
     private final String appVersion;
@@ -33,12 +34,12 @@ public class TechInfoContributor implements InfoContributor {
 
     public TechInfoContributor(
             @Value("${spring.application.name}") String appName,
-            DeploymentProperties deploymentProperties,
-            Environment env
+            Environment env,
+            BuildProperties buildProperties
     ) {
         this.appName = appName;
-        this.appVersion = deploymentProperties.version();
-        this.appBuildtime = deploymentProperties.buildtime();
+        this.appVersion = buildProperties.getVersion();
+        this.appBuildtime = LocalDateTime.ofInstant(buildProperties.getTime(), ZoneId.systemDefault()).format(FORMATTER);
         this.springProfiles = Arrays.toString(env.getActiveProfiles());
         this.springBootVersion = SpringBootVersion.getVersion();
         try {
