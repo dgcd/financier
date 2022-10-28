@@ -13,14 +13,10 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
 
     // misc
-    implementation "org.apache.poi:poi-ooxml:${apachePoiVersion}"
+    implementation "org.apache.poi:poi-ooxml:$apachePoiVersion"
 
     // testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-springBoot {
-    buildInfo()
 }
 
 tasks.named('bootJar') {
