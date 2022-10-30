@@ -37,7 +37,7 @@ class OperationsController {
 
     @LogControllerData
     @PostMapping(OPERATIONS_CANCEL_PATH)
-    public CommonResponseDto closeAccount(
+    public CommonResponseDto cancelOperation(
             @Valid @RequestBody CommonIdDto dto
     ) {
         var payload = operationsService.cancelOperation(dto);
