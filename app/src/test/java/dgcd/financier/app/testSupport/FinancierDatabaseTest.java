@@ -2,6 +2,7 @@ package dgcd.financier.app.testSupport;
 
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,5 +18,6 @@ import java.lang.annotation.Target;
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test_with_db")
+@Import(TestConfig.class)
 public @interface FinancierDatabaseTest {
 }
