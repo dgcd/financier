@@ -40,7 +40,7 @@ public class LogControllerDataAspect {
             String methodName,
             Object[] args
     ) {
-        if (logParams) {
+        if (logParams && args.length > 0) {
             var argsString = Arrays.toString(args);
             log.info(">>> Method {} is called with params: {}", methodName, argsString);
         } else {
