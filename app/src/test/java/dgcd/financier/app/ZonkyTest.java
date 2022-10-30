@@ -1,0 +1,34 @@
+package dgcd.financier.app;
+
+import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import static io.zonky.test.db.AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY;
+import static io.zonky.test.db.AutoConfigureEmbeddedDatabase.DatabaseType.POSTGRES;
+import static org.assertj.core.api.Assertions.assertThat;
+
+@Disabled("Build properties")
+@SpringBootTest(properties = {
+        "spring.flyway.enabled=false",
+        "spring.jpa.hibernate.ddl-auto=none",
+})
+@AutoConfigureEmbeddedDatabase(provider = ZONKY, type = POSTGRES)
+public class ZonkyTest {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+
+    @Test
+    void checkPostgresVersion() {
+        var version = jdbcTemplate.queryForObject("select version();", String.class);
+
+        assertThat(version).isNotNull();
+        assertThat(version).contains("PostgreSQL 14.5");
+    }
+
+}

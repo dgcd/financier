@@ -13,10 +13,18 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
 
     // misc
-    implementation "org.apache.poi:poi-ooxml:${apachePoiVersion}"
+    implementation "org.apache.poi:poi-ooxml:$apachePoiVersion"
 
     // testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "io.zonky.test:embedded-database-spring-test:$zonkySpringVersion"
+    testImplementation "io.zonky.test:embedded-postgres:$zonkyPostgresVersion"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "io.zonky.test.postgres:embedded-postgres-binaries-bom:$zonkyPostgresBomVersion"
+    }
 }
 
 tasks.named('bootJar') {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
@@ -62,17 +63,17 @@ public class ApplicationControllerAdvice {
     private ResponseEntity<CommonResponseDto> makeResponse(
             Exception exception,
             String errorMessage,
-            HttpStatus respenseStatus
+            HttpStatus responseStatus
     ) {
         log.warn("Exception occured: ", exception);
 
         var httpHeaders = new HttpHeaders();
-        httpHeaders.add("Content-Type", APPLICATION_JSON_VALUE);
+        httpHeaders.add(CONTENT_TYPE, APPLICATION_JSON_VALUE);
 
         return new ResponseEntity<>(
                 CommonResponseDto.error(errorMessage),
                 httpHeaders,
-                respenseStatus
+                responseStatus
         );
     }
 
