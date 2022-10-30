@@ -1,7 +1,6 @@
 package dgcd.financier.app;
 
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,8 +10,8 @@ import static io.zonky.test.db.AutoConfigureEmbeddedDatabase.DatabaseProvider.ZO
 import static io.zonky.test.db.AutoConfigureEmbeddedDatabase.DatabaseType.POSTGRES;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled("Build properties")
 @SpringBootTest(properties = {
+        // todo: disabled until newer Flyway support
         "spring.flyway.enabled=false",
         "spring.jpa.hibernate.ddl-auto=none",
 })
@@ -28,7 +27,7 @@ public class ZonkyTest {
         var version = jdbcTemplate.queryForObject("select version();", String.class);
 
         assertThat(version).isNotNull();
-        assertThat(version).contains("PostgreSQL 14.5");
+        assertThat(version).contains("PostgreSQL 15.");
     }
 
 }
