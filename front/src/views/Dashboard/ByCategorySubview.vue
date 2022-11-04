@@ -66,7 +66,6 @@ export default {
             const monthsSpaceLength = this.monthsSpaceLength();
             const categoriesTree = this.getCategoriesTree();
             const tableData = this.makeTableData(monthsSpace, monthsSpaceLength, preparedOps, categoriesTree, this.currency);
-            console.log("preparedData: ", tableData);
             return tableData;
         },
 
@@ -83,7 +82,6 @@ export default {
                     return newRow;
                 });
             }
-            console.log("preparedRows: ", tableData);
             return tableData;
         },
     },
