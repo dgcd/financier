@@ -1,0 +1,13 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+}
+
+tasks.named('jar') {
+//    archiveFileName = 'financier-domain.jar'
+    manifest {
+        attributes('Automatic-Module-Name': 'financier.domain')
+    }
+}

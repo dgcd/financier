@@ -1,8 +1,8 @@
 package dgcd.financier.app.modules.operation.dto;
 
-import dgcd.financier.app.dictionary.Currency;
-import dgcd.financier.app.dictionary.OperationType;
 import dgcd.financier.app.modules.operation.Operation;
+import dgcd.financier.domain.Currency;
+import dgcd.financier.domain.OperationType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,6 +1,6 @@
 package dgcd.financier.app.modules.operation.dto;
 
-import dgcd.financier.app.dictionary.OperationType;
+import dgcd.financier.domain.OperationType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 

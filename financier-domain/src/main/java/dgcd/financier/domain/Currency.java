@@ -1,4 +1,4 @@
-package dgcd.financier.app.dictionary;
+package dgcd.financier.domain;
 
 @SuppressWarnings("unused")
 public enum Currency {

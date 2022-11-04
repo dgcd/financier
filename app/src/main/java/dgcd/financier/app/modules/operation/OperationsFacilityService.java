@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static dgcd.financier.app.dictionary.OperationType.BASE;
-import static dgcd.financier.app.dictionary.OperationType.TRANS;
+import static dgcd.financier.domain.OperationType.BASE;
+import static dgcd.financier.domain.OperationType.TRANS;
 import static java.math.BigDecimal.ONE;
 import static java.util.Objects.isNull;
 

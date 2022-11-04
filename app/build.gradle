@@ -1,4 +1,10 @@
+plugins {
+    id 'org.springframework.boot'
+}
+
 dependencies {
+    implementation project(":financier-domain")
+
     // web
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-websocket'

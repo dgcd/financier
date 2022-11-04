@@ -1,8 +1,8 @@
 package dgcd.financier.app.modules.operation;
 
-import dgcd.financier.app.dictionary.OperationType;
 import dgcd.financier.app.modules.account.Account;
 import dgcd.financier.app.modules.category.Category;
+import dgcd.financier.domain.OperationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

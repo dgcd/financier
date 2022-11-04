@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version "$springBootVersion"
     id 'io.spring.dependency-management' version "$springDependencyManagement"
     id 'java'
+    id 'java-library'
     id 'jacoco'
 }
 
@@ -14,7 +15,6 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
     apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'org.springframework.boot'
 
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
@@ -38,6 +38,11 @@ subprojects {
         testAnnotationProcessor 'org.projectlombok:lombok'
     }
 
+    dependencyManagement {
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+        }
+    }
     // tests configuration
     tasks.named('test') {
         useJUnitPlatform()
