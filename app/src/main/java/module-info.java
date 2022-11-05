@@ -1,7 +1,5 @@
 module financier.app {
-
     requires lombok;
-
     requires spring.context;
     requires spring.core;
     requires spring.beans;
@@ -14,19 +12,10 @@ module financier.app {
     requires org.aspectj.weaver;
 //    requires org.apache.tomcat.embed.core;
     requires org.slf4j;
-
     requires jakarta.validation;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
-
 //    requires org.apache.poi.ooxml;
 
     requires financier.domain;
-
-
-//    requires spring.test;
-//    requires org.hamcrest;
-//    requires spring.boot.test;
-//    requires spring.boot.test.autoconfigure;
-
 }

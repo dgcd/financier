@@ -3,10 +3,11 @@ plugins {
 }
 
 dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.assertj:assertj-core'
 }
 
 tasks.named('jar') {
-//    archiveFileName = 'financier-domain.jar'
     manifest {
         attributes('Automatic-Module-Name': 'financier.domain')
     }
