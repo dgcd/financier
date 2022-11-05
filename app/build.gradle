@@ -6,6 +6,7 @@ dependencies {
     implementation project(':financier-domain')
     implementation project(':financier-usecase')
     implementation project(':financier-rates')
+    implementation project(':financier-repository')
 
     // web
     implementation('org.springframework.boot:spring-boot-starter-web') {

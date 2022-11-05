@@ -16,6 +16,7 @@ public class FinancierApplication {
     private static final Account account = AccountFactory.makeNew("account", Currency.RUB);
     private static final InitDataGetUsecase init = new InitDataGetUsecaseImpl(null, null, null, null, null);
     private static final RatesService rates = new RatesServiceImpl();
+//    private static final Ope
 
     public static void main(String[] args) {
         SpringApplication.run(FinancierApplication.class, args);

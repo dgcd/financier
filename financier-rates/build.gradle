@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation project(':financier-domain')
     implementation project(':financier-usecase')
 
     testImplementation 'org.junit.jupiter:junit-jupiter'

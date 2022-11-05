@@ -20,4 +20,5 @@ module financier.app {
     requires financier.domain;
     requires financier.usecase;
     requires financier.rates;
+    requires financier.repository;
 }
