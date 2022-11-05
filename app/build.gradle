@@ -3,12 +3,12 @@ plugins {
 }
 
 dependencies {
-    implementation project(":financier-domain")
+    implementation project(':financier-domain')
+    implementation project(':financier-usecase')
 
     // web
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-websocket'
-        exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-el'
     }
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

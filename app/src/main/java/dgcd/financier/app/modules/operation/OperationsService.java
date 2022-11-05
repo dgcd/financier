@@ -8,9 +8,9 @@ import dgcd.financier.app.modules.operation.exceptions.OperationCreateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static dgcd.financier.domain.OperationType.BASE;
-import static dgcd.financier.domain.OperationType.EXCHANGE;
-import static dgcd.financier.domain.OperationType.TRANS;
+import static dgcd.financier.core.domain.OperationType.BASE;
+import static dgcd.financier.core.domain.OperationType.EXCHANGE;
+import static dgcd.financier.core.domain.OperationType.TRANS;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;

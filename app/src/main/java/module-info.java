@@ -18,4 +18,5 @@ module financier.app {
 //    requires org.apache.poi.ooxml;
 
     requires financier.domain;
+    requires financier.usecase;
 }

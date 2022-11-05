@@ -1,6 +1,6 @@
 module financier.domain {
     requires lombok;
 
-    exports dgcd.financier.domain;
-    exports dgcd.financier.domain.factory;
+    exports dgcd.financier.core.domain;
+    exports dgcd.financier.core.domain.factory;
 }

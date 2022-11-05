@@ -8,7 +8,7 @@ import dgcd.financier.app.modules.category.dto.CategoryResponseDto;
 import dgcd.financier.app.modules.operation.OperationsDaoService;
 import dgcd.financier.app.modules.operation.dto.OperationResponseDto;
 import dgcd.financier.app.modules.valute.ValuteService;
-import dgcd.financier.domain.Currency;
+import dgcd.financier.core.domain.Currency;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

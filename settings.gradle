@@ -9,3 +9,4 @@ rootProject.name = 'financier'
 
 include 'app'
 include 'financier-domain'
+include 'financier-usecase'
