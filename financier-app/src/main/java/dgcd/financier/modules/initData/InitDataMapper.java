@@ -12,7 +12,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
         componentModel = SPRING,
         uses = {AccountMapper.class, CategoryMapper.class, OperationMapper.class}
 )
-public interface InitDataMapper {
+interface InitDataMapper {
 
     InitDataResponseDto fromUsecase(InitDataGetUsecase.Response response);
 
