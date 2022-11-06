@@ -1,4 +1,4 @@
-package dgcd.financier.modules.initData;
+package dgcd.financier.modules.dto;
 
 import dgcd.financier.core.domain.Currency;
 import dgcd.financier.core.domain.OperationType;
@@ -14,9 +14,9 @@ public record OperationResponseDto(
         String accountTitle,
         Currency currency,
 
+        OperationType type,
         BigDecimal quantity,
         BigDecimal amount,
-        OperationType type,
 
         Long categoryId,
         String categoryTitle,
@@ -27,5 +27,4 @@ public record OperationResponseDto(
         String comment,
 
         String correlationId
-) {
-}
+) {}

@@ -17,7 +17,7 @@ public class OperationRepositoryImpl implements OperationsRepository {
 
     @Override
     public List<Operation> findAllNotCanceled() {
-        return operationsJpaRepository.findAll()
+        return operationsJpaRepository.findByIsCanceledFalse()
                 .stream()
                 .map(OperationMapper::fromEntity)
                 .toList();

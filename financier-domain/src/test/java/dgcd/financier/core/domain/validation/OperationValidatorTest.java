@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static dgcd.financier.core.domain.Currency.USD;
+import static dgcd.financier.core.domain.OperationType.BASE;
 import static dgcd.financier.core.domain.OperationType.INCOME;
 import static java.lang.Boolean.FALSE;
 import static java.math.BigDecimal.ONE;
@@ -210,7 +211,7 @@ class OperationValidatorTest {
 
 
     @Test
-    void test_nullSubcategory_ERROR() {
+    void test_nullSubcategoryIfNotBase_ERROR() {
         var date = LocalDate.now();
         var account = makeAccount();
         var type = INCOME;
@@ -224,7 +225,43 @@ class OperationValidatorTest {
 
         assertThatThrownBy(() -> new GeneralOperation(null, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId))
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage("Operation subcategory can not be null");
+                .hasMessage("Non-BASE operation subcategory can not be null");
+    }
+
+
+    @Test
+    void test_nullSubcategoryIfBase_OK() {
+        var date = LocalDate.now();
+        var account = makeAccount();
+        var type = BASE;
+        var amount = ONE;
+        var quantity = ONE;
+        Category subcategory = null;
+        var comment = "comment";
+        var counterparty = "counterparty";
+        var isCanceled = FALSE;
+        var correlationId = "corr_Id";
+
+        new GeneralOperation(null, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId);
+    }
+
+
+    @Test
+    void test_notNullSubcategoryIfBase_ERROR() {
+        var date = LocalDate.now();
+        var account = makeAccount();
+        var type = BASE;
+        var amount = ONE;
+        var quantity = ONE;
+        var subcategory = makeSubcategory(makeParentCategory());
+        var comment = "comment";
+        var counterparty = "counterparty";
+        var isCanceled = FALSE;
+        var correlationId = "corr_Id";
+
+        assertThatThrownBy(() -> new GeneralOperation(null, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("BASE operation can not have category");
     }
 
 

@@ -1,5 +1,9 @@
 package dgcd.financier.modules.initData;
 
+import dgcd.financier.modules.dto.AccountResponseDto;
+import dgcd.financier.modules.dto.CategoryResponseDto;
+import dgcd.financier.modules.dto.OperationResponseDto;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;

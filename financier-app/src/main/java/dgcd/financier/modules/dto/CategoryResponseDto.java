@@ -1,4 +1,4 @@
-package dgcd.financier.modules.initData;
+package dgcd.financier.modules.dto;
 
 public record CategoryResponseDto(
         Long id,

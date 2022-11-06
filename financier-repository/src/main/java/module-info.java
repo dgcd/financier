@@ -10,6 +10,7 @@ module financier.repository {
     requires financier.domain;
     requires financier.usecase;
 
+    exports dgcd.financier.repository.entity;
     exports dgcd.financier.repository.impl;
     exports dgcd.financier.repository.jpa;
 }

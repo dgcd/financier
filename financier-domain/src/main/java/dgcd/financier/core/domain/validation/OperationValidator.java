@@ -11,9 +11,11 @@ import static dgcd.financier.core.domain.Constants.OPERATION_CORRELATION_MAX_LEN
 import static dgcd.financier.core.domain.Constants.OPERATION_CORRELATION_MIN_LENGTH;
 import static dgcd.financier.core.domain.Constants.OPERATION_COUNTERPARTY_MAX_LENGTH;
 import static dgcd.financier.core.domain.Constants.OPERATION_COUNTERPARTY_MIN_LENGTH;
+import static dgcd.financier.core.domain.OperationType.BASE;
 import static dgcd.financier.core.domain.validation.ValidationUtils.checkIdentity;
 import static dgcd.financier.core.domain.validation.ValidationUtils.checkStringBoundaries;
 import static java.math.BigDecimal.ZERO;
+import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
 
 public class OperationValidator {
@@ -31,9 +33,15 @@ public class OperationValidator {
             throw new IllegalArgumentException("Quantity must be greater the 0");
         }
 
-        requireNonNull(operation.getSubcategory(), "Operation subcategory can not be null");
-        if (operation.getSubcategory().isParent()) {
-            throw new IllegalArgumentException("Subcategory can not be parent");
+        if (BASE.equals(operation.getType())) {
+            if (nonNull(operation.getSubcategory())) {
+                throw new IllegalArgumentException("BASE operation can not have category");
+            }
+        } else {
+            requireNonNull(operation.getSubcategory(), "Non-BASE operation subcategory can not be null");
+            if (operation.getSubcategory().isParent()) {
+                throw new IllegalArgumentException("Subcategory can not be parent");
+            }
         }
 
         var comment = operation.getComment();

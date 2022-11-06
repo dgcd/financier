@@ -20,6 +20,9 @@ public class CategoryMapper {
     }
 
     public static Category fromEntity(CategoryEntity categoryEntity) {
+        if (isNull(categoryEntity)) {
+            return null;
+        }
         if (isNull(categoryEntity.getParent())) {
             return CategoryFactory.makeExistingParent(
                     categoryEntity.getId(),

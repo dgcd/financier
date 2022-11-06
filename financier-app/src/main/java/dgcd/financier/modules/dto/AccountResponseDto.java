@@ -1,4 +1,4 @@
-package dgcd.financier.modules.initData;
+package dgcd.financier.modules.dto;
 
 import dgcd.financier.core.domain.Currency;
 
@@ -10,7 +10,4 @@ public record AccountResponseDto(
         Currency currency,
         BigDecimal balance,
         Boolean isClosed
-) {
-
-
-}
+) {}

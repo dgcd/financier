@@ -5,25 +5,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-
 @Service
 @RequiredArgsConstructor
 class InitDataService {
 
     private final InitDataGetUsecase initDataGetUsecase;
+    private final InitDataGetUsecaseMapper initDataGetUsecaseMapper;
 
     @Transactional(readOnly = true)
     public InitDataResponseDto getInitData() {
         var response = initDataGetUsecase.execute(new InitDataGetUsecase.Request());
-        return new InitDataResponseDto(
-                List.of(),
-                List.of(),
-                List.of(),
-                response.getRates(),
-                Map.of()
-        );
+        return initDataGetUsecaseMapper.fromUsecase(response);
     }
 
 }
