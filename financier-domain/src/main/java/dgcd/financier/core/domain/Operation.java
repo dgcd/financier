@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public interface Operation {
 
-    Long getId();
+    Long getIdentity();
 
     LocalDate getDate();
 

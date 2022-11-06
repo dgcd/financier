@@ -13,12 +13,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AccountFactoryTest {
 
     @Test
+    void test_makeExisting_OK() {
+        // when
+        var account = AccountFactory.makeExisting(42L, "title123", RUB, ZERO, FALSE);
+
+        // then
+        assertThat(account.getIdentity()).isEqualTo(42L);
+        assertThat(account.getTitle()).isEqualTo("title123");
+        assertThat(account.getCurrency()).isEqualTo(RUB);
+        assertThat(account.getBalance()).isEqualTo(ZERO);
+        assertThat(account.getIsClosed()).isFalse();
+    }
+
+
+    @Test
     void test_makeNew_OK() {
         // when
         var account = AccountFactory.makeNew("title123", RUB);
 
         // then
-        assertThat(account.getId()).isNull();
+        assertThat(account.getIdentity()).isNull();
         assertThat(account.getTitle()).isEqualTo("title123");
         assertThat(account.getCurrency()).isEqualTo(RUB);
         assertThat(account.getBalance()).isEqualTo(ZERO);
@@ -36,7 +50,7 @@ class AccountFactoryTest {
         var newAccount = AccountFactory.makeWithNewBalance(srcAccount, newBalance);
 
         // then
-        assertThat(newAccount.getId()).isNull();
+        assertThat(newAccount.getIdentity()).isNull();
         assertThat(newAccount.getTitle()).isEqualTo("title123");
         assertThat(newAccount.getCurrency()).isEqualTo(RUB);
         assertThat(newAccount.getBalance()).isEqualTo(newBalance);
@@ -53,7 +67,7 @@ class AccountFactoryTest {
         var newAccount = AccountFactory.makeWithSetClosed(srcAccount);
 
         // then
-        assertThat(newAccount.getId()).isEqualTo(42L);
+        assertThat(newAccount.getIdentity()).isEqualTo(42L);
         assertThat(newAccount.getTitle()).isEqualTo("title123");
         assertThat(newAccount.getCurrency()).isEqualTo(RUB);
         assertThat(newAccount.getBalance()).isEqualTo(ZERO);

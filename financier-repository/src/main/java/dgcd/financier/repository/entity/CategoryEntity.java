@@ -43,7 +43,7 @@ public class CategoryEntity {
     private Long id;
 
     @NotNull
-    @Size(min = CATEGORY_TITLE_MIN_LENGTH,  max = CATEGORY_TITLE_MAX_LENGTH)
+    @Size(min = CATEGORY_TITLE_MIN_LENGTH, max = CATEGORY_TITLE_MAX_LENGTH)
     private String title;
 
     @ManyToOne

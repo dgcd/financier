@@ -6,14 +6,16 @@ import dgcd.financier.core.domain.Operation;
 import dgcd.financier.core.domain.OperationType;
 import dgcd.financier.core.domain.validation.OperationValidator;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
+@ToString
 public class GeneralOperation implements Operation {
 
-    private final Long id;
+    private final Long identity;
     private final LocalDate date;
     private final Account account;
     private final OperationType type;
@@ -27,7 +29,7 @@ public class GeneralOperation implements Operation {
 
 
     public GeneralOperation(
-            Long id,
+            Long identity,
             LocalDate date,
             Account account,
             OperationType type,
@@ -39,7 +41,7 @@ public class GeneralOperation implements Operation {
             Boolean isCanceled,
             String correlationId
     ) {
-        this.id = id;
+        this.identity = identity;
         this.date = date;
         this.account = account;
         this.type = type;

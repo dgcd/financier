@@ -10,8 +10,8 @@ import static dgcd.financier.core.domain.Currency.USD;
 
 public class RatesServiceImpl implements RatesService {
 
-    private final BigDecimal RATE_USD = BigDecimal.valueOf(84);
-    private final BigDecimal RATE_EUR = BigDecimal.valueOf(94);
+    private final BigDecimal RATE_USD = BigDecimal.valueOf(62);
+    private final BigDecimal RATE_EUR = BigDecimal.valueOf(61);
 
 
     @Override

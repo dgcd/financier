@@ -4,12 +4,15 @@ import dgcd.financier.core.domain.Account;
 import dgcd.financier.core.domain.Constants;
 import dgcd.financier.core.domain.exception.IllegalAccountTitleException;
 
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkIdentity;
 import static dgcd.financier.core.domain.validation.ValidationUtils.checkStringBoundaries;
 import static java.util.Objects.requireNonNull;
 
 public class AccountValidator {
 
     public static void validate(Account account) {
+        checkIdentity(account.getIdentity());
+
         var title = account.getTitle();
         requireNonNull(title, "Title can not be null");
         checkStringBoundaries(

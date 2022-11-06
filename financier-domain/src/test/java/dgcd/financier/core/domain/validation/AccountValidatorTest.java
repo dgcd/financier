@@ -1,6 +1,7 @@
 package dgcd.financier.core.domain.validation;
 
 import dgcd.financier.core.domain.exception.IllegalAccountTitleException;
+import dgcd.financier.core.domain.exception.IllegalIdentityException;
 import dgcd.financier.core.domain.implementation.GeneralAccount;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,20 @@ class AccountValidatorTest {
         assertThatThrownBy(() -> new GeneralAccount(null, null, EUR, ZERO, FALSE))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("Title can not be null");
+    }
+
+    @Test
+    void test_zeroIdentity_ERROR() {
+        assertThatThrownBy(() -> new GeneralAccount(0L, null, EUR, ZERO, FALSE))
+                .isInstanceOf(IllegalIdentityException.class)
+                .hasMessage("Identity must be greater then 0 but was: 0");
+    }
+
+    @Test
+    void test_negativeIdentity_ERROR() {
+        assertThatThrownBy(() -> new GeneralAccount(-42L, null, EUR, ZERO, FALSE))
+                .isInstanceOf(IllegalIdentityException.class)
+                .hasMessage("Identity must be greater then 0 but was: -42");
     }
 
     @Test

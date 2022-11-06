@@ -21,9 +21,21 @@ public class AccountFactory {
         );
     }
 
+
+    public static Account makeExisting(Long id, String title, Currency currency, BigDecimal amount, Boolean isClosed) {
+        return new GeneralAccount(
+                id,
+                title,
+                currency,
+                amount,
+                isClosed
+        );
+    }
+
+
     public static Account makeWithNewBalance(Account src, BigDecimal newBalance) {
         return new GeneralAccount(
-                src.getId(),
+                src.getIdentity(),
                 src.getTitle(),
                 src.getCurrency(),
                 newBalance,
@@ -31,9 +43,10 @@ public class AccountFactory {
         );
     }
 
+
     public static Account makeWithSetClosed(Account src) {
         return new GeneralAccount(
-                src.getId(),
+                src.getIdentity(),
                 src.getTitle(),
                 src.getCurrency(),
                 src.getBalance(),

@@ -11,6 +11,7 @@ import static dgcd.financier.core.domain.Constants.OPERATION_CORRELATION_MAX_LEN
 import static dgcd.financier.core.domain.Constants.OPERATION_CORRELATION_MIN_LENGTH;
 import static dgcd.financier.core.domain.Constants.OPERATION_COUNTERPARTY_MAX_LENGTH;
 import static dgcd.financier.core.domain.Constants.OPERATION_COUNTERPARTY_MIN_LENGTH;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkIdentity;
 import static dgcd.financier.core.domain.validation.ValidationUtils.checkStringBoundaries;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Objects.requireNonNull;
@@ -18,6 +19,8 @@ import static java.util.Objects.requireNonNull;
 public class OperationValidator {
 
     public static void validate(Operation operation) {
+        checkIdentity(operation.getIdentity());
+
         requireNonNull(operation.getDate(), "Operation date can not be null");
         requireNonNull(operation.getAccount(), "Operation account can not be null");
         requireNonNull(operation.getType(), "Operation type can not be null");

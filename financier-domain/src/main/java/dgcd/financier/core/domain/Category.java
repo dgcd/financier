@@ -2,7 +2,7 @@ package dgcd.financier.core.domain;
 
 public interface Category {
 
-    Long getId();
+    Long getIdentity();
 
     String getTitle();
 

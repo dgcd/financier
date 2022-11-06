@@ -40,9 +40,39 @@ public class OperationFactory {
         );
     }
 
+
+    public static Operation makeExisting(
+            Long id,
+            LocalDate date,
+            Account account,
+            OperationType type,
+            BigDecimal amount,
+            BigDecimal quantity,
+            Category subcategory,
+            String comment,
+            String counterparty,
+            Boolean isCanceled,
+            String correlationId
+    ) {
+        return new GeneralOperation(
+                id,
+                date,
+                account,
+                type,
+                amount,
+                quantity,
+                subcategory,
+                comment,
+                counterparty,
+                isCanceled,
+                correlationId
+        );
+    }
+
+
     public static Operation makeWithIsCanceledSet(Operation source, Account updatedAccount) {
         return new GeneralOperation(
-                source.getId(),
+                source.getIdentity(),
                 source.getDate(),
                 updatedAccount,
                 source.getType(),

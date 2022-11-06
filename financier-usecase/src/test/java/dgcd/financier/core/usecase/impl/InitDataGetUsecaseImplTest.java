@@ -58,8 +58,8 @@ class InitDataGetUsecaseImplTest {
         var accounts = List.of(account);
 
         var parentCategory = CategoryFactory.makeNewParent("parent");
-        var subcategory1 = CategoryFactory.makeNewChild("subcat1", parentCategory);
-        var subcategory2 = CategoryFactory.makeNewChild("subcat2", parentCategory);
+        var subcategory1 = CategoryFactory.makeNewSubcategory("subcat1", parentCategory);
+        var subcategory2 = CategoryFactory.makeNewSubcategory("subcat2", parentCategory);
         var caregories = List.of(parentCategory, subcategory2, subcategory1);
 
         var date = LocalDate.now();

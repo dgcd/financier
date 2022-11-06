@@ -1,0 +1,53 @@
+plugins {
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    implementation project(':financier-domain')
+    implementation project(':financier-usecase')
+    implementation project(':financier-rates')
+    implementation project(':financier-repository')
+
+    // web
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-websocket'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // database
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.flywaydb:flyway-core'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // misc
+    implementation "org.apache.poi:poi-ooxml:$apachePoiVersion"
+
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
+
+    // testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "io.zonky.test:embedded-database-spring-test:$zonkySpringVersion"
+    testImplementation "io.zonky.test:embedded-postgres:$zonkyPostgresVersion"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "io.zonky.test.postgres:embedded-postgres-binaries-bom:$zonkyPostgresBomVersion"
+    }
+}
+
+tasks.named('bootJar') {
+    archiveFileName = 'financier.jar'
+    exclude('application.properties')
+}
+
+tasks.named('jar') {
+    enabled = false
+}
+
+springBoot {
+    buildInfo()
+}

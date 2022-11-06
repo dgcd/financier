@@ -3,6 +3,7 @@ package dgcd.financier.core.domain.validation;
 import dgcd.financier.core.domain.Account;
 import dgcd.financier.core.domain.Category;
 import dgcd.financier.core.domain.OperationType;
+import dgcd.financier.core.domain.exception.IllegalIdentityException;
 import dgcd.financier.core.domain.exception.IllegalOperationCommentException;
 import dgcd.financier.core.domain.exception.IllegalOperationCorrelationException;
 import dgcd.financier.core.domain.exception.IllegalOperationCounterpartyException;
@@ -51,6 +52,46 @@ class OperationValidatorTest {
         var correlationId = "corr_Id";
 
         new GeneralOperation(null, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId);
+    }
+
+
+    @Test
+    void test_zeroIdentity_ERROR() {
+        var identity = 0L;
+        var date = LocalDate.now();
+        var account = makeAccount();
+        var type = INCOME;
+        var amount = ONE;
+        var quantity = ONE;
+        var subcategory = makeSubcategory(makeParentCategory());
+        var comment = "comment";
+        var counterparty = "counterparty";
+        var isCanceled = FALSE;
+        var correlationId = "corr_Id";
+
+        assertThatThrownBy(() -> new GeneralOperation(identity, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId))
+                .isInstanceOf(IllegalIdentityException.class)
+                .hasMessage("Identity must be greater then 0 but was: 0");
+    }
+
+
+    @Test
+    void test_negativeDate_ERROR() {
+        var identity = -42L;
+        var date = LocalDate.now();
+        var account = makeAccount();
+        var type = INCOME;
+        var amount = ONE;
+        var quantity = ONE;
+        var subcategory = makeSubcategory(makeParentCategory());
+        var comment = "comment";
+        var counterparty = "counterparty";
+        var isCanceled = FALSE;
+        var correlationId = "corr_Id";
+
+        assertThatThrownBy(() -> new GeneralOperation(identity, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId))
+                .isInstanceOf(IllegalIdentityException.class)
+                .hasMessage("Identity must be greater then 0 but was: -42");
     }
 
 
@@ -207,6 +248,23 @@ class OperationValidatorTest {
 
 
     @Test
+    void test_nullComment_OK() {
+        var date = LocalDate.now();
+        var account = makeAccount();
+        var type = INCOME;
+        var amount = ONE;
+        var quantity = ONE;
+        var subcategory = makeSubcategory(makeParentCategory());
+        String comment = null;
+        var counterparty = "counterparty";
+        var isCanceled = FALSE;
+        var correlationId = "corr_Id";
+
+        new GeneralOperation(null, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId);
+    }
+
+
+    @Test
     void test_shortComment_ERROR() {
         var date = LocalDate.now();
         var account = makeAccount();
@@ -241,6 +299,23 @@ class OperationValidatorTest {
         assertThatThrownBy(() -> new GeneralOperation(null, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId))
                 .isInstanceOf(IllegalOperationCommentException.class)
                 .hasMessage("Operation comment length must be from 2 to 20 but was: 21");
+    }
+
+
+    @Test
+    void test_nullCounterparty_OK() {
+        var date = LocalDate.now();
+        var account = makeAccount();
+        var type = INCOME;
+        var amount = ONE;
+        var quantity = ONE;
+        var subcategory = makeSubcategory(makeParentCategory());
+        var comment = "comment";
+        String counterparty = null;
+        var isCanceled = FALSE;
+        var correlationId = "corr_Id";
+
+        new GeneralOperation(null, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId);
     }
 
 
@@ -298,6 +373,23 @@ class OperationValidatorTest {
         assertThatThrownBy(() -> new GeneralOperation(null, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("Operation isCanceled statis can not be null");
+    }
+
+
+    @Test
+    void test_nullCorrelation_OK() {
+        var date = LocalDate.now();
+        var account = makeAccount();
+        var type = INCOME;
+        var amount = ONE;
+        var quantity = ONE;
+        var subcategory = makeSubcategory(makeParentCategory());
+        var comment = "comment";
+        var counterparty = "counterparty";
+        var isCanceled = FALSE;
+        String correlationId = null;
+
+        new GeneralOperation(null, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId);
     }
 
 
