@@ -18,11 +18,6 @@ module financier.app {
     requires org.hibernate.orm.core;
 //    requires org.apache.poi.ooxml;
 
-    requires org.springdoc.openapi.common;
-    requires org.springdoc.openapi.ui;
-    requires org.springdoc.openapi.webmvc.core;
-
-
     requires financier.domain;
     requires financier.usecase;
     requires financier.rates;

@@ -8,4 +8,8 @@ public interface AccountsRepository {
 
     List<Account> findAll();
 
+    boolean existByTitle(String title);
+
+    Account save(Account account);
+
 }

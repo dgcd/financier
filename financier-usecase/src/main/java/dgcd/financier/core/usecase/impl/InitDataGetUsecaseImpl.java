@@ -20,7 +20,7 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
 
 
     @Override
-    public InitDataGetUsecase.Response execute(InitDataGetUsecase.Request request) {
+    public InitDataGetUsecase.Response execute(InitDataGetUsecase.Request ignored) {
         return new InitDataGetUsecase.Response(
                 accountsRepository.findAll(),
                 categoriesRepository.findAll(),

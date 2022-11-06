@@ -1,7 +1,6 @@
-package dgcd.financier.modules.dto.mapper;
+package dgcd.financier.modules.operation;
 
 import dgcd.financier.core.domain.Operation;
-import dgcd.financier.modules.dto.OperationResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

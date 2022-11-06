@@ -24,4 +24,18 @@ public class AccountRepositoryImpl implements AccountsRepository {
                 .toList();
     }
 
+
+    @Override
+    public boolean existByTitle(String title) {
+        return accountsJpaRepository.findByTitle(title).isPresent();
+    }
+
+
+    @Override
+    public Account save(Account account) {
+        var accountEntity = AccountMapper.toEntity(account);
+        var savedEntity = accountsJpaRepository.save(accountEntity);
+        return AccountMapper.fromEntity(savedEntity);
+    }
+
 }

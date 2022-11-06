@@ -1,4 +1,4 @@
-package dgcd.financier.modules.dto;
+package dgcd.financier.modules.operation;
 
 import dgcd.financier.core.domain.Currency;
 import dgcd.financier.core.domain.OperationType;

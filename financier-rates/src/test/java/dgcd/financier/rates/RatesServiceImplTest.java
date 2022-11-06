@@ -18,8 +18,8 @@ class RatesServiceImplTest {
         var rates = ratesService.getRates();
 
         assertThat(rates).hasSize(2);
-        assertThat(rates).extracting(USD.name()).isEqualTo(BigDecimal.valueOf(84));
-        assertThat(rates).extracting(EUR.name()).isEqualTo(BigDecimal.valueOf(94));
+        assertThat(rates).extracting(USD.name()).isEqualTo(BigDecimal.valueOf(62));
+        assertThat(rates).extracting(EUR.name()).isEqualTo(BigDecimal.valueOf(61));
     }
 
 }

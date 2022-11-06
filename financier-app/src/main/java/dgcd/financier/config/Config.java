@@ -1,6 +1,8 @@
-package dgcd.financier.modules.config;
+package dgcd.financier.config;
 
+import dgcd.financier.core.usecase.AccountCreateUsecase;
 import dgcd.financier.core.usecase.InitDataGetUsecase;
+import dgcd.financier.core.usecase.impl.AccountCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.InitDataGetUsecaseImpl;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
@@ -35,6 +37,11 @@ public class Config {
                 ratesService,
                 techInfoService
         );
+    }
+
+    @Bean
+    public AccountCreateUsecase accountCreateUsecase(AccountsRepository accountsRepository) {
+        return new AccountCreateUsecaseImpl(accountsRepository);
     }
 
 }

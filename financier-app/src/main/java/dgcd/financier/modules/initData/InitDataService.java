@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 class InitDataService {
 
     private final InitDataGetUsecase initDataGetUsecase;
-    private final InitDataGetUsecaseMapper initDataGetUsecaseMapper;
+    private final InitDataMapper initDataMapper;
 
     @Transactional(readOnly = true)
     public InitDataResponseDto getInitData() {
-        var response = initDataGetUsecase.execute(new InitDataGetUsecase.Request());
-        return initDataGetUsecaseMapper.fromUsecase(response);
+        var response = initDataGetUsecase.execute(null);
+        return initDataMapper.fromUsecase(response);
     }
 
 }

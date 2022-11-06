@@ -49,7 +49,7 @@ class InitDataGetUsecaseImplTest {
     private InitDataGetUsecaseImpl initDataGetUsecase;
 
     @Test
-    void test_executeUsecase_OK() {
+    void test_execute_OK() {
         // given
         var request = new InitDataGetUsecase.Request();
 
@@ -65,7 +65,7 @@ class InitDataGetUsecaseImplTest {
         var date = LocalDate.now();
         var operation1 = OperationFactory.makeNew(date, account, EXPENSE, new BigDecimal("10000"), ONE, subcategory1, "comment1", "counterparty1", null);
         var operation2 = OperationFactory.makeNew(date, account, INCOME, new BigDecimal("2300.5"), ONE, subcategory1, "comment2", null, null);
-        var operation3 = OperationFactory.makeNew(date, account, BASE, new BigDecimal("10034099"), ONE, subcategory2, null, null, null);
+        var operation3 = OperationFactory.makeNew(date, account, BASE, new BigDecimal("10034099"), ONE, null, null, null, null);
         var operations = List.of(operation1, operation2, operation3);
 
         BigDecimal usdRate = BigDecimal.valueOf(84);

@@ -1,9 +1,9 @@
 package dgcd.financier.modules.initData;
 
 import dgcd.financier.core.usecase.InitDataGetUsecase;
-import dgcd.financier.modules.dto.mapper.AccountMapper;
-import dgcd.financier.modules.dto.mapper.CategoryMapper;
-import dgcd.financier.modules.dto.mapper.OperationMapper;
+import dgcd.financier.modules.account.AccountMapper;
+import dgcd.financier.modules.category.CategoryMapper;
+import dgcd.financier.modules.operation.OperationMapper;
 import org.mapstruct.Mapper;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
@@ -12,7 +12,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
         componentModel = SPRING,
         uses = {AccountMapper.class, CategoryMapper.class, OperationMapper.class}
 )
-public interface InitDataGetUsecaseMapper {
+public interface InitDataMapper {
 
     InitDataResponseDto fromUsecase(InitDataGetUsecase.Response response);
 
