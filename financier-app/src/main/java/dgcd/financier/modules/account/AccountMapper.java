@@ -1,7 +1,9 @@
 package dgcd.financier.modules.account;
 
 import dgcd.financier.core.domain.Account;
+import dgcd.financier.core.usecase.AccountCloseUsecase;
 import dgcd.financier.core.usecase.AccountCreateUsecase;
+import dgcd.financier.infrastructure.dto.CommonIdDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -16,6 +18,11 @@ public interface AccountMapper {
     })
     AccountResponseDto fromDomain(Account account);
 
-    AccountCreateUsecase.Request toUsecase(AccountCreateRequestDto dto);
+    AccountCreateUsecase.Request toCreateUsecase(AccountCreateRequestDto dto);
+
+    @Mappings({
+            @Mapping(target = "identity", source = "dto.id"),
+    })
+    AccountCloseUsecase.Request toCloseUsecase(CommonIdDto dto);
 
 }

@@ -4,7 +4,7 @@ import dgcd.financier.core.domain.Account;
 import dgcd.financier.core.domain.exception.IllegalAccountTitleException;
 import dgcd.financier.core.domain.factory.AccountFactory;
 import dgcd.financier.core.usecase.AccountCreateUsecase;
-import dgcd.financier.core.usecase.exception.AccountWithTitleAlreadyExistsException;
+import dgcd.financier.core.usecase.exception.AccountAlreadyExistsException;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -84,7 +84,7 @@ class AccountCreateUsecaseImplTest {
 
         // when
         assertThatThrownBy(() -> accountCreateUsecase.execute(request))
-                .isInstanceOf(AccountWithTitleAlreadyExistsException.class)
+                .isInstanceOf(AccountAlreadyExistsException.class)
                 .hasMessage("Account with title 'account' already exists");
 
         // then

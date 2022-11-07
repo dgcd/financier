@@ -1,6 +1,7 @@
 package dgcd.financier.modules.category;
 
 import dgcd.financier.core.domain.Category;
+import dgcd.financier.core.usecase.CategoryCreateUsecase;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -16,5 +17,10 @@ public interface CategoryMapper {
             @Mapping(target = "parentTitle", source = "category.parent.title"),
     })
     CategoryResponseDto fromDomain(Category category);
+
+    @Mappings({
+            @Mapping(target = "parentIdentity", source = "dto.parentId"),
+    })
+    CategoryCreateUsecase.Request toCreateUsecase(CategoryCreateRequestDto dto);
 
 }

@@ -2,12 +2,14 @@ package dgcd.financier.repository.impl;
 
 import dgcd.financier.core.domain.Account;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
+import dgcd.financier.repository.entity.AccountEntity;
 import dgcd.financier.repository.jpa.AccountsJpaRepository;
 import dgcd.financier.repository.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,6 +24,13 @@ public class AccountRepositoryImpl implements AccountsRepository {
                 .stream()
                 .map(AccountMapper::fromEntity)
                 .toList();
+    }
+
+
+    @Override
+    public Optional<Account> findByIdentity(Long identity) {
+        var accountEntityOpt = accountsJpaRepository.findById(identity);
+        return accountEntityOpt.map(AccountMapper::fromEntity);
     }
 
 

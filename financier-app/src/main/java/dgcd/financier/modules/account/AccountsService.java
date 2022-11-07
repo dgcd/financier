@@ -1,6 +1,8 @@
 package dgcd.financier.modules.account;
 
+import dgcd.financier.core.usecase.AccountCloseUsecase;
 import dgcd.financier.core.usecase.AccountCreateUsecase;
+import dgcd.financier.infrastructure.dto.CommonIdDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,30 +12,22 @@ import org.springframework.transaction.annotation.Transactional;
 class AccountsService {
 
     private final AccountCreateUsecase accountCreateUsecase;
+    private final AccountCloseUsecase accountCloseUsecase;
     private final AccountMapper accountMapper;
 
 
     @Transactional
     public AccountResponseDto createAccount(AccountCreateRequestDto dto) {
-        var request = accountMapper.toUsecase(dto);
+        var request = accountMapper.toCreateUsecase(dto);
         var response = accountCreateUsecase.execute(request);
         return accountMapper.fromDomain(response.getAccount());
     }
 
-//    @Transactional
-//    public AccountResponseDto closeAccount(CommonIdDto dto) {
-//        var account = accountsDaoService.findByIdOrElseThrow(dto.id());
-//        if (account.getIsClosed()) {
-//            throw new AccountClosingException("Account with id '" + dto.id() + "' is already closed");
-//        }
-//        if (ZERO.compareTo(account.getBalance()) != 0) {
-//            throw new AccountClosingException("Account with id '" + dto.id() + "' has non-zero balance");
-//        }
-//
-//        account.setIsClosed(true);
-//
-//        var savedAccount = accountsDaoService.save(account);
-//        return AccountResponseDto.of(savedAccount);
-//    }
+    @Transactional
+    public AccountResponseDto closeAccount(CommonIdDto dto) {
+        var request = accountMapper.toCloseUsecase(dto);
+        var response = accountCloseUsecase.execute(request);
+        return accountMapper.fromDomain(response.getAccount());
+    }
 
 }
