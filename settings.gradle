@@ -16,3 +16,8 @@ include 'financier-repository'
 include 'financier-gateway'
 
 include 'financier-app'
+
+project(":financier-domain").projectDir = file("core/financier-domain")
+project(":financier-usecase").projectDir = file("core/financier-usecase")
+project(":financier-repository").projectDir = file("infrastructure/financier-repository")
+project(":financier-gateway").projectDir = file("infrastructure/financier-gateway")
