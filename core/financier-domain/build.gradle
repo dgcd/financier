@@ -9,6 +9,6 @@ dependencies {
 
 tasks.named('jar') {
     manifest {
-        attributes('Automatic-Module-Name': 'financier.domain')
+        attributes('Automatic-Module-Name': 'financier.core.domain')
     }
 }

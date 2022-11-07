@@ -13,7 +13,7 @@ import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
 import dgcd.financier.core.usecase.port.repository.OperationsRepository;
 import dgcd.financier.core.usecase.port.repository.RatesRepository;
 import dgcd.financier.core.usecase.port.service.TechInfoService;
-import dgcd.financier.repository.impl.RatesRepositoryImpl;
+import dgcd.financier.infrastructure.repository.impl.RatesRepositoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

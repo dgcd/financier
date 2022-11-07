@@ -1,4 +1,4 @@
-module financier.repository {
+module financier.infrastructure.repository {
     requires lombok;
 
     requires spring.context;
@@ -7,10 +7,10 @@ module financier.repository {
     requires org.hibernate.orm.core;
     requires spring.data.jpa;
 
-    requires financier.domain;
-    requires financier.usecase;
+    requires financier.core.domain;
+    requires financier.core.usecase;
 
-    exports dgcd.financier.repository.entity;
-    exports dgcd.financier.repository.impl;
-    exports dgcd.financier.repository.jpa;
+    exports dgcd.financier.infrastructure.repository.entity;
+    exports dgcd.financier.infrastructure.repository.impl;
+    exports dgcd.financier.infrastructure.repository.jpa;
 }

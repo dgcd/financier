@@ -16,8 +16,8 @@ module financier.app {
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
 
-    requires financier.domain;
-    requires financier.usecase;
-    requires financier.repository;
-    requires financier.gateway;
+    requires financier.core.domain;
+    requires financier.core.usecase;
+    requires financier.infrastructure.gateway;
+    requires financier.infrastructure.repository;
 }

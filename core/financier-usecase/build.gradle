@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation project(':financier-domain')
+    implementation project(':core:financier-domain')
 
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.assertj:assertj-core'
@@ -12,6 +12,6 @@ dependencies {
 
 tasks.named('jar') {
     manifest {
-        attributes('Automatic-Module-Name': 'financier.usecase')
+        attributes('Automatic-Module-Name': 'financier.core.usecase')
     }
 }

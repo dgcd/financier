@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation project(':financier-domain')
-    implementation project(':financier-usecase')
+    implementation project(':core:financier-domain')
+    implementation project(':core:financier-usecase')
 
     implementation'org.springframework:spring-web'
     implementation'org.springframework:spring-aop'
@@ -23,6 +23,6 @@ dependencies {
 
 tasks.named('jar') {
     manifest {
-        attributes('Automatic-Module-Name': 'financier.gateway')
+        attributes('Automatic-Module-Name': 'financier.infrastructure.gateway')
     }
 }

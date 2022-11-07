@@ -1,4 +1,4 @@
-module financier.gateway {
+module financier.infrastructure.gateway {
     requires lombok;
     requires org.mapstruct;
     requires spring.context;
@@ -10,13 +10,13 @@ module financier.gateway {
     requires org.slf4j;
     requires jakarta.validation;
 
-    requires financier.domain;
-    requires financier.usecase;
+    requires financier.core.domain;
+    requires financier.core.usecase;
 
-    exports dgcd.financier.gateway.aspects;
-    exports dgcd.financier.gateway.controller;
-    exports dgcd.financier.gateway.dto;
-    exports dgcd.financier.gateway.exception;
-    exports dgcd.financier.gateway.mapper;
-    exports dgcd.financier.gateway.service;
+    exports dgcd.financier.infrastructure.gateway.aspects;
+    exports dgcd.financier.infrastructure.gateway.controller;
+    exports dgcd.financier.infrastructure.gateway.dto;
+    exports dgcd.financier.infrastructure.gateway.exception;
+    exports dgcd.financier.infrastructure.gateway.mapper;
+    exports dgcd.financier.infrastructure.gateway.service;
 }

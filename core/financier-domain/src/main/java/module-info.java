@@ -1,4 +1,4 @@
-module financier.domain {
+module financier.core.domain {
     requires lombok;
 
     exports dgcd.financier.core.domain;

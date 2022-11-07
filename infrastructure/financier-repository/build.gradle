@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation project(':financier-domain')
-    implementation project(':financier-usecase')
+    implementation project(':core:financier-domain')
+    implementation project(':core:financier-usecase')
 
     implementation 'org.springframework.data:spring-data-jpa'
 
@@ -19,6 +19,6 @@ dependencies {
 
 tasks.named('jar') {
     manifest {
-        attributes('Automatic-Module-Name': 'financier.repository')
+        attributes('Automatic-Module-Name': 'financier.infrastructure.repository')
     }
 }

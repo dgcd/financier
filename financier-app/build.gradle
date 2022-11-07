@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation project(':financier-domain')
-    implementation project(':financier-usecase')
+    implementation project(':core:financier-domain')
+    implementation project(':core:financier-usecase')
     implementation project(':financier-repository')
     implementation project(':financier-gateway')
 
