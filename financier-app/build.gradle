@@ -6,6 +6,7 @@ dependencies {
     implementation project(':financier-domain')
     implementation project(':financier-usecase')
     implementation project(':financier-repository')
+    implementation project(':financier-gateway')
 
     // web
     implementation('org.springframework.boot:spring-boot-starter-web') {
@@ -13,18 +14,17 @@ dependencies {
     }
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
 
     // database
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.flywaydb:flyway-core'
     runtimeOnly 'org.postgresql:postgresql'
 
-    // misc
-    implementation "org.apache.poi:poi-ooxml:$apachePoiVersion"
-
-    implementation "org.mapstruct:mapstruct:$mapstructVersion"
-    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+//    // misc
+//    implementation "org.apache.poi:poi-ooxml:$apachePoiVersion"
+//
+//    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+//    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
 
 
     // testing
