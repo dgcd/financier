@@ -4,7 +4,7 @@ import dgcd.financier.core.usecase.InitDataGetUsecase;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
 import dgcd.financier.core.usecase.port.repository.OperationsRepository;
-import dgcd.financier.core.usecase.port.service.RatesService;
+import dgcd.financier.core.usecase.port.repository.RatesRepository;
 import dgcd.financier.core.usecase.port.service.TechInfoService;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +15,7 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
     private final CategoriesRepository categoriesRepository;
     private final OperationsRepository operationsRepository;
 
-    private final RatesService ratesService;
+    private final RatesRepository ratesRepository;
     private final TechInfoService techInfoService;
 
 
@@ -25,7 +25,7 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
                 accountsRepository.findAll(),
                 categoriesRepository.findAll(),
                 operationsRepository.findAllNotCanceled(),
-                ratesService.getRates(),
+                ratesRepository.getRates(),
                 techInfoService.getTechInfo()
         );
     }

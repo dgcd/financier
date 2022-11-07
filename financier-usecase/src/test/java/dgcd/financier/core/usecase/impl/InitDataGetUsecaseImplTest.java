@@ -7,7 +7,7 @@ import dgcd.financier.core.usecase.InitDataGetUsecase;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
 import dgcd.financier.core.usecase.port.repository.OperationsRepository;
-import dgcd.financier.core.usecase.port.service.RatesService;
+import dgcd.financier.core.usecase.port.repository.RatesRepository;
 import dgcd.financier.core.usecase.port.service.TechInfoService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,7 @@ class InitDataGetUsecaseImplTest {
     @Mock
     private OperationsRepository operationsRepository;
     @Mock
-    private RatesService ratesService;
+    private RatesRepository ratesRepository;
     @Mock
     private TechInfoService techInfoService;
 
@@ -82,7 +82,7 @@ class InitDataGetUsecaseImplTest {
         when(accountsRepository.findAll()).thenReturn(accounts);
         when(categoriesRepository.findAll()).thenReturn(caregories);
         when(operationsRepository.findAllNotCanceled()).thenReturn(operations);
-        when(ratesService.getRates()).thenReturn(rates);
+        when(ratesRepository.getRates()).thenReturn(rates);
         when(techInfoService.getTechInfo()).thenReturn(techInfo);
 
         // when

@@ -1,0 +1,27 @@
+package dgcd.financier.repository.impl;
+
+import dgcd.financier.core.usecase.port.repository.RatesRepository;
+
+import java.math.BigDecimal;
+import java.util.Map;
+
+import static dgcd.financier.core.domain.Currency.EUR;
+import static dgcd.financier.core.domain.Currency.USD;
+
+// stub
+public class RatesRepositoryImpl implements RatesRepository {
+
+    private final BigDecimal RATE_USD = BigDecimal.valueOf(62);
+    private final BigDecimal RATE_EUR = BigDecimal.valueOf(61);
+
+
+    @Override
+    public Map<String, BigDecimal> getRates() {
+        return Map.of(
+                USD.name(), RATE_USD,
+                EUR.name(), RATE_EUR
+        );
+
+    }
+
+}

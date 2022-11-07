@@ -8,8 +8,11 @@ pluginManagement {
 rootProject.name = 'financier'
 
 include 'app'
-include 'financier-app'
+
 include 'financier-domain'
 include 'financier-usecase'
-include 'financier-rates'
+
 include 'financier-repository'
+include 'financier-gateway'
+
+include 'financier-app'

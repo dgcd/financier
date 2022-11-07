@@ -2,7 +2,6 @@ package dgcd.financier.repository.impl;
 
 import dgcd.financier.core.domain.Account;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
-import dgcd.financier.repository.entity.AccountEntity;
 import dgcd.financier.repository.jpa.AccountsJpaRepository;
 import dgcd.financier.repository.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
