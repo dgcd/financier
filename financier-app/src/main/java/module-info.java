@@ -18,6 +18,6 @@ module financier.app {
 
     requires financier.core.domain;
     requires financier.core.usecase;
-    requires financier.infrastructure.gateway;
-    requires financier.infrastructure.repository;
+    requires financier.infra.gateway;
+    requires financier.infra.repository;
 }

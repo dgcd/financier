@@ -5,8 +5,8 @@ plugins {
 dependencies {
     implementation project(':core:financier-domain')
     implementation project(':core:financier-usecase')
-    implementation project(':financier-repository')
-    implementation project(':financier-gateway')
+    implementation project(':infra:financier-repository')
+    implementation project(':infra:financier-gateway')
 
     // web
     implementation('org.springframework.boot:spring-boot-starter-web') {
