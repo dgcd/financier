@@ -4,8 +4,9 @@ import dgcd.financier.core.domain.factory.AccountFactory;
 import dgcd.financier.core.usecase.AccountCreateUsecase;
 import dgcd.financier.core.usecase.exception.AccountAlreadyExistsException;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
-import dgcd.financier.core.usecase.validator.AccountCreateUsecaseRequestValidator;
 import lombok.RequiredArgsConstructor;
+
+import static dgcd.financier.core.usecase.validator.AccountCreateUsecaseRequestValidator.validate;
 
 @RequiredArgsConstructor
 public class AccountCreateUsecaseImpl implements AccountCreateUsecase {
@@ -14,7 +15,7 @@ public class AccountCreateUsecaseImpl implements AccountCreateUsecase {
 
     @Override
     public AccountCreateUsecase.Response execute(AccountCreateUsecase.Request request) {
-        AccountCreateUsecaseRequestValidator.validate(request);
+        validate(request);
 
         if (accountsRepository.existByTitle(request.getTitle())) {
             throw new AccountAlreadyExistsException(request.getTitle());
@@ -23,7 +24,6 @@ public class AccountCreateUsecaseImpl implements AccountCreateUsecase {
         var account = AccountFactory.makeNew(request.getTitle(), request.getCurrency());
 
         var savedAccount = accountsRepository.save(account);
-
         return new Response(savedAccount);
     }
 

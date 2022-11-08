@@ -7,11 +7,11 @@ import dgcd.financier.core.usecase.exception.AccountAlreadyClosedException;
 import dgcd.financier.core.usecase.exception.AccountHasNonZeroBalanceException;
 import dgcd.financier.core.usecase.exception.AccountNotExistsException;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
-import dgcd.financier.core.usecase.validator.AccountCloseUsecaseRequestValidator;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+import static dgcd.financier.core.usecase.validator.AccountCloseUsecaseRequestValidator.validate;
 import static java.math.BigDecimal.ZERO;
 
 @RequiredArgsConstructor
@@ -22,16 +22,14 @@ public class AccountCloseUsecaseImpl implements AccountCloseUsecase {
 
     @Override
     public AccountCloseUsecase.Response execute(Request request) {
-        AccountCloseUsecaseRequestValidator.validate(request);
+        validate(request);
 
         var accountOptional = accountsRepository.findByIdentity(request.getIdentity());
-
         var accountFromDb = checkAccount(request.getIdentity(), accountOptional);
 
-        var newAccount = AccountFactory.makeWithSetClosed(accountFromDb);
+        var closedAccount = AccountFactory.makeWithSetClosed(accountFromDb);
 
-        var savedAccount = accountsRepository.save(newAccount);
-
+        var savedAccount = accountsRepository.save(closedAccount);
         return new Response(savedAccount);
     }
 

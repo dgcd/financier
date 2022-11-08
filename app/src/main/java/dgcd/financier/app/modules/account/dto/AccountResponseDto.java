@@ -1,7 +1,7 @@
 package dgcd.financier.app.modules.account.dto;
 
+import dgcd.financier.app.dict.Currency;
 import dgcd.financier.app.modules.account.Account;
-import dgcd.financier.core.domain.Currency;
 
 import java.math.BigDecimal;
 

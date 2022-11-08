@@ -79,28 +79,7 @@ class AccountCloseUsecaseImplTest {
 
 
     @Test
-    void test_execute_nullRequest_ERROR() {
-        // when
-        assertThatThrownBy(() -> accountCloseUsecase.execute(null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("Request can not be null");
-    }
-
-
-    @Test
-    void test_execute_nullIdentity_ERROR() {
-        // given
-        var request = new AccountCloseUsecase.Request(null);
-
-        // when
-        assertThatThrownBy(() -> accountCloseUsecase.execute(request))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("Identity can not be null");
-    }
-
-
-    @Test
-    void test_accountByIdentityWasNotFound_ERROR() {
+    void test_execute_accountByIdentityWasNotFound_ERROR() {
         // given
         var request = new AccountCloseUsecase.Request(42L);
 
@@ -124,7 +103,7 @@ class AccountCloseUsecaseImplTest {
 
 
     @Test
-    void test_accountWasAlreadyClosed_ERROR() {
+    void test_execute_accountWasAlreadyClosed_ERROR() {
         // given
         var request = new AccountCloseUsecase.Request(42L);
 
@@ -148,7 +127,7 @@ class AccountCloseUsecaseImplTest {
 
 
     @Test
-    void test_accountHasNonZeroBalanse_ERROR() {
+    void test_execute_accountHasNonZeroBalanse_ERROR() {
         // given
         var request = new AccountCloseUsecase.Request(42L);
 

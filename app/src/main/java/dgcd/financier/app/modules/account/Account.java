@@ -1,6 +1,6 @@
 package dgcd.financier.app.modules.account;
 
-import dgcd.financier.core.domain.Currency;
+import dgcd.financier.app.dict.Currency;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

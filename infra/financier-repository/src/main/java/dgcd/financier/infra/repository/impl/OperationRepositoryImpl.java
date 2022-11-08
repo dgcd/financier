@@ -2,8 +2,8 @@ package dgcd.financier.infra.repository.impl;
 
 import dgcd.financier.core.domain.Operation;
 import dgcd.financier.core.usecase.port.repository.OperationsRepository;
-import dgcd.financier.infra.repository.mapper.OperationMapper;
 import dgcd.financier.infra.repository.jpa.OperationsJpaRepository;
+import dgcd.financier.infra.repository.mapper.OperationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

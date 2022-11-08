@@ -1,7 +1,6 @@
 package dgcd.financier.core.usecase.impl;
 
 import dgcd.financier.core.domain.Account;
-import dgcd.financier.core.domain.exception.IllegalAccountTitleException;
 import dgcd.financier.core.domain.factory.AccountFactory;
 import dgcd.financier.core.usecase.AccountCreateUsecase;
 import dgcd.financier.core.usecase.exception.AccountAlreadyExistsException;
@@ -94,51 +93,6 @@ class AccountCreateUsecaseImplTest {
         assertThat(titleCaptor.getValue()).isEqualTo("account");
 
         verify(accountsRepository, never()).save(any());
-    }
-
-
-    @Test
-    void test_execute_nullRequest_ERROR() {
-        // when
-        assertThatThrownBy(() -> accountCreateUsecase.execute(null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("Request can not be null");
-    }
-
-
-    @Test
-    void test_execute_nullTitle_ERROR() {
-        // given
-        var request = new AccountCreateUsecase.Request(null, USD);
-
-        // when
-        assertThatThrownBy(() -> accountCreateUsecase.execute(request))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("Title can not be null");
-    }
-
-
-    @Test
-    void test_execute_tooShortTitle_ERROR() {
-        // given
-        var request = new AccountCreateUsecase.Request("1", USD);
-
-        // when
-        assertThatThrownBy(() -> accountCreateUsecase.execute(request))
-                .isInstanceOf(IllegalAccountTitleException.class)
-                .hasMessage("Account title length must be from 5 to 40 but was: 1");
-    }
-
-
-    @Test
-    void test_execute_nullCurrency_ERROR() {
-        // given
-        var request = new AccountCreateUsecase.Request("title", null);
-
-        // when
-        assertThatThrownBy(() -> accountCreateUsecase.execute(request))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("Currency can not be null");
     }
 
 }

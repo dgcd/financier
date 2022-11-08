@@ -1,8 +1,8 @@
 package dgcd.financier.infra.gateway.controller;
 
 import dgcd.financier.infra.gateway.WebConstants;
-import dgcd.financier.infra.gateway.dto.CommonResponseDto;
 import dgcd.financier.infra.gateway.aspects.LogControllerData;
+import dgcd.financier.infra.gateway.dto.CommonResponseDto;
 import dgcd.financier.infra.gateway.service.InitDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

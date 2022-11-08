@@ -1,5 +1,6 @@
 package dgcd.financier.app.modules.initData;
 
+import dgcd.financier.app.dict.Currency;
 import dgcd.financier.app.infrastructure.actuator.TechInfoContributor;
 import dgcd.financier.app.modules.account.AccountsDaoService;
 import dgcd.financier.app.modules.account.dto.AccountResponseDto;
@@ -8,7 +9,6 @@ import dgcd.financier.app.modules.category.dto.CategoryResponseDto;
 import dgcd.financier.app.modules.operation.OperationsDaoService;
 import dgcd.financier.app.modules.operation.dto.OperationResponseDto;
 import dgcd.financier.app.modules.valute.ValuteService;
-import dgcd.financier.core.domain.Currency;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

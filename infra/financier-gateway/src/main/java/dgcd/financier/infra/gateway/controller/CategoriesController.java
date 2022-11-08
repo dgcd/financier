@@ -1,9 +1,9 @@
 package dgcd.financier.infra.gateway.controller;
 
 import dgcd.financier.infra.gateway.WebConstants;
+import dgcd.financier.infra.gateway.aspects.LogControllerData;
 import dgcd.financier.infra.gateway.dto.CategoryCreateRequestDto;
 import dgcd.financier.infra.gateway.dto.CommonResponseDto;
-import dgcd.financier.infra.gateway.aspects.LogControllerData;
 import dgcd.financier.infra.gateway.service.CategoriesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
