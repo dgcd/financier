@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,6 +22,29 @@ public class OperationRepositoryImpl implements OperationsRepository {
                 .stream()
                 .map(OperationMapper::fromEntity)
                 .toList();
+    }
+
+
+    @Override
+    public Optional<Operation> findByIdentity(Long identity) {
+        var operationEntityOpt = operationsJpaRepository.findById(identity);
+        return operationEntityOpt.map(OperationMapper::fromEntity);
+    }
+
+    @Override
+    public List<Operation> findByCorrelationIdStartingWith(String prefix) {
+        return operationsJpaRepository.findByCorrelationIdStartingWith(prefix)
+                .stream()
+                .map(OperationMapper::fromEntity)
+                .toList();
+    }
+
+
+    @Override
+    public Operation save(Operation operation) {
+        var operationEntity = OperationMapper.toEntity(operation);
+        var savedEntity = operationsJpaRepository.save(operationEntity);
+        return OperationMapper.fromEntity(savedEntity);
     }
 
 }

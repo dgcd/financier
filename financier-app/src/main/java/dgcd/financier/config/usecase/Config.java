@@ -4,10 +4,14 @@ import dgcd.financier.core.usecase.AccountCloseUsecase;
 import dgcd.financier.core.usecase.AccountCreateUsecase;
 import dgcd.financier.core.usecase.CategoryCreateUsecase;
 import dgcd.financier.core.usecase.InitDataGetUsecase;
+import dgcd.financier.core.usecase.OperationCancelUsecase;
+import dgcd.financier.core.usecase.OperationCreateUsecase;
 import dgcd.financier.core.usecase.impl.AccountCloseUsecaseImpl;
 import dgcd.financier.core.usecase.impl.AccountCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.CategoryCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.InitDataGetUsecaseImpl;
+import dgcd.financier.core.usecase.impl.OperationCancelUsecaseImpl;
+import dgcd.financier.core.usecase.impl.OperationCreateUsecaseImpl;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
 import dgcd.financier.core.usecase.port.repository.OperationsRepository;
@@ -43,19 +47,48 @@ public class Config {
         );
     }
 
+
     @Bean
     public AccountCreateUsecase accountCreateUsecase(AccountsRepository accountsRepository) {
         return new AccountCreateUsecaseImpl(accountsRepository);
     }
+
 
     @Bean
     public AccountCloseUsecase accountCloseUsecase(AccountsRepository accountsRepository) {
         return new AccountCloseUsecaseImpl(accountsRepository);
     }
 
+
     @Bean
     public CategoryCreateUsecase categoryCreateUsecase(CategoriesRepository categoriesRepository) {
         return new CategoryCreateUsecaseImpl(categoriesRepository);
+    }
+
+
+    @Bean
+    public OperationCreateUsecase operationCreateUsecase(
+            AccountsRepository accountsRepository,
+            CategoriesRepository categoriesRepository,
+            OperationsRepository operationsRepository
+    ) {
+        return new OperationCreateUsecaseImpl(
+                accountsRepository,
+                categoriesRepository,
+                operationsRepository
+        );
+    }
+
+
+    @Bean
+    public OperationCancelUsecase operationCancelUsecase(
+            AccountsRepository accountsRepository,
+            OperationsRepository operationsRepository
+    ) {
+        return new OperationCancelUsecaseImpl(
+                accountsRepository,
+                operationsRepository
+        );
     }
 
 }

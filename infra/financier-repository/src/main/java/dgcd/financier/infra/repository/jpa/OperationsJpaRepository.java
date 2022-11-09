@@ -9,4 +9,6 @@ public interface OperationsJpaRepository extends JpaRepository<OperationEntity, 
 
     List<OperationEntity> findByIsCanceledFalse();
 
+    List<OperationEntity> findByCorrelationIdStartingWith(String prefix);
+
 }

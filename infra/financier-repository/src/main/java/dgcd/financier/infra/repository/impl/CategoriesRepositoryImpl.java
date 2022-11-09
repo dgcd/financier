@@ -16,6 +16,7 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
 
     private final CategotiesJpaRepository categotiesJpaRepository;
 
+
     @Override
     public List<Category> findAll() {
         return categotiesJpaRepository.findAll()
@@ -23,6 +24,7 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
                 .map(CategoryMapper::fromEntity)
                 .toList();
     }
+
 
     @Override
     public List<Category> findAllByTitle(String title) {
@@ -32,12 +34,14 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
                 .toList();
     }
 
+
     @Override
     public Optional<Category> findById(Long identity) {
         return categotiesJpaRepository
                 .findById(identity)
                 .map(CategoryMapper::fromEntity);
     }
+
 
     @Override
     public Category save(Category category) {
