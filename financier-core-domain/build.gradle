@@ -6,9 +6,3 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.assertj:assertj-core'
 }
-
-tasks.named('jar') {
-    manifest {
-        attributes('Automatic-Module-Name': 'financier.core.domain')
-    }
-}

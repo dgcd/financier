@@ -15,9 +15,3 @@ dependencies {
     testImplementation 'org.assertj:assertj-core'
     testImplementation 'org.mockito:mockito-junit-jupiter'
 }
-
-tasks.named('jar') {
-    manifest {
-        attributes('Automatic-Module-Name': 'financier.infra.repository')
-    }
-}
