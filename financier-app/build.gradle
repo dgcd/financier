@@ -1,0 +1,58 @@
+plugins {
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    implementation project(':financier-core-usecase')
+    implementation project(':financier-infra-repository')
+    implementation project(':financier-infra-gateway')
+
+    // web
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-websocket'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // database
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.flywaydb:flyway-core'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "io.zonky.test:embedded-database-spring-test:$zonkySpringVersion"
+    testImplementation "io.zonky.test:embedded-postgres:$zonkyPostgresVersion"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "io.zonky.test.postgres:embedded-postgres-binaries-bom:$zonkyPostgresBomVersion"
+    }
+}
+
+tasks.named('bootJar') {
+    archiveFileName = 'financier.jar'
+    exclude('application.properties')
+}
+
+tasks.named('jar') {
+    enabled = false
+}
+
+springBoot {
+    buildInfo()
+}
+
+
+// enable preview features
+final PREVIEW_OPTION = '--enable-preview'
+tasks.withType(JavaCompile).each {
+    it.options.compilerArgs.add(PREVIEW_OPTION)
+}
+tasks.withType(JavaExec).each {
+    it.jvmArgs([PREVIEW_OPTION])
+}
+tasks.withType(Test).each {
+    it.jvmArgs([PREVIEW_OPTION])
+}

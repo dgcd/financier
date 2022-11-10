@@ -154,6 +154,7 @@ export default {
         operationType() { this.emitEnabled = true; 
                           this.emitOperation(); },
         amount()        { this.emitOperation(); },
+        amountTo()      { this.emitOperation(); },
         quantity()      { this.emitOperation(); },
         subcategoryId() { this.emitOperation(); },
         comment()       { this.emitOperation(); },

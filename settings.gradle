@@ -7,4 +7,10 @@ pluginManagement {
 
 rootProject.name = 'financier'
 
-include 'app'
+include 'financier-app'
+
+include 'financier-core-domain'
+include 'financier-core-usecase'
+
+include 'financier-infra-repository'
+include 'financier-infra-gateway'
