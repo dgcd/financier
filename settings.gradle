@@ -7,17 +7,10 @@ pluginManagement {
 
 rootProject.name = 'financier'
 
-include 'app'
-
-include 'core:financier-domain'
-include 'core:financier-usecase'
-
-include 'infra:financier-repository'
-include 'infra:financier-gateway'
-
 include 'financier-app'
 
-//project(":financier-domain").projectDir = file("core/financier-domain")
-//project(":financier-usecase").projectDir = file("core/financier-usecase")
-//project(":financier-repository").projectDir = file("infrastructure/financier-repository")
-//project(":financier-gateway").projectDir = file("infrastructure/financier-gateway")
+include 'financier-core-domain'
+include 'financier-core-usecase'
+
+include 'financier-infra-repository'
+include 'financier-infra-gateway'

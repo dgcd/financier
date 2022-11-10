@@ -1,0 +1,31 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    implementation project(':financier-core-domain')
+    implementation project(':financier-core-usecase')
+
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework:spring-web'
+    implementation 'org.springframework:spring-tx'
+    implementation 'org.aspectj:aspectjweaver'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'jakarta.validation:jakarta.validation-api'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-core'
+
+    implementation "org.apache.poi:poi-ooxml:$apachePoiVersion"
+
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.assertj:assertj-core'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
+}
+
+tasks.named('jar') {
+    manifest {
+        attributes('Automatic-Module-Name': 'financier.infra.gateway')
+    }
+}

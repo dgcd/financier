@@ -2,12 +2,16 @@ package dgcd.financier.config.usecase;
 
 import dgcd.financier.core.usecase.AccountCloseUsecase;
 import dgcd.financier.core.usecase.AccountCreateUsecase;
+import dgcd.financier.core.usecase.AlldataExportUsecase;
+import dgcd.financier.core.usecase.AlldataImportUsecase;
 import dgcd.financier.core.usecase.CategoryCreateUsecase;
 import dgcd.financier.core.usecase.InitDataGetUsecase;
 import dgcd.financier.core.usecase.OperationCancelUsecase;
 import dgcd.financier.core.usecase.OperationCreateUsecase;
 import dgcd.financier.core.usecase.impl.AccountCloseUsecaseImpl;
 import dgcd.financier.core.usecase.impl.AccountCreateUsecaseImpl;
+import dgcd.financier.core.usecase.impl.AlldataExportUsecaseImpl;
+import dgcd.financier.core.usecase.impl.AlldataImportUsecaseImpl;
 import dgcd.financier.core.usecase.impl.CategoryCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.InitDataGetUsecaseImpl;
 import dgcd.financier.core.usecase.impl.OperationCancelUsecaseImpl;
@@ -87,6 +91,34 @@ public class Config {
     ) {
         return new OperationCancelUsecaseImpl(
                 accountsRepository,
+                operationsRepository
+        );
+    }
+
+
+    @Bean
+    public AlldataExportUsecase alldataExportUsecase(
+            AccountsRepository accountsRepository,
+            CategoriesRepository categoriesRepository,
+            OperationsRepository operationsRepository
+    ) {
+        return new AlldataExportUsecaseImpl(
+                accountsRepository,
+                categoriesRepository,
+                operationsRepository
+        );
+    }
+
+
+    @Bean
+    public AlldataImportUsecase alldataImportUsecase(
+            AccountsRepository accountsRepository,
+            CategoriesRepository categoriesRepository,
+            OperationsRepository operationsRepository
+    ) {
+        return new AlldataImportUsecaseImpl(
+                accountsRepository,
+                categoriesRepository,
                 operationsRepository
         );
     }
