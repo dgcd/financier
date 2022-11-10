@@ -1,6 +1,5 @@
 package dgcd.financier.infra.gateway.controller;
 
-import dgcd.financier.infra.gateway.WebConstants;
 import dgcd.financier.infra.gateway.aspects.LogControllerData;
 import dgcd.financier.infra.gateway.dto.CategoryCreateRequestDto;
 import dgcd.financier.infra.gateway.dto.CommonResponseDto;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static dgcd.financier.infra.gateway.WebConstants.CATEGORIES_CREATE_PATH;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -26,10 +26,8 @@ class CategoriesController {
 
 
     @LogControllerData
-    @PostMapping(WebConstants.CATEGORIES_CREATE_PATH)
-    public CommonResponseDto createCategory(
-            @Valid @RequestBody CategoryCreateRequestDto dto
-    ) {
+    @PostMapping(CATEGORIES_CREATE_PATH)
+    public CommonResponseDto createCategory(@Valid @RequestBody CategoryCreateRequestDto dto) {
         var payload = categoriesService.createCategory(dto);
         return CommonResponseDto.ok(payload);
     }

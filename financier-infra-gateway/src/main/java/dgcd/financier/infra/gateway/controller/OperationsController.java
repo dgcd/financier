@@ -29,18 +29,14 @@ class OperationsController {
 
     @LogControllerData
     @PostMapping(OPERATIONS_CREATE_PATH)
-    public CommonResponseDto createOperation(
-            @Valid @RequestBody OperationCreateRequestDto dto
-    ) {
+    public CommonResponseDto createOperation(@Valid @RequestBody OperationCreateRequestDto dto) {
         var payload = operationsService.createOperation(dto);
         return CommonResponseDto.ok(payload);
     }
 
     @LogControllerData
     @PostMapping(OPERATIONS_CANCEL_PATH)
-    public CommonResponseDto cancelOperation(
-            @Valid @RequestBody CommonIdDto dto
-    ) {
+    public CommonResponseDto cancelOperation(@Valid @RequestBody CommonIdDto dto) {
         var payload = operationsService.cancelOperation(dto);
         return CommonResponseDto.ok(payload);
     }

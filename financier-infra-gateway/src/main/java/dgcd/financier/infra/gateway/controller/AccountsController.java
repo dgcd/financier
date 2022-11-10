@@ -1,6 +1,5 @@
 package dgcd.financier.infra.gateway.controller;
 
-import dgcd.financier.infra.gateway.WebConstants;
 import dgcd.financier.infra.gateway.aspects.LogControllerData;
 import dgcd.financier.infra.gateway.dto.AccountCreateRequestDto;
 import dgcd.financier.infra.gateway.dto.CommonIdDto;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static dgcd.financier.infra.gateway.WebConstants.ACCOUNTS_CLOSE_PATH;
+import static dgcd.financier.infra.gateway.WebConstants.ACCOUNTS_CREATE_PATH;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -27,7 +28,7 @@ class AccountsController {
 
 
     @LogControllerData
-    @PostMapping(WebConstants.ACCOUNTS_CREATE_PATH)
+    @PostMapping(ACCOUNTS_CREATE_PATH)
     public CommonResponseDto createAccount(@Valid @RequestBody AccountCreateRequestDto dto) {
         var payload = accountsService.createAccount(dto);
         return CommonResponseDto.ok(payload);
@@ -35,7 +36,7 @@ class AccountsController {
 
 
     @LogControllerData
-    @PostMapping(WebConstants.ACCOUNTS_CLOSE_PATH)
+    @PostMapping(ACCOUNTS_CLOSE_PATH)
     public CommonResponseDto closeAccount(@Valid @RequestBody CommonIdDto dto) {
         var payload = accountsService.closeAccount(dto);
         return CommonResponseDto.ok(payload);
