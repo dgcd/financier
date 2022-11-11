@@ -5,6 +5,7 @@ import dgcd.financier.infra.gateway.dto.CommonIdDto;
 import dgcd.financier.infra.gateway.dto.CommonResponseDto;
 import dgcd.financier.infra.gateway.dto.OperationCreateRequestDto;
 import dgcd.financier.infra.gateway.service.OperationsService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ class OperationsController {
 
     @LogControllerData
     @PostMapping(OPERATIONS_CREATE_PATH)
+    @Operation(summary = "Create new operation")
     public CommonResponseDto createOperation(@Valid @RequestBody OperationCreateRequestDto dto) {
         var payload = operationsService.createOperation(dto);
         return CommonResponseDto.ok(payload);
@@ -36,6 +38,7 @@ class OperationsController {
 
     @LogControllerData
     @PostMapping(OPERATIONS_CANCEL_PATH)
+    @Operation(summary = "Cancel operation")
     public CommonResponseDto cancelOperation(@Valid @RequestBody CommonIdDto dto) {
         var payload = operationsService.cancelOperation(dto);
         return CommonResponseDto.ok(payload);
