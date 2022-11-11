@@ -12,10 +12,7 @@ import static dgcd.financier.infra.gateway.WebConstants.INIT_PATH;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(
-        consumes = APPLICATION_JSON_VALUE,
-        produces = APPLICATION_JSON_VALUE
-)
+@RequestMapping(produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 class InitDataController {
 
