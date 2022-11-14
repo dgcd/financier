@@ -1,6 +1,6 @@
-package dgcd.financier;
+package dgcd.financier.test.integration;
 
-import dgcd.financier.testSupport.FinancierDatabaseTest;
+import dgcd.financier.test.integration.config.FinancierIntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@FinancierDatabaseTest
+@FinancierIntegrationTest
 class StaticResourcesTests {
 
     @Autowired

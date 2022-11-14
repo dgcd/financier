@@ -1,8 +1,9 @@
-package dgcd.financier.testSupport;
+package dgcd.financier.test.integration.config;
 
+import dgcd.financier.test.support.queryCounter.QueryCountExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,10 @@ import java.lang.annotation.Target;
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test_with_db")
-@Import(TestConfig.class)
-public @interface FinancierDatabaseTest {
+//@Import(TestConfig.class)
+@ExtendWith(QueryCountExtension.class)
+public @interface FinancierIntegrationTest {
+
+    String TEST_DATA_FOLDER = "/integration";
+
 }
