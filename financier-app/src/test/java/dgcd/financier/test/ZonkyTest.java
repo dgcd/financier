@@ -1,4 +1,4 @@
-package dgcd.financier;
+package dgcd.financier.test;
 
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.Test;

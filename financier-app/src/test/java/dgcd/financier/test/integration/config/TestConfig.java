@@ -1,4 +1,4 @@
-package dgcd.financier.testSupport;
+package dgcd.financier.test.integration.config;
 
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.test.context.TestConfiguration;
