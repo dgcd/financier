@@ -68,8 +68,8 @@ class InitDataGetUsecaseImplTest {
         var operation3 = OperationFactory.makeNew(date, account, BASE, new BigDecimal("10034099"), ONE, null, null, null, null);
         var operations = List.of(operation1, operation2, operation3);
 
-        BigDecimal usdRate = BigDecimal.valueOf(84);
-        BigDecimal eurRate = BigDecimal.valueOf(94);
+        var usdRate = BigDecimal.valueOf(111);
+        var eurRate = BigDecimal.valueOf(222);
         var rates = Map.of(
                 USD.name(), usdRate,
                 EUR.name(), eurRate
