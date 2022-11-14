@@ -10,6 +10,7 @@ module financier.infra.gateway {
     requires jakarta.validation;
     requires org.apache.tomcat.embed.core;
     requires org.apache.poi.ooxml;
+    requires io.swagger.v3.oas.annotations;
 
     requires financier.core.domain;
     requires financier.core.usecase;

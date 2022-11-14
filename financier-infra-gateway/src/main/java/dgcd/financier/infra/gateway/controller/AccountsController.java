@@ -5,6 +5,7 @@ import dgcd.financier.infra.gateway.dto.AccountCreateRequestDto;
 import dgcd.financier.infra.gateway.dto.CommonIdDto;
 import dgcd.financier.infra.gateway.dto.CommonResponseDto;
 import dgcd.financier.infra.gateway.service.AccountsService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ class AccountsController {
 
     @LogControllerData
     @PostMapping(ACCOUNTS_CREATE_PATH)
+    @Operation(summary = "Create new account")
     public CommonResponseDto createAccount(@Valid @RequestBody AccountCreateRequestDto dto) {
         var payload = accountsService.createAccount(dto);
         return CommonResponseDto.ok(payload);
@@ -37,6 +39,7 @@ class AccountsController {
 
     @LogControllerData
     @PostMapping(ACCOUNTS_CLOSE_PATH)
+    @Operation(summary = "Close account with zero balance")
     public CommonResponseDto closeAccount(@Valid @RequestBody CommonIdDto dto) {
         var payload = accountsService.closeAccount(dto);
         return CommonResponseDto.ok(payload);
