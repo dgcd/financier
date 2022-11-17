@@ -60,7 +60,7 @@ public class OperationValidator {
                 IllegalOperationCounterpartyException::new
         );
 
-        requireNonNull(operation.getIsCanceled(), "Operation isCanceled statis can not be null");
+        requireNonNull(operation.getIsCanceled(), "Operation isCanceled status can not be null");
 
         var correlation = operation.getCorrelationId();
         checkStringBoundaries(

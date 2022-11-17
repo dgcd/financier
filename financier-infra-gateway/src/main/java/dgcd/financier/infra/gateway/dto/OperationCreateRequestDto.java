@@ -23,7 +23,7 @@ public record OperationCreateRequestDto(
 
         Long subcategoryId,
 
-        // todo: validate boundaries and message for all dtos
+        // todo: validate boundaries and message for all DTOs
         @Size(min = 1, max = 30, message = "Comment length must be 1..30")
         String comment,
         @Size(min = 1, max = 30, message = "Counterparty length must be 1..30")

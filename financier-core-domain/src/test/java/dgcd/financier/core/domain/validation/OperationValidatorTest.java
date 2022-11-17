@@ -409,7 +409,7 @@ class OperationValidatorTest {
 
         assertThatThrownBy(() -> new GeneralOperation(null, date, account, type, amount, quantity, subcategory, comment, counterparty, isCanceled, correlationId))
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage("Operation isCanceled statis can not be null");
+                .hasMessage("Operation isCanceled status can not be null");
     }
 
 
