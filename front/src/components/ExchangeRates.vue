@@ -6,7 +6,7 @@
 import { mapState } from 'vuex';
 
 export default {
-    name: 'ExchageRates',
+    name: 'ExchangeRates',
 
     computed: {
         ...mapState(['rates']),
