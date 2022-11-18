@@ -127,7 +127,7 @@ class AccountCloseUsecaseImplTest {
 
 
     @Test
-    void test_execute_accountHasNonZeroBalanse_ERROR() {
+    void test_execute_accountHasNonZeroBalance_ERROR() {
         // given
         var request = new AccountCloseUsecase.Request(42L);
 

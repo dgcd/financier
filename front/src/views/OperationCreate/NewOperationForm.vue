@@ -14,36 +14,36 @@
         <br>
 
         <tr>
-            <td><span>{{isExchage ? 'Currency from: ' : 'Currency: '}}</span></td>
+            <td><span>{{isExchange ? 'Currency from: ' : 'Currency: '}}</span></td>
             <td><currency-selector v-model="currency" :filterExistentAccounts="true"/></td>
         </tr>
         <tr>
             <td><span>{{isTrans ? 'Account from: ' : 'Account: '}}</span></td>
             <td><account-selector v-model="accountId" :currency="currency" /></td>
         </tr>
-        <br v-if="isExchage">
+        <br v-if="isExchange">
 
-        <tr v-if="isExchage">
+        <tr v-if="isExchange">
             <td><span>Currency to: </span></td>
             <td>
                 <currency-selector v-model="currencyTo" :filterExistentAccounts="true"/>
-                <span v-if="isExchage && currency === currencyTo">&nbsp;&nbsp;Currencies must differ</span>
+                <span v-if="isExchange && currency === currencyTo">&nbsp;&nbsp;Currencies must differ</span>
             </td>
         </tr>
         <tr v-if="isTrans">
             <td><span>Account to: </span></td>
             <td>
-                <account-selector v-model="accountToId" :currency="isExchage ? currencyTo : currency" />
+                <account-selector v-model="accountToId" :currency="isExchange ? currencyTo : currency" />
                 <span v-if="accountId === accountToId">&nbsp;&nbsp;Accounts must differ</span>
             </td>
         </tr>
         <br>
 
         <tr>
-            <td><span>{{isExchage ? 'Amount from: ' : 'Total amount: '}}</span></td>
+            <td><span>{{isExchange ? 'Amount from: ' : 'Total amount: '}}</span></td>
             <td><input type="text" v-model.trim="amount"></td>
         </tr>
-        <tr v-if="isExchage">
+        <tr v-if="isExchange">
             <td><span>Amount to: </span></td>
             <td><input type="text" v-model.trim="amountTo"></td>
         </tr>
@@ -142,7 +142,7 @@ export default {
             return this.operationType !== dicts.OPERATION_TYPE_BASE;
         },
 
-        isExchage() {
+        isExchange() {
             return this.isTrans && this.operationType === dicts.OPERATION_TYPE_EXCHANGE;
         },
     },
@@ -182,7 +182,7 @@ export default {
 
                 amountTo: Number.isNaN(amntTo) ?
                     null :
-                    this.isExchage ?
+                    this.isExchange ?
                         amntTo :
                         null,
 

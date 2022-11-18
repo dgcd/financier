@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.ACCOUNT_COLUMNS_COUNT;
-import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.CATEGORIY_COLUMNS_COUNT;
+import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.CATEGORY_COLUMNS_COUNT;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.OPERATION_COLUMNS_COUNT;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEET_ACCOUNTS;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEET_CATEGORIES;
@@ -74,7 +74,7 @@ public class AlldataParseExcelService {
         var rowNum = 0;
         while (true) {
             var row = sheet.getRow(rowNum++);
-            if (isEmptyRow(row, CATEGORIY_COLUMNS_COUNT)) {
+            if (isEmptyRow(row, CATEGORY_COLUMNS_COUNT)) {
                 break;
             }
             var cellNum = 0;

@@ -60,7 +60,7 @@ class InitDataGetUsecaseImplTest {
         var parentCategory = CategoryFactory.makeNewParent("parent");
         var subcategory1 = CategoryFactory.makeNewSubcategory("subcat1", parentCategory);
         var subcategory2 = CategoryFactory.makeNewSubcategory("subcat2", parentCategory);
-        var caregories = List.of(parentCategory, subcategory2, subcategory1);
+        var categories = List.of(parentCategory, subcategory2, subcategory1);
 
         var date = LocalDate.now();
         var operation1 = OperationFactory.makeNew(date, account, EXPENSE, new BigDecimal("10000"), ONE, subcategory1, "comment1", "counterparty1", null);
@@ -80,7 +80,7 @@ class InitDataGetUsecaseImplTest {
 
         // and
         when(accountsRepository.findAll()).thenReturn(accounts);
-        when(categoriesRepository.findAll()).thenReturn(caregories);
+        when(categoriesRepository.findAll()).thenReturn(categories);
         when(operationsRepository.findAllNotCanceled()).thenReturn(operations);
         when(ratesRepository.getRates()).thenReturn(rates);
         when(techInfoService.getTechInfo()).thenReturn(techInfo);
