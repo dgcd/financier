@@ -101,9 +101,6 @@ export default {
                 const categoryRows = this.getCategoryRows(category, monthsSpace, monthsSpaceLength, preparedOps, currency);
                 resultRows = resultRows.concat(categoryRows);
             }
-            // if (!resultRows.length) {
-            //     return [];
-            // }
             resultRows.push(this.getSummaryRow(resultRows, monthsSpaceLength));
             return resultRows;
         },
