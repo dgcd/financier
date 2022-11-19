@@ -101,9 +101,9 @@ export default {
                 const categoryRows = this.getCategoryRows(category, monthsSpace, monthsSpaceLength, preparedOps, currency);
                 resultRows = resultRows.concat(categoryRows);
             }
-            if (!resultRows.length) {
-                return [];
-            }
+            // if (!resultRows.length) {
+            //     return [];
+            // }
             resultRows.push(this.getSummaryRow(resultRows, monthsSpaceLength));
             return resultRows;
         },
@@ -227,6 +227,8 @@ export default {
             if (!preparedOps[monthToken][currency][categoryTitle]) return 0;
             if (!preparedOps[monthToken][currency][categoryTitle][subcategoryTitle]) return 0;
             return preparedOps[monthToken][currency][categoryTitle][subcategoryTitle]
+                // filter out trans and exchange operations from by-category dashboard
+                .filter(op => op.type !== 'TRANS' && op.type !== 'EXCHANGE')
                 .map(op => op.amount)
                 .reduce((acc, amount) => acc + amount, 0);
         },
