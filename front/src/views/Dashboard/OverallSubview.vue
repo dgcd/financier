@@ -85,7 +85,10 @@ export default {
     },
 
     methods: {
-        ...mapGetters(['groupOpsAndBaseByMonthByCurrency', 'makeMonthsSpace']),
+        ...mapGetters([
+            'groupOpsAndBaseByMonthByCurrency',
+            'makeMonthsSpace',
+        ]),
 
         makeTableData(monthsSpace, preparedOps, currency) {
             const result = [];
@@ -149,7 +152,7 @@ export default {
                         trans += op.amount;
                         break;
                     default:
-                        throw new Error("Unknown type");
+                        throw new Error(`Wrong operation type: ${op.type}`);
                 }
                 if (op.accountTitle.includes('deposit')) {
                     deposit += op.amount;
@@ -162,7 +165,7 @@ export default {
             return {
                 month: monthToken,
                 income, expense, trans,
-                result: income + expense + trans,
+                result: income + expense,
                 balance, deposit, invest,
                 summ: balance + deposit + invest,
             };
@@ -192,7 +195,7 @@ export default {
             return {
                 month: yearToken,
                 income, expense, trans,
-                result: income + expense + trans,
+                result: income + expense,
                 avgIncome: income / months,
                 avgExpense: expense / months,
                 balance, deposit, invest,
