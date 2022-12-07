@@ -115,10 +115,9 @@ export default {
             if (this.categoryTitle === dicts.SELECT_ALL) {
                 const titles = this.categories
                     .filter(cat => !!cat.parentId)
-                    .map(cat => cat.title)
-                    .sort();
-                const unique = new Set(titles);
-                return [ dicts.SELECT_ALL, dicts.SELECT_EMPTY, ...unique ];
+                    .map(cat => cat.title);
+                const uniqueAndSorted = [ ...new Set(titles)].sort();
+                return [ dicts.SELECT_ALL, dicts.SELECT_EMPTY, ...uniqueAndSorted ];
             }
             const titles = this.categories
                 .filter(cat => !!cat.parentId && cat.parentTitle === this.categoryTitle)
