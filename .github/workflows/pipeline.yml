@@ -4,9 +4,10 @@ jobs:
   build-back:
     runs-on: ubuntu-latest
     steps:
-      - run: export
       - name: Checkout for back
         uses: actions/checkout@v2
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
       - name: Setup JDK 19
         uses: actions/setup-java@v2
         with:
@@ -15,7 +16,3 @@ jobs:
           cache: gradle
       - name: Build with Gradle
         run: ./gradlew test :financier-app:build --stacktrace
-      - run: export
-      - name: List files
-        run: ls -la ./financier-app/build/libs
-
