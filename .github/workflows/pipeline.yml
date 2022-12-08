@@ -11,5 +11,8 @@ jobs:
         with:
           java-version: 19
           distribution: adopt
+      - name: Build with Gradle
+        run: ./gradlew :financier-app:build
 
-          
+
+
