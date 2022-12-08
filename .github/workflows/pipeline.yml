@@ -4,6 +4,7 @@ jobs:
   build-back:
     runs-on: ubuntu-latest
     steps:
+      - run: export
       - name: Checkout for back
         uses: actions/checkout@v2
       - name: Setup JDK 19
@@ -12,7 +13,8 @@ jobs:
           java-version: 19
           distribution: adopt
       - name: Build with Gradle
-        run: ./gradlew :financier-app:build
-
+        run: ./gradlew test :financier-app:build --stacktrace
+      - name: List files
+        run: ls -la ./financier-app/build/libs
 
 
