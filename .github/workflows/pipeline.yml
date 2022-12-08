@@ -12,6 +12,7 @@ jobs:
         with:
           java-version: 19
           distribution: adopt
+          cache: gradle
       - name: Build with Gradle
         run: ./gradlew test :financier-app:build --stacktrace
       - name: List files
