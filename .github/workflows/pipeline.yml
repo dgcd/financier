@@ -23,6 +23,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 19
-      - run: cd front/
+#      - run: cd front/
       - run: npm i
+        with:
+          paths: front
       - run: npm run build
+        with:
+          paths: front
