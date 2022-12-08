@@ -15,6 +15,7 @@ jobs:
           cache: gradle
       - name: Build with Gradle
         run: ./gradlew test :financier-app:build --stacktrace
+      - run: export
       - name: List files
         run: ls -la ./financier-app/build/libs
 
