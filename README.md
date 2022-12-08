@@ -1,3 +1,5 @@
+[![pipeline](https://github.com/dgcd/financier/actions/workflows/pipeline.yml/badge.svg)](https://github.com/dgcd/financier/actions/workflows/pipeline.yml)
+
 # Financier
 
 Simple personal finance manager and playground for new features. Clean architecture and Java modularity implementation.
