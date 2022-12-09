@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 //})
 //@AutoConfigureEmbeddedDatabase(provider = ZONKY, type = POSTGRES)
 @FinancierIntegrationTest
-
 public class ZonkyTest {
 
     @Autowired
