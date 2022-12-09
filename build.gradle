@@ -45,21 +45,19 @@ subprojects {
 
     // tests configuration
     tasks.named('test') {
-        useJUnitPlatform {
-            excludeTags 'integration'
-        }
+        useJUnitPlatform()
         finalizedBy jacocoTestReport
     }
-    tasks.register('integrationTest', Test) {
-        group 'verification'
-        useJUnitPlatform {
-            includeTags 'integration'
-        }
-        finalizedBy jacocoTestReport
-    }
+//    tasks.register('integrationTest', Test) {
+//        group 'verification'
+//        useJUnitPlatform {
+//            includeTags 'integration'
+//        }
+//        finalizedBy jacocoTestReport
+//    }
     tasks.named('jacocoTestReport') {
-//        dependsOn test
-//        dependsOn test
+        dependsOn test
+//        dependsOn integrationTest
     }
 
     // enable preview features

@@ -1,5 +1,6 @@
-package dgcd.financier.test;
+package dgcd.financier.test.integration;
 
+import dgcd.financier.test.integration.config.FinancierIntegrationTest;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,14 @@ import static io.zonky.test.db.AutoConfigureEmbeddedDatabase.DatabaseProvider.ZO
 import static io.zonky.test.db.AutoConfigureEmbeddedDatabase.DatabaseType.POSTGRES;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(properties = {
-        // todo: disabled until newer Flyway support
-        "spring.flyway.enabled=false",
-        "spring.jpa.hibernate.ddl-auto=none",
-})
-@AutoConfigureEmbeddedDatabase(provider = ZONKY, type = POSTGRES)
+//@SpringBootTest(properties = {
+//        // todo: disabled until newer Flyway support
+////        "spring.flyway.enabled=false",
+////        "spring.jpa.hibernate.ddl-auto=none",
+//})
+//@AutoConfigureEmbeddedDatabase(provider = ZONKY, type = POSTGRES)
+@FinancierIntegrationTest
+
 public class ZonkyTest {
 
     @Autowired
@@ -27,7 +30,7 @@ public class ZonkyTest {
         var version = jdbcTemplate.queryForObject("select version();", String.class);
 
         assertThat(version).isNotNull();
-        assertThat(version).contains("PostgreSQL 15.");
+        assertThat(version).contains("PostgreSQL 15.1");
     }
 
 }
