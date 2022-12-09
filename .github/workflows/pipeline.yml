@@ -18,14 +18,16 @@ jobs:
         run: ./gradlew test :financier-app:build --stacktrace --info
   build-front:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front
     steps:
       - uses: actions/checkout@v3
+      - run: pwd
       - uses: actions/setup-node@v3
         with:
           node-version: 19
           cache: npm
       - run: npm -v
       - run: node -v
-      - run: pwd
-      - run: cd front/
       - run: pwd
