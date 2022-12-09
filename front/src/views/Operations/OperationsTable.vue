@@ -17,6 +17,23 @@
             <th>Counterparty</th>
             <th>Cancel</th>
         </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><select-list v-model="currency" :valuesList="currencies"/></td>
+            <td><select-list v-model="accountTitle" :valuesList="accountTitles"/></td>
+
+            <td><select-list v-model="operationType" :valuesList="operationTypes"/></td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+            <td><select-list v-model="categoryTitle" :valuesList="categoryTitles"/></td>
+            <td><select-list v-model="subcategoryTitle" :valuesList="subcategoryTitles"/></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
         <tr v-for="o in sortedOperations" :key="o.id">
             <td>{{ o.id }}</td>
             <td style="min-width:100px">{{ o.date }}</td>
@@ -55,8 +72,59 @@ export default {
         },
     },
 
+    data() {
+        return {
+            currency: dicts.SELECT_ALL,
+            currencies: [ dicts.SELECT_ALL, ...dicts.currencies ],
+            accountTitle: dicts.SELECT_ALL,
+            operationType: dicts.SELECT_ALL,
+            operationTypes: [ dicts.SELECT_ALL, ...dicts.operationTypesSet ],
+            categoryTitle: dicts.SELECT_ALL,
+            subcategoryTitle: dicts.SELECT_ALL,
+       };
+    },
+
     computed: {
-        ...mapState(['selections']),
+        ...mapState(['selections', 'accounts', 'categories']),
+
+        accountTitles() {
+            const titles = this.accounts
+                .filter(acc => {
+                    if (this.currency === dicts.SELECT_ALL) {
+                        return true;
+                    }
+                    return acc.currency === this.currency;
+                })                
+                .map(acc => acc.title)
+                .sort();
+            return [ dicts.SELECT_ALL, ...titles ];
+        },
+
+        categoryTitles() {
+            const titles = this.categories
+                .filter(cat => !cat.parentId)
+                .map(cat => cat.title)
+                .sort();
+            return [ dicts.SELECT_ALL, dicts.SELECT_EMPTY, ...titles ];
+        },
+
+        subcategoryTitles() {
+            if (this.categoryTitle === dicts.SELECT_EMPTY) {
+                return [ dicts.SELECT_EMPTY ];
+            }
+            if (this.categoryTitle === dicts.SELECT_ALL) {
+                const titles = this.categories
+                    .filter(cat => !!cat.parentId)
+                    .map(cat => cat.title);
+                const uniqueAndSorted = [ ...new Set(titles)].sort();
+                return [ dicts.SELECT_ALL, dicts.SELECT_EMPTY, ...uniqueAndSorted ];
+            }
+            const titles = this.categories
+                .filter(cat => !!cat.parentId && cat.parentTitle === this.categoryTitle)
+                .map(cat => cat.title)
+                .sort();
+            return [ dicts.SELECT_ALL, ...titles ];
+        },
 
         sortedOperations() {
             return this.operations
@@ -68,6 +136,42 @@ export default {
                     if (!this.selections.showTrans && (op.type === dicts.OPERATION_TYPE_TRANS || op.type === dicts.OPERATION_TYPE_EXCHANGE))
                         return false;
                     return true;
+                })
+                .filter(op => {
+                    if (this.currency === dicts.SELECT_ALL) {
+                        return true;
+                    }
+                    return op.currency === this.currency;
+                })
+                .filter(op => {
+                    if (this.accountTitle === dicts.SELECT_ALL) {
+                        return true;
+                    }
+                    return op.accountTitle === this.accountTitle;
+                })
+                .filter(op => {
+                    if (this.operationType === dicts.SELECT_ALL) {
+                        return true;
+                    }
+                    return op.type === this.operationType;
+                })
+                .filter(op => {
+                    if (this.categoryTitle === dicts.SELECT_ALL) {
+                        return true;
+                    }
+                    if (this.categoryTitle === dicts.SELECT_EMPTY && op.categoryTitle === 'n/a') {
+                        return true;
+                    }
+                    return op.categoryTitle === this.categoryTitle;
+                })
+                .filter(op => {
+                    if (this.subcategoryTitle === dicts.SELECT_ALL) {
+                        return true;
+                    }
+                    if (this.subcategoryTitle === dicts.SELECT_EMPTY && op.subcategoryTitle === 'n/a') {
+                        return true;
+                    }
+                    return op.subcategoryTitle === this.subcategoryTitle;
                 })
                 .sort((op1, op2) => op2.date === op1.date ?
                     op2.id - op1.id :

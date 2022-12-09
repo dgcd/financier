@@ -1,3 +1,7 @@
+
+const SELECT_ALL = '--ALL--';
+const SELECT_EMPTY = '--EMPTY--';
+
 const currencies = [
     'RUB',
     'USD',
@@ -26,4 +30,6 @@ export default {
     OPERATION_TYPE_INCOME,
     OPERATION_TYPE_TRANS,
     OPERATION_TYPE_BASE,
+    SELECT_ALL,
+    SELECT_EMPTY,
 };
