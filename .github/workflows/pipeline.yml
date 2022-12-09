@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout for back
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: Setup JDK 19
@@ -23,9 +23,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 19
-#      - run: npm i
-#        with:
-#          paths: front
-#      - run: npm run build
-#        with:
-#          paths: front
+          cache: 'npm'
+      - run: npm -v
+      - run: node -v
+      - run: pwd
+      - run: cd front/
+      - run: pwd
