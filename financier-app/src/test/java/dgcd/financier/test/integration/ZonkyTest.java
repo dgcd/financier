@@ -7,12 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@SpringBootTest(properties = {
-//        // todo: disabled until newer Flyway support
-////        "spring.flyway.enabled=false",
-////        "spring.jpa.hibernate.ddl-auto=none",
-//})
-//@AutoConfigureEmbeddedDatabase(provider = ZONKY, type = POSTGRES)
 @FinancierIntegrationTest
 public class ZonkyTest {
 
