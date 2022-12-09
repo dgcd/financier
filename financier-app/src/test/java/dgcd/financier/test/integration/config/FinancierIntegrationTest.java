@@ -24,8 +24,7 @@ import static io.zonky.test.db.AutoConfigureEmbeddedDatabase.DatabaseType.POSTGR
 @Tag("integration")
 @AutoConfigureMockMvc
 @Transactional
-@ActiveProfiles("test_with_db")
-//@Import(TestConfig.class)
+@ActiveProfiles("integrationTest")
 @ExtendWith(QueryCountExtension.class)
 @AutoConfigureEmbeddedDatabase(provider = ZONKY, type = POSTGRES)
 public @interface FinancierIntegrationTest {

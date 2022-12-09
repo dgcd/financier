@@ -1,14 +1,10 @@
 package dgcd.financier.test.integration;
 
 import dgcd.financier.test.integration.config.FinancierIntegrationTest;
-import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import static io.zonky.test.db.AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY;
-import static io.zonky.test.db.AutoConfigureEmbeddedDatabase.DatabaseType.POSTGRES;
 import static org.assertj.core.api.Assertions.assertThat;
 
 //@SpringBootTest(properties = {

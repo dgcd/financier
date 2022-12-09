@@ -15,7 +15,7 @@ jobs:
           distribution: adopt
           cache: gradle
       - name: Build with Gradle
-        run: ./gradlew test :financier-app:build --stacktrace
+        run: ./gradlew test :financier-app:build --stacktrace --info
   build-front:
     runs-on: ubuntu-latest
     steps:
