@@ -16,19 +16,22 @@ jobs:
           cache: gradle
       - name: Build with Gradle
         run: ./gradlew test :financier-app:build --stacktrace
+
   build-front:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: front
     steps:
-      - uses: actions/checkout@v3
-      - run: pwd
-      - uses: actions/setup-node@v3
+      - name: Checkout for front
+        uses: actions/checkout@v3
+      - name: Setup Node.js 19
+        uses: actions/setup-node@v3
         with:
           node-version: 19
           cache: npm
           cache-dependency-path: front/package-lock.json
-      - run: npm -v
-      - run: node -v
-      - run: pwd
+      - name: Install dependencies
+        run: npm i
+      - name: Build front
+        run: npm run build
