@@ -15,7 +15,7 @@ jobs:
           distribution: temurin
           cache: gradle
       - name: Build with Gradle
-        run: ./gradlew test :financier-app:build --stacktrace --info
+        run: ./gradlew test :financier-app:build --stacktrace
   build-front:
     runs-on: ubuntu-latest
     defaults:
@@ -28,6 +28,7 @@ jobs:
         with:
           node-version: 19
           cache: npm
+          cache-dependency-path: front/package-lock.json
       - run: npm -v
       - run: node -v
       - run: pwd
