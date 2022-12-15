@@ -96,11 +96,23 @@ export default {
 
 
         makeTableData(monthsSpace, monthsSpaceLength, preparedOps, categoriesTree, currency) {
-            let resultRows = [];
+            const catRows = [];
             for (let category of categoriesTree) {
                 const categoryRows = this.getCategoryRows(category, monthsSpace, monthsSpaceLength, preparedOps, currency);
-                resultRows = resultRows.concat(categoryRows);
+                catRows = catRows.concat(categoryRows);
             }
+
+            // sort categories by summary amount
+            catRows.sort((a,b) => a.columns[0].amount - b.columns[0].amount);
+
+            const resultRows = [];
+            for (let catRow of catRows) {
+                resultRows.push(catRow);
+                for (let subcatRow of catRow.subcategoriesRows) {
+                    resultRows.push(subcatRow);
+                }
+            }
+
             resultRows.push(this.getSummaryRow(resultRows, monthsSpaceLength));
             return resultRows;
         },
@@ -162,7 +174,8 @@ export default {
                     id: id + '_year',
                 });
             }
-            return [categoryRow].concat(notEmptyRows);
+            categoryRow.subcategoriesRows = notEmptyRows;
+            return [categoryRow];
         },
 
 
