@@ -96,7 +96,7 @@ export default {
 
 
         makeTableData(monthsSpace, monthsSpaceLength, preparedOps, categoriesTree, currency) {
-            const catRows = [];
+            let catRows = [];
             for (let category of categoriesTree) {
                 const categoryRows = this.getCategoryRows(category, monthsSpace, monthsSpaceLength, preparedOps, currency);
                 catRows = catRows.concat(categoryRows);
