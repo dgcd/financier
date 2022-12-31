@@ -5,12 +5,11 @@
 
         <error-message v-if="error" :message="error" />
 
-        <CategoriesTable :categories="categories" />
+        <CategoriesTable /> 
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import CategoriesTable from './CategoriesTable.vue';
 
 export default {
@@ -24,10 +23,6 @@ export default {
         return {
             error: null,
         };
-    },
-
-    computed: {
-        ...mapState(['categories']),
     },
 
     created() {
