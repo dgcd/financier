@@ -2,7 +2,7 @@
     <div>
         <table class="tbl">
             <tr>
-                <th>Id</th>
+                <!-- <th>Id</th> -->
                 <th>Title</th>
                 <th>Currency</th>
                 <th>Balance</th>
@@ -10,7 +10,7 @@
                 <th v-for="c in getHistoryColumns" :key="c">{{c}}</th>
             </tr>
             <tr v-for="a in sortedAccounts" :key="a.id">
-                <td>{{ a.id }}</td>
+                <!-- <td>{{ a.id }}</td> -->
                 <td align="left" style="min-width:250px">
                     {{ a.title }}
                     <button class="btn btn-link btn-sm py-0" v-if="a.id && !a.balance && !a.isClosed" @click="closeAccountHandler(a)">X</button>
