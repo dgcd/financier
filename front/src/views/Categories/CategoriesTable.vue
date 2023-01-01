@@ -8,9 +8,14 @@
         </tr>
         <tr v-for="c in sortedCategories" :key="c.id">
             <td>{{ c.id }}</td>
-            <td align="left">{{ c.title }}</td>
+            <td
+                align="left"
+                :class="c.parentId ? '' : 'boldRow'"
+            >{{ c.title }}</td>
             <td><button class="btn btn-link" v-if="!c.parentId" @click="onClickCreate(c.id)">add child</button></td>
-            <td>{{ c.count }}</td>
+            <td
+                :class="c.parentId ? '' : 'boldRow'"
+            >{{ c.count }}</td>
         </tr>
     </table>
 </template>
