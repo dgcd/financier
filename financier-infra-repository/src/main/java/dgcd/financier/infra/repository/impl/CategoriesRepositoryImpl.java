@@ -3,12 +3,13 @@ package dgcd.financier.infra.repository.impl;
 import dgcd.financier.core.domain.Category;
 import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
 import dgcd.financier.infra.repository.jpa.CategoriesJpaRepository;
-import dgcd.financier.infra.repository.mapper.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+
+import static dgcd.financier.infra.repository.mapper.CategoryMapper.INSTANCE;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
     public List<Category> findAll() {
         return categoriesJpaRepository.findAll()
                 .stream()
-                .map(CategoryMapper::fromEntity)
+                .map(INSTANCE::fromEntity)
                 .toList();
     }
 
@@ -30,7 +31,7 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
     public List<Category> findAllByTitle(String title) {
         return categoriesJpaRepository.findByTitle(title)
                 .stream()
-                .map(CategoryMapper::fromEntity)
+                .map(INSTANCE::fromEntity)
                 .toList();
     }
 
@@ -39,26 +40,26 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
     public Optional<Category> findById(Long identity) {
         return categoriesJpaRepository
                 .findById(identity)
-                .map(CategoryMapper::fromEntity);
+                .map(INSTANCE::fromEntity);
     }
 
 
     @Override
     public Category save(Category category) {
-        var entity = CategoryMapper.toEntity(category);
+        var entity = INSTANCE.toEntity(category);
         var savedEntity = categoriesJpaRepository.save(entity);
-        return CategoryMapper.fromEntity(savedEntity);
+        return INSTANCE.fromEntity(savedEntity);
     }
 
 
     @Override
     public List<Category> saveAll(List<Category> categories) {
         var categoryEntities = categories.stream()
-                .map(CategoryMapper::toEntity)
+                .map(INSTANCE::toEntity)
                 .toList();
         return categoriesJpaRepository.saveAll(categoryEntities)
                 .stream()
-                .map(CategoryMapper::fromEntity)
+                .map(INSTANCE::fromEntity)
                 .toList();
     }
 

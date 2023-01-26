@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import static dgcd.financier.infra.repository.mapper.AccountMapper.INSTANCE;
+
 @Repository
 @RequiredArgsConstructor
 public class AccountRepositoryImpl implements AccountsRepository {
@@ -21,7 +23,7 @@ public class AccountRepositoryImpl implements AccountsRepository {
     public List<Account> findAll() {
         return accountsJpaRepository.findAll()
                 .stream()
-                .map(AccountMapper::fromEntity)
+                .map(INSTANCE::fromEntity)
                 .toList();
     }
 
@@ -29,7 +31,7 @@ public class AccountRepositoryImpl implements AccountsRepository {
     @Override
     public Optional<Account> findByIdentity(Long identity) {
         var accountEntityOpt = accountsJpaRepository.findById(identity);
-        return accountEntityOpt.map(AccountMapper::fromEntity);
+        return accountEntityOpt.map(INSTANCE::fromEntity);
     }
 
 
@@ -41,20 +43,20 @@ public class AccountRepositoryImpl implements AccountsRepository {
 
     @Override
     public Account save(Account account) {
-        var accountEntity = AccountMapper.toEntity(account);
+        var accountEntity = INSTANCE.toEntity(account);
         var savedEntity = accountsJpaRepository.save(accountEntity);
-        return AccountMapper.fromEntity(savedEntity);
+        return INSTANCE.fromEntity(savedEntity);
     }
 
 
     @Override
     public List<Account> saveAll(List<Account> accounts) {
         var accountEntities = accounts.stream()
-                .map(AccountMapper::toEntity)
+                .map(INSTANCE::toEntity)
                 .toList();
         return accountsJpaRepository.saveAll(accountEntities)
                 .stream()
-                .map(AccountMapper::fromEntity)
+                .map(INSTANCE::fromEntity)
                 .toList();
     }
 

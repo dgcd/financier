@@ -3,12 +3,13 @@ package dgcd.financier.infra.repository.impl;
 import dgcd.financier.core.domain.Operation;
 import dgcd.financier.core.usecase.port.repository.OperationsRepository;
 import dgcd.financier.infra.repository.jpa.OperationsJpaRepository;
-import dgcd.financier.infra.repository.mapper.OperationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+
+import static dgcd.financier.infra.repository.mapper.OperationMapper.INSTANCE;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class OperationRepositoryImpl implements OperationsRepository {
     public List<Operation> findAll() {
         return operationsJpaRepository.findAll()
                 .stream()
-                .map(OperationMapper::fromEntity)
+                .map(INSTANCE::fromEntity)
                 .toList();
     }
 
@@ -29,7 +30,7 @@ public class OperationRepositoryImpl implements OperationsRepository {
     public List<Operation> findAllNotCanceled() {
         return operationsJpaRepository.findByIsCanceledFalse()
                 .stream()
-                .map(OperationMapper::fromEntity)
+                .map(INSTANCE::fromEntity)
                 .toList();
     }
 
@@ -37,7 +38,7 @@ public class OperationRepositoryImpl implements OperationsRepository {
     @Override
     public Optional<Operation> findByIdentity(Long identity) {
         var operationEntityOpt = operationsJpaRepository.findById(identity);
-        return operationEntityOpt.map(OperationMapper::fromEntity);
+        return operationEntityOpt.map(INSTANCE::fromEntity);
     }
 
 
@@ -45,27 +46,27 @@ public class OperationRepositoryImpl implements OperationsRepository {
     public List<Operation> findByCorrelationIdStartingWith(String prefix) {
         return operationsJpaRepository.findByCorrelationIdStartingWith(prefix)
                 .stream()
-                .map(OperationMapper::fromEntity)
+                .map(INSTANCE::fromEntity)
                 .toList();
     }
 
 
     @Override
     public Operation save(Operation operation) {
-        var operationEntity = OperationMapper.toEntity(operation);
+        var operationEntity = INSTANCE.toEntity(operation);
         var savedEntity = operationsJpaRepository.save(operationEntity);
-        return OperationMapper.fromEntity(savedEntity);
+        return INSTANCE.fromEntity(savedEntity);
     }
 
 
     @Override
     public List<Operation> saveAll(List<Operation> operations) {
         var operationEntities = operations.stream()
-                .map(OperationMapper::toEntity)
+                .map(INSTANCE::toEntity)
                 .toList();
         return operationsJpaRepository.saveAll(operationEntities)
                 .stream()
-                .map(OperationMapper::fromEntity)
+                .map(INSTANCE::fromEntity)
                 .toList();
     }
 

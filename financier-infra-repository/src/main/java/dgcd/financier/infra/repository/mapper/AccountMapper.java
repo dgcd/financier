@@ -3,20 +3,24 @@ package dgcd.financier.infra.repository.mapper;
 import dgcd.financier.core.domain.Account;
 import dgcd.financier.core.domain.factory.AccountFactory;
 import dgcd.financier.infra.repository.entity.AccountEntity;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+import org.mapstruct.factory.Mappers;
 
-public class AccountMapper {
+@Mapper
+public interface AccountMapper {
 
-    public static AccountEntity toEntity(Account account) {
-        return new AccountEntity(
-                account.getIdentity(),
-                account.getTitle(),
-                account.getCurrency(),
-                account.getBalance(),
-                account.getIsClosed()
-        );
-    }
+    AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
-    public static Account fromEntity(AccountEntity accountEntity) {
+
+    @Mappings({
+            @Mapping(target = "id", source = "identity"),
+    })
+    AccountEntity toEntity(Account account);
+
+
+    default Account fromEntity(AccountEntity accountEntity) {
         return AccountFactory.makeExisting(
                 accountEntity.getId(),
                 accountEntity.getTitle(),
