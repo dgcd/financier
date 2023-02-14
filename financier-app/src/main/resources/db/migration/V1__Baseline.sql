@@ -34,8 +34,11 @@ create table main.operations (
     subcategory_id  int8                null,
     "comment"       varchar(100)        null,
     counterparty    varchar(100)        null,
+    is_canceled     bool                not null    default false,
+    correlation_id  varchar(38)         null,
 
-    constraint operations_pkey              primary key (id),
-    constraint operations_account_id_fkey   foreign key (account_id)  references main.accounts(id),
-    constraint operations_category_id_fkey  foreign key (subcategory_id) references main.categories(id)
+    constraint operations_pkey                  primary key (id),
+    constraint operations_account_id_fkey       foreign key (account_id)  references main.accounts(id),
+    constraint operations_category_id_fkey      foreign key (subcategory_id) references main.categories(id),
+    constraint operations_correlation_id_key    unique (correlation_id)
 );

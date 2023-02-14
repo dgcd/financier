@@ -11,6 +11,9 @@ dependencies {
     implementation 'jakarta.validation:jakarta.validation-api'
     implementation 'org.hibernate.orm:hibernate-core'
 
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.assertj:assertj-core'
     testImplementation 'org.mockito:mockito-junit-jupiter'
