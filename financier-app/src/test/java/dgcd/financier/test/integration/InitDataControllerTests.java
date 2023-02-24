@@ -27,7 +27,7 @@ class InitDataControllerTests {
 
     @Test
     @Sql(TEST_DATA_FOLDER + "/initData/getInitData.sql")
-    void getInitData() throws Exception {
+    void test_getInitData() throws Exception {
         mockMvc
                 .perform(post(INIT_PATH)
                         .accept(APPLICATION_JSON)
