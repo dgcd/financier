@@ -43,6 +43,10 @@ subprojects {
         }
     }
 
+    jacoco {
+        toolVersion = "0.8.9"
+    }
+
     // tests configuration
     tasks.named('test') {
         useJUnitPlatform()
