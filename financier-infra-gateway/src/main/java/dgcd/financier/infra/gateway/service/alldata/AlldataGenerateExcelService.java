@@ -18,8 +18,7 @@ import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEE
 
 @Service
 @RequiredArgsConstructor
-public
-class AlldataGenerateExcelService {
+public class AlldataGenerateExcelService {
 
     public void generateExcel(
             ServletOutputStream outputStream,

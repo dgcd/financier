@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 class OperationCancelUsecaseRequestValidatorTest {
 
     @Test
-    void validate() {
+    void test_validate_OK() {
         // todo
     }
 
