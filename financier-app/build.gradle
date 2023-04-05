@@ -47,6 +47,15 @@ springBoot {
 }
 
 
+// tests configuration
+tasks.named('test') {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+tasks.named('jacocoTestReport') {
+    dependsOn test
+}
+
 // enable preview features
 final PREVIEW_OPTION = '--enable-preview'
 tasks.withType(JavaCompile).each {
@@ -57,4 +66,13 @@ tasks.withType(JavaExec).each {
 }
 tasks.withType(Test).each {
     it.jvmArgs([PREVIEW_OPTION])
+}
+
+// JVM memory tuning
+tasks.withType(JavaExec).each {
+    it.jvmArgs([
+            '-XX:+HeapDumpOnOutOfMemoryError',
+            '-XX:MaxMetaspaceSize=128m',
+            '-Xmx512m',
+    ])
 }

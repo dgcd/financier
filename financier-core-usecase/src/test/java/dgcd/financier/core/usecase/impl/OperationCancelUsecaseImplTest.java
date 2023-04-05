@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 class OperationCancelUsecaseImplTest {
 
     @Test
-    void execute() {
+    void test_execute_OK() {
         // todo
     }
 

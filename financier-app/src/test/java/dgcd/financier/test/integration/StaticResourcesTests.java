@@ -20,7 +20,7 @@ class StaticResourcesTests {
     private MockMvc mockMvc;
 
     @Test
-    void getIndexHtml() throws Exception {
+    void test_getIndexHtml_OK() throws Exception {
         mockMvc
                 .perform(get("/index.html"))
                 .andExpect(status().isOk())
@@ -30,7 +30,7 @@ class StaticResourcesTests {
 
 
     @Test
-    void getFavicon() throws Exception {
+    void test_getFavicon_OK() throws Exception {
         mockMvc
                 .perform(get("/favicon.ico"))
                 .andExpect(status().isOk())

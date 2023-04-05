@@ -15,7 +15,7 @@ public class ZonkyTest {
 
 
     @Test
-    void checkPostgresVersion() {
+    void test_checkPostgresVersion_OK() {
         var version = jdbcTemplate.queryForObject("select version();", String.class);
 
         assertThat(version).isNotNull();
