@@ -166,7 +166,6 @@ export default {
             if (!this.emitEnabled) return;
             const qtty = Number(this.quantity);
             const amnt = this.parseAmount(this.amount);
-            console.log(`amnt: ${amnt}`);
             const amntTo = Number(this.amountTo);
             const operation = {
                 date: this.date,
@@ -204,41 +203,29 @@ export default {
 
         parseAmount(amount) {
             if (!amount) {
-                console.log(`undef: ${amount}`);
-                return;
+                return null;
             }
-            let noSpaces = amount.replace(/\s+/g, '');
-            console.log(`noSpaces: '${noSpaces}'`);
 
+            let noSpaces = amount.replace(/\s+/g, '');
             if (noSpaces.length > 0 && noSpaces.charAt(0) === '=') {
                 return this.parseAmountExpression(noSpaces.substring(1));
             }
 
             let result = Number(noSpaces);
-            console.log(`result: ${result}`);
-
-            if (Number.isNaN(result)) {
-                console.log(`isNaN: ${result}`);
-            }
             return result;
         },
  
-//     =12.5 +20.25* 10-4 0/4   +   12 +20* 10-4 0/4      
         parseAmountExpression(s) {
             let nums = [];
             let ops = [];
             for (let i = 0; i < s.length;) {
-                console.log(`for i: ${i}`);
-
                 if (this.isNum(s.charAt(i))) {
                     let i2 = i + 1;
                     while (i2 < s.length && this.isNum(s.charAt(i2))) {
-                        console.log(`i2: ${i2}, char: ${s.charAt(i2)}`);
                         i2 ++;
                     }
                     let number = Number(s.slice(i, i2));
                     i = i2;
-                    console.log(`number: ${number}`);
                     nums.push(number);
                 } else if (this.isOp(s.charAt(i))) {
                     let curOp = s.charAt(i);
@@ -250,22 +237,14 @@ export default {
                     ops.push(curOp);
                 } else {
                     // wrong character
-                    console.log("wrong char: " + s.charAt(i));
-                    console.log(nums);
-                    console.log(ops);
+                    console.warn("wrong character: " + s.charAt(i));
                     return null;
                 }
             }
-            console.log("end");
-            console.log(nums);
-            console.log(ops);
             while (ops.length !== 0) {
                 this.processOp(nums, ops[ops.length -1]);
                 ops.pop();
             }
-            console.log("end 2");
-            console.log(nums);
-            console.log(ops);
             return nums[nums.length -1];
         },
 
@@ -278,21 +257,11 @@ export default {
         },
 
         isOp(c) {
-            if (c === '+' || c === '-' || c === '*' || c === '/') {
-                console.log(`is op: ${c}`);
-                return true;
-            }
-            console.log(`not op: ${c}`);
-            return false;
+            return c === '+' || c === '-' || c === '*' || c === '/';
         },
 
         isNum(c) {
-            if ((c >= '0' && c <= '9') || c === '.') { // numeric (0-9)
-                console.log(`is num: ${c}`);
-                return true;
-            }
-            console.log(`not num: ${c}`);
-            return false;
+            return (c >= '0' && c <= '9') || c === '.';
         },
 
         processOp(nums, op) {
