@@ -208,7 +208,7 @@ export default {
                 return;
             }
             let noSpaces = amount.replace(/\s+/g, '');
-            console.log(`noSpaces: ${noSpaces}`);
+            console.log(`noSpaces: '${noSpaces}'`);
 
             if (noSpaces.length > 0 && noSpaces.charAt(0) === '=') {
                 return this.parseAmountExpression(noSpaces.substring(1));
@@ -222,60 +222,51 @@ export default {
             }
             return result;
         },
-
-        isalnum(str) {
-            var code, i, len;
-
-            for (i = 0, len = str.length; i < len; i++) {
-                code = str.charCodeAt(i);
-                if (!(code > 47 && code < 58)
-                    //  && // numeric (0-9)
-                    // !(code > 64 && code < 91) && // upper alpha (A-Z)
-                    // !(code > 96 && code < 123)
-                    ) { // lower alpha (a-z)
-                    return false;
-                }
-            }
-            return true;
-        },
-
+ 
+//     =12 +20* 10-4 0/4   +   12 +20* 10-4 0/4      
         parseAmountExpression(s) {
-            let st = [];
-            let op = [];
-            for (let i = 0; i < s.length; i++) {
-            //   console.log(i);
-                // if (s.charAt(i) == '(') {
-                //     op.push('(');
-                // } else if (s.charAt(i) == ')') {
-                //     while (op[op.length -1] != '(') {
-                //         this.process_op(st, op[op.length -1]);
-                //         op.pop();
-                //     }
-                //     op.pop();
-                // } else 
-                if (this.is_op(s.charAt(i))) {
-                    let cur_op = s.charAt(i);
-                    while (op.length !== 0 && this.priority(op[op.length -1]) >= this.priority(cur_op)) {
-                        this.process_op(st, op[op.length -1]);
-                        op.pop();
+            let nums = [];
+            let ops = [];
+            for (let i = 0; i < s.length;) {
+                console.log(`for i: ${i}`);
+
+                if (this.isNum(s.charAt(i))) {
+                    let i2 = i + 1;
+                    while (i2 < s.length && this.isNum(s.charAt(i2))) {
+                        console.log(`i2: ${i2}, char: ${s.charAt(i2)}`);
+                        i2 ++;
                     }
-                    op.push(cur_op);
+                    let number = Number(s.slice(i, i2));
+                    i = i2;
+                    console.log(`number: ${number}`);
+                    nums.push(number);
+                } else if (this.isOp(s.charAt(i))) {
+                    let curOp = s.charAt(i);
+                    while (ops.length !== 0 && this.priority(ops[ops.length -1]) >= this.priority(curOp)) {
+                        let prevOp = ops.pop();
+                        this.processOp(nums, prevOp);
+                    }
+                    i++;
+                    ops.push(curOp);
                 } else {
-                    let number = 0;
-                    while (i < s.length && this.isalnum(s.charAt(i)))
-                        number = number * 10 + s[i++];// - '0';
-                    --i;
-                    st.push(number);
+                    // wrong character
+                    console.log("wrong char: " + s.charAt(i));
+                    console.log(nums);
+                    console.log(ops);
+                    return null;
                 }
             }
-            console.log(st);
-            console.log(op);
-
-            while (op.length !== 0) {
-                this.process_op(st, op[op.length -1]);
-                op.pop();
+            console.log("end");
+            console.log(nums);
+            console.log(ops);
+            while (ops.length !== 0) {
+                this.processOp(nums, ops[ops.length -1]);
+                ops.pop();
             }
-            return st[st.length -1];
+            console.log("end 2");
+            console.log(nums);
+            console.log(ops);
+            return nums[nums.length -1];
         },
 
         priority (op) {
@@ -286,18 +277,32 @@ export default {
             return -1;
         },
 
-        is_op(c) {
-            return c === '+' || c === '-' || c === '*' || c === '/';
+        isOp(c) {
+            if (c === '+' || c === '-' || c === '*' || c === '/') {
+                console.log(`is op: ${c}`);
+                return true;
+            }
+            console.log(`not op: ${c}`);
+            return false;
         },
 
-        process_op(st, op) {
-            let r = st.pop();
-            let l = st.pop();
+        isNum(c) {
+            if (c >= '0' && c <= '9') { // numeric (0-9)
+                console.log(`is num: ${c}`);
+                return true;
+            }
+            console.log(`not num: ${c}`);
+            return false;
+        },
+
+        processOp(nums, op) {
+            let r = nums.pop();
+            let l = nums.length ? nums.pop() : 0;
             switch (op) {
-                case '+': st.push(l + r); break;
-                case '-': st.push(l - r); break;
-                case '*': st.push(l * r); break;
-                case '/': st.push(l / r); break;
+                case '+': nums.push(l + r); break;
+                case '-': nums.push(l - r); break;
+                case '*': nums.push(l * r); break;
+                case '/': nums.push(l / r); break;
             }
         },
     },
