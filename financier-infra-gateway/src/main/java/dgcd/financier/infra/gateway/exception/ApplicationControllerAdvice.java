@@ -40,12 +40,12 @@ public class ApplicationControllerAdvice {
     }
 
 
-    @ExceptionHandler(RuntimeException.class)
-    protected ResponseEntity<CommonResponseDto> runtimeException(RuntimeException exception) {
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ResponseEntity<CommonResponseDto> illegalArgumentException(IllegalArgumentException exception) {
         return makeResponse(
                 exception,
                 exception.getMessage(),
-                INTERNAL_SERVER_ERROR
+                BAD_REQUEST
         );
     }
 

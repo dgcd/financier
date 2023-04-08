@@ -8,15 +8,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record OperationCreateRequestDto(
-        @NotNull
+        @NotNull(message = "Operation date can not be null")
         LocalDate date,
-        @NotNull
+        @NotNull(message = "Operation id can not be null")
         Long accountId,
         Long accountToId,
 
-        @NotNull
+        @NotNull(message = "Operation type can not be null")
         OperationType operationType,
-        @NotNull
+        @NotNull(message = "Operation amount can not be null")
         BigDecimal amount,
         BigDecimal amountTo,
         BigDecimal quantity,

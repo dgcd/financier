@@ -203,7 +203,7 @@ export default {
         },
 
         parseAmount(amount) {
-            if (amount === null || amount === undefined) {
+            if (!amount) {
                 console.log(`undef: ${amount}`);
                 return;
             }
