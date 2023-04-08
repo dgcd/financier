@@ -223,7 +223,7 @@ export default {
             return result;
         },
  
-//     =12 +20* 10-4 0/4   +   12 +20* 10-4 0/4      
+//     =12.5 +20.25* 10-4 0/4   +   12 +20* 10-4 0/4      
         parseAmountExpression(s) {
             let nums = [];
             let ops = [];
@@ -287,7 +287,7 @@ export default {
         },
 
         isNum(c) {
-            if (c >= '0' && c <= '9') { // numeric (0-9)
+            if ((c >= '0' && c <= '9') || c === '.') { // numeric (0-9)
                 console.log(`is num: ${c}`);
                 return true;
             }
