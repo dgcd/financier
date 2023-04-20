@@ -80,7 +80,7 @@ export default {
         ...mapMutations(['addOperations', 'updateAccounts']),
 
         onCreate() {
-            if (!this.operationValid()) {
+            if (!this.operationValid(this.operation)) {
                 return;
             }
             this.error = null;
@@ -91,7 +91,15 @@ export default {
             );
         },
 
-        operationValid() {
+        operationValid(operation) {
+            if (operation.amount === 0) {
+                this.error = 'Amount can not be 0';
+                return false;
+            }
+            if (!operation.amount) {
+                this.error = 'Amount is not correct';
+                return false;
+            }
             return true;
         },
 

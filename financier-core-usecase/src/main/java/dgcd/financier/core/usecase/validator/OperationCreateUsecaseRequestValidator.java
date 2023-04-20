@@ -26,6 +26,9 @@ public class OperationCreateUsecaseRequestValidator {
         if (request.getAmount().compareTo(ZERO) == 0) {
             throw new IllegalArgumentException("Operation amount can not be 0");
         }
+        if (request.getAmount().scale() > 2) {
+            throw new IllegalArgumentException("Operation amount scale is too big");
+        }
         // todo more checks
     }
 
