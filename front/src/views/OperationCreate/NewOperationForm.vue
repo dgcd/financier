@@ -245,7 +245,7 @@ export default {
                 this.processOp(nums, ops[ops.length -1]);
                 ops.pop();
             }
-            return nums[nums.length -1];
+            return Math.round(nums[nums.length -1] * 100)/100;
         },
 
         priority (op) {

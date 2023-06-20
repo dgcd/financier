@@ -11,8 +11,8 @@ import static dgcd.financier.core.domain.Currency.USD;
 // todo: stub, implement
 public class RatesRepositoryImpl implements RatesRepository {
 
-    public static final BigDecimal RATE_USD = BigDecimal.valueOf(70);
-    public static final BigDecimal RATE_EUR = BigDecimal.valueOf(74);
+    public static final BigDecimal RATE_USD = BigDecimal.valueOf(81);
+    public static final BigDecimal RATE_EUR = BigDecimal.valueOf(87);
 
 
     @Override
