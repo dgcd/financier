@@ -126,7 +126,7 @@ public class OperationCreateUsecaseImpl implements OperationCreateUsecase {
 
 
     private Category getSubcategoryFromDbAndCheck(Long identity) {
-        var subcategoryOptional = categoriesRepository.findById(identity);
+        var subcategoryOptional = categoriesRepository.findByIdentity(identity);
         if (subcategoryOptional.isEmpty()) {
             throw new CategoryNotExistsException(identity);
         }

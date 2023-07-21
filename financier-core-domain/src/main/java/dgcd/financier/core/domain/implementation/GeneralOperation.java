@@ -6,11 +6,13 @@ import dgcd.financier.core.domain.Operation;
 import dgcd.financier.core.domain.OperationType;
 import dgcd.financier.core.domain.validation.OperationValidator;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
+@ToString
 public class GeneralOperation implements Operation {
 
     private final Long identity;

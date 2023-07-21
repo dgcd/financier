@@ -11,7 +11,7 @@ public interface CategoriesRepository {
 
     List<Category> findAllByTitle(String title);
 
-    Optional<Category> findById(Long identity);
+    Optional<Category> findByIdentity(Long identity);
 
     Category save(Category category);
 
