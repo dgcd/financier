@@ -1,5 +1,6 @@
 module financier.infra.repository {
     requires lombok;
+    requires org.slf4j;
     requires org.mapstruct;
 
     requires spring.context;

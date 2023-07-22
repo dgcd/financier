@@ -25,4 +25,6 @@ public final class WebConstants {
 
     public static final String ALLDATA_ATTACHMENT_NAMING = "attachment;filename=financier_data_%s.xlsx";
 
+    public static final String MDC_RQ_ID = "rqId";
+
 }

@@ -58,7 +58,7 @@ class CategoryCreateUsecaseImplTest {
         verify(categoriesRepository).findAllByTitle(titleCaptor.capture());
         assertThat(titleCaptor.getValue()).isEqualTo("parent");
 
-        verify(categoriesRepository, never()).findById(any());
+        verify(categoriesRepository, never()).findByIdentity(any());
 
         verify(categoriesRepository, times(1)).save(any());
         var categoryCaptor = ArgumentCaptor.forClass(Category.class);
@@ -98,7 +98,7 @@ class CategoryCreateUsecaseImplTest {
         verify(categoriesRepository).findAllByTitle(titleCaptor.capture());
         assertThat(titleCaptor.getValue()).isEqualTo("parent");
 
-        verify(categoriesRepository, never()).findById(any());
+        verify(categoriesRepository, never()).findByIdentity(any());
         verify(categoriesRepository, never()).save(any());
     }
 
@@ -114,7 +114,7 @@ class CategoryCreateUsecaseImplTest {
                         makeExistingSubcategory(324L, "subcat123", makeExistingParent(213L, "otherParent", null)),
                         makeExistingParent(213L, "subcat123", null)
                 ));
-        when(categoriesRepository.findById(any()))
+        when(categoriesRepository.findByIdentity(any()))
                 .thenReturn(Optional.of(
                         makeExistingParent(100L, "parent", null)
                 ));
@@ -132,9 +132,9 @@ class CategoryCreateUsecaseImplTest {
         verify(categoriesRepository).findAllByTitle(titleCaptor.capture());
         assertThat(titleCaptor.getValue()).isEqualTo("subcat123");
 
-        verify(categoriesRepository, times(1)).findById(any());
+        verify(categoriesRepository, times(1)).findByIdentity(any());
         var identityCaptor = ArgumentCaptor.forClass(Long.class);
-        verify(categoriesRepository).findById(identityCaptor.capture());
+        verify(categoriesRepository).findByIdentity(identityCaptor.capture());
         assertThat(identityCaptor.getValue()).isEqualTo(100L);
 
         verify(categoriesRepository, times(1)).save(any());
@@ -183,7 +183,7 @@ class CategoryCreateUsecaseImplTest {
         verify(categoriesRepository).findAllByTitle(titleCaptor.capture());
         assertThat(titleCaptor.getValue()).isEqualTo("subcat123");
 
-        verify(categoriesRepository, never()).findById(any());
+        verify(categoriesRepository, never()).findByIdentity(any());
         verify(categoriesRepository, never()).save(any());
     }
 
@@ -199,7 +199,7 @@ class CategoryCreateUsecaseImplTest {
                         makeExistingSubcategory(324L, "subcat123", makeExistingParent(213L, "otherParent", null)),
                         makeExistingParent(213L, "subcat123", null)
                 ));
-        when(categoriesRepository.findById(any()))
+        when(categoriesRepository.findByIdentity(any()))
                 .thenReturn(Optional.empty());
 
         // when
@@ -213,9 +213,9 @@ class CategoryCreateUsecaseImplTest {
         verify(categoriesRepository).findAllByTitle(titleCaptor.capture());
         assertThat(titleCaptor.getValue()).isEqualTo("subcat123");
 
-        verify(categoriesRepository, times(1)).findById(any());
+        verify(categoriesRepository, times(1)).findByIdentity(any());
         var identityCaptor = ArgumentCaptor.forClass(Long.class);
-        verify(categoriesRepository).findById(identityCaptor.capture());
+        verify(categoriesRepository).findByIdentity(identityCaptor.capture());
         assertThat(identityCaptor.getValue()).isEqualTo(100L);
     }
 
@@ -231,7 +231,7 @@ class CategoryCreateUsecaseImplTest {
                         makeExistingSubcategory(324L, "subcat123", makeExistingParent(213L, "otherParent", null)),
                         makeExistingParent(213L, "subcat123", null)
                 ));
-        when(categoriesRepository.findById(any()))
+        when(categoriesRepository.findByIdentity(any()))
                 .thenReturn(Optional.of(
                         makeExistingSubcategory(100L, "fakeParent", makeExistingParent(100L, "parent", null))
                 ));
@@ -247,9 +247,9 @@ class CategoryCreateUsecaseImplTest {
         verify(categoriesRepository).findAllByTitle(titleCaptor.capture());
         assertThat(titleCaptor.getValue()).isEqualTo("subcat123");
 
-        verify(categoriesRepository, times(1)).findById(any());
+        verify(categoriesRepository, times(1)).findByIdentity(any());
         var identityCaptor = ArgumentCaptor.forClass(Long.class);
-        verify(categoriesRepository).findById(identityCaptor.capture());
+        verify(categoriesRepository).findByIdentity(identityCaptor.capture());
         assertThat(identityCaptor.getValue()).isEqualTo(100L);
     }
 

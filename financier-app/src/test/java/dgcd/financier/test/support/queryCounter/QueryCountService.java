@@ -1,5 +1,12 @@
 package dgcd.financier.test.support.queryCounter;
 
+import static dgcd.financier.test.support.queryCounter.QueryType.CALL;
+import static dgcd.financier.test.support.queryCounter.QueryType.DELETE;
+import static dgcd.financier.test.support.queryCounter.QueryType.INSERT;
+import static dgcd.financier.test.support.queryCounter.QueryType.NEXTVAL;
+import static dgcd.financier.test.support.queryCounter.QueryType.SELECT;
+import static dgcd.financier.test.support.queryCounter.QueryType.UPDATE;
+
 public class QueryCountService {
 
     private final static QueryCountService INSTANCE = new QueryCountService();
@@ -63,16 +70,16 @@ public class QueryCountService {
                 .trim();
 
         if (trimmedQuery.startsWith("select nextval")) {
-            return QueryType.NEXTVAL;
+            return NEXTVAL;
         }
 
         var firstChar = trimmedQuery.charAt(0);
         return switch (firstChar) {
-            case 'w', 's' -> QueryType.SELECT; // query can be started 'with'
-            case 'i' -> QueryType.INSERT;
-            case 'u' -> QueryType.UPDATE;
-            case 'd' -> QueryType.DELETE;
-            case 'c', '?' -> QueryType.CALL;
+            case 'w', 's' -> SELECT; // query can be started 'with'
+            case 'i' -> INSERT;
+            case 'u' -> UPDATE;
+            case 'd' -> DELETE;
+            case 'c', '?' -> CALL;
             default -> throw new RuntimeException("Unknown QueryType: " + trimmedQuery);
         };
     }

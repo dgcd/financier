@@ -25,9 +25,9 @@ public class LogControllerDataAspect {
 
         logBefore(annotation.logParams(), methodName, joinPoint.getArgs());
 
-        var startMillis = System.currentTimeMillis();
+        var startNanos = System.nanoTime();
         var result = joinPoint.proceed();
-        var millis = System.currentTimeMillis() - startMillis;
+        var millis = (System.nanoTime() - startNanos) / 1_000_000;
 
         logAfter(annotation.logResult(), methodName, result, millis);
 

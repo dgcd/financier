@@ -11,7 +11,7 @@ public interface OperationsRepository {
 
     List<Operation> findAllNotCanceled();
 
-    Optional<Operation> findByIdentity(Long dentity);
+    Optional<Operation> findByIdentity(Long identity);
 
     List<Operation> findByCorrelationIdStartingWith(String prefix);
 

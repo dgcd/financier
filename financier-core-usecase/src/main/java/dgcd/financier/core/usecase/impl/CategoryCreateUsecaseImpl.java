@@ -31,7 +31,7 @@ public class CategoryCreateUsecaseImpl implements CategoryCreateUsecase {
 
         Category category;
         if (nonNull(request.getParentIdentity())) {
-            var parentOpt = categoriesRepository.findById(request.getParentIdentity());
+            var parentOpt = categoriesRepository.findByIdentity(request.getParentIdentity());
             var parent = checkParentCategory(parentOpt, request.getParentIdentity());
             category = CategoryFactory.makeNewSubcategory(request.getTitle(), parent);
         } else {

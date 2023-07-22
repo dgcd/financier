@@ -4,10 +4,12 @@ import dgcd.financier.core.domain.Account;
 import dgcd.financier.core.domain.Currency;
 import dgcd.financier.core.domain.validation.AccountValidator;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
 @Getter
+@ToString
 public final class GeneralAccount implements Account {
 
     private final Long identity;

@@ -17,8 +17,10 @@ subprojects {
 
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
-    sourceCompatibility = JavaVersion.VERSION_20
-    targetCompatibility = JavaVersion.VERSION_20
+    java {
+        sourceCompatibility = JavaVersion.VERSION_20
+        targetCompatibility = JavaVersion.VERSION_20
+    }
 
     repositories {
         maven { url 'https://repo.spring.io/milestone' }
@@ -44,7 +46,7 @@ subprojects {
     }
 
     jacoco {
-        toolVersion = "0.8.9"
+        toolVersion = "$jacocoVersion"
     }
 
     // tests configuration
@@ -57,15 +59,14 @@ subprojects {
     }
 
     // enable preview features
-    final PREVIEW_OPTION = '--enable-preview'
-    tasks.withType(JavaCompile).each {
-        it.options.compilerArgs.add(PREVIEW_OPTION)
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs += "--enable-preview"
     }
-    tasks.withType(JavaExec).each {
-        it.jvmArgs([PREVIEW_OPTION])
+    tasks.withType(Test).configureEach {
+        jvmArgs += "--enable-preview"
     }
-    tasks.withType(Test).each {
-        it.jvmArgs([PREVIEW_OPTION])
+    tasks.withType(JavaExec).configureEach {
+        jvmArgs += "--enable-preview"
     }
 
     // JVM memory tuning
