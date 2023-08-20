@@ -40,7 +40,7 @@ class InitDataControllerTests {
                 .andExpect(jsonPath("$.payload.categories", hasSize(2)))
                 .andExpect(jsonPath("$.payload.operations", hasSize(3)));
 
-        assertSelectCount(3);
+        assertSelectCount(4);
     }
 
 }

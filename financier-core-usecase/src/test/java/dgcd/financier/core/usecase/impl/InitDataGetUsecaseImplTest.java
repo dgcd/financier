@@ -3,6 +3,7 @@ package dgcd.financier.core.usecase.impl;
 import dgcd.financier.core.domain.factory.AccountFactory;
 import dgcd.financier.core.domain.factory.CategoryFactory;
 import dgcd.financier.core.domain.factory.OperationFactory;
+import dgcd.financier.core.domain.factory.RatesFactory;
 import dgcd.financier.core.usecase.InitDataGetUsecase;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
@@ -70,10 +71,7 @@ class InitDataGetUsecaseImplTest {
 
         var usdRate = BigDecimal.valueOf(111);
         var eurRate = BigDecimal.valueOf(222);
-        var rates = Map.of(
-                USD.name(), usdRate,
-                EUR.name(), eurRate
-        );
+        var rates = RatesFactory.make(LocalDate.now(), eurRate, usdRate);
 
         var version = "42 ".concat(UUID.randomUUID().toString());
         var techInfo = Map.of("javaVersion", version);
@@ -90,7 +88,7 @@ class InitDataGetUsecaseImplTest {
 
         // then
         assertThat(response.getAccounts()).hasSize(1);
-        assertThat(response.getAccounts()).first().isEqualTo(account);
+        assertThat(response.getAccounts().get(0)).isEqualTo(account);
 
         assertThat(response.getCategories()).hasSize(3);
         assertThat(response.getCategories()).allMatch(cat -> cat.isParent() || cat.getParent().equals(parentCategory));

@@ -3,7 +3,6 @@ module financier.infra.exchange {
     requires org.slf4j;
 
     requires spring.context;
-    requires spring.core;
     requires spring.beans;
     requires spring.web;
 
