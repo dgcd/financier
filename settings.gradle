@@ -14,3 +14,4 @@ include 'financier-core-usecase'
 
 include 'financier-infra-repository'
 include 'financier-infra-gateway'
+include 'financier-infra-exchange'

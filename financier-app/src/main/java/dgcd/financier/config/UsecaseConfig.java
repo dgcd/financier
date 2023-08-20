@@ -1,4 +1,4 @@
-package dgcd.financier.config.usecase;
+package dgcd.financier.config;
 
 import dgcd.financier.core.usecase.AccountCloseUsecase;
 import dgcd.financier.core.usecase.AccountCreateUsecase;
@@ -8,6 +8,7 @@ import dgcd.financier.core.usecase.CategoryCreateUsecase;
 import dgcd.financier.core.usecase.InitDataGetUsecase;
 import dgcd.financier.core.usecase.OperationCancelUsecase;
 import dgcd.financier.core.usecase.OperationCreateUsecase;
+import dgcd.financier.core.usecase.RatesUpdateUsecase;
 import dgcd.financier.core.usecase.impl.AccountCloseUsecaseImpl;
 import dgcd.financier.core.usecase.impl.AccountCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.AlldataExportUsecaseImpl;
@@ -16,23 +17,17 @@ import dgcd.financier.core.usecase.impl.CategoryCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.InitDataGetUsecaseImpl;
 import dgcd.financier.core.usecase.impl.OperationCancelUsecaseImpl;
 import dgcd.financier.core.usecase.impl.OperationCreateUsecaseImpl;
+import dgcd.financier.core.usecase.impl.RatesUpdateUsecaseImpl;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
 import dgcd.financier.core.usecase.port.repository.OperationsRepository;
 import dgcd.financier.core.usecase.port.repository.RatesRepository;
 import dgcd.financier.core.usecase.port.service.TechInfoService;
-import dgcd.financier.infra.repository.impl.RatesRepositoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class Config {
-
-    @Bean
-    public RatesRepository ratesService() {
-        return new RatesRepositoryImpl();
-    }
-
+public class UsecaseConfig {
 
     @Bean
     public InitDataGetUsecase initDataGetUsecase(
@@ -120,6 +115,16 @@ public class Config {
                 accountsRepository,
                 categoriesRepository,
                 operationsRepository
+        );
+    }
+
+
+    @Bean
+    public RatesUpdateUsecase ratesUpdateUsecase(
+            RatesRepository ratesRepository
+    ) {
+        return new RatesUpdateUsecaseImpl(
+                ratesRepository
         );
     }
 

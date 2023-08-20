@@ -1,31 +1,42 @@
 package dgcd.financier.infra.repository.impl;
 
+import dgcd.financier.core.domain.Rates;
+import dgcd.financier.core.domain.factory.RatesFactory;
 import dgcd.financier.core.usecase.port.repository.RatesRepository;
+import dgcd.financier.infra.repository.entity.RatesEntity;
+import dgcd.financier.infra.repository.jpa.RatesJpaRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-import java.util.Map;
+import java.time.LocalDate;
 
-import static dgcd.financier.core.domain.Currency.EUR;
-import static dgcd.financier.core.domain.Currency.USD;
+import static java.math.BigDecimal.ZERO;
 
 @Slf4j
+@Repository
+@RequiredArgsConstructor
 public class RatesRepositoryImpl implements RatesRepository {
 
-    public static final BigDecimal RATE_USD = BigDecimal.valueOf(90);
-    public static final BigDecimal RATE_EUR = BigDecimal.valueOf(98);
-
+    private final RatesJpaRepository ratesJpaRepository;
 
     @Override
-    public Map<String, BigDecimal> getRates() {
-        var rates = Map.of(
-                USD.name(), RATE_USD,
-                EUR.name(), RATE_EUR
-        );
+    public Rates getRates() {
+        var rates = ratesJpaRepository.findFirstByOrderByDateDesc()
+                .map(r -> RatesFactory.make(r.getDate(), r.getEur(), r.getUsd()))
+                .orElse(RatesFactory.make(LocalDate.now(), ZERO, ZERO));
 
         log.debug("[getRates] rates: {}", rates);
 
         return rates;
+    }
+
+
+    @Override
+    public void updateRates(Rates rates) {
+        var ratesEntity = new RatesEntity(rates.getDate(), rates.getEurRate(), rates.getUsdRate());
+        var savedEntity = ratesJpaRepository.save(ratesEntity);
+        log.debug("[updateRates] rates: {}", savedEntity);
     }
 
 }
