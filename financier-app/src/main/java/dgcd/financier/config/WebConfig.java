@@ -1,4 +1,4 @@
-package dgcd.financier.config.web;
+package dgcd.financier.config;
 
 import org.springframework.boot.web.embedded.tomcat.TomcatProtocolHandlerCustomizer;
 import org.springframework.boot.web.server.ErrorPage;
@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.core.task.support.TaskExecutorAdapter;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.Executors;
 
@@ -16,6 +17,12 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Configuration
 public class WebConfig {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
 
     @Bean
     public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> webServerCustomizer() {

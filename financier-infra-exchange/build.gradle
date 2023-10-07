@@ -1,0 +1,12 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    implementation project(':financier-core-domain')
+    implementation project(':financier-core-usecase')
+
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework:spring-web'
+    implementation 'org.slf4j:slf4j-api'
+}

@@ -24,7 +24,7 @@ Simple personal finance manager and playground for new features. Clean architect
 * Add environment variables to Gradle run configuration template in IDE:
 
 ```
-POSTGRES_FINANCIER_USERNAME=##;POSTGRES_FINANCIER_PASSWORD=####;POSTGRES_FINANCIER_PORT=######
+POSTGRES_FINANCIER_USERNAME=##;POSTGRES_FINANCIER_PASSWORD=####;POSTGRES_FINANCIER_PORT=######;EXCHANGE_API_KEY=##
 ```
 
 * Add `financierhost` to `hosts` file

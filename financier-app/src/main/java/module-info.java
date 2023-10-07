@@ -1,4 +1,7 @@
 module financier.app {
+    requires lombok;
+    requires org.slf4j;
+
     requires spring.context;
     requires spring.core;
     requires spring.beans;
@@ -12,4 +15,5 @@ module financier.app {
     requires financier.core.usecase;
     requires financier.infra.gateway;
     requires financier.infra.repository;
+    requires financier.infra.exchange;
 }

@@ -1,10 +1,11 @@
 package dgcd.financier.core.usecase.port.repository;
 
-import java.math.BigDecimal;
-import java.util.Map;
+import dgcd.financier.core.domain.Rates;
 
 public interface RatesRepository {
 
-    Map<String, BigDecimal> getRates();
+    Rates getRates();
+
+    void updateRates(Rates rates);
 
 }

@@ -9,3 +9,6 @@ INSERT INTO main.operations (id, op_date,account_id,quantity,amount,op_type,subc
     (1, '2022-09-08',1, 1.000000, 10000.00,'BASE',NULL,NULL,NULL,false,NULL),
     (2, '2022-09-09',1, 1.000000, -100.00,'EXPENSE',2,'fuel','fuel',false,NULL),
     (3, '2022-09-09',1, 1.000000, -200.00,'EXPENSE',2,'fuel','fuel',false,NULL);
+
+INSERT INTO main.rates (id_date, eur, usd) VALUES
+    ('2022-09-08', 110, 100);

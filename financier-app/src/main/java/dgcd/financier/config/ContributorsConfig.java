@@ -1,4 +1,4 @@
-package dgcd.financier.config.actuator;
+package dgcd.financier.config;
 
 import org.springframework.boot.actuate.info.OsInfoContributor;
 import org.springframework.context.annotation.Bean;

@@ -1,5 +1,5 @@
 <template>
-    <span>Exchange rates: USD: {{rates.USD | formatMoneyToString}}, EUR: {{rates.EUR | formatMoneyToString}}</span>
+    <span>Exchange rates: USD: <b>{{rates.USD | formatMoneyToString}}</b>, EUR: <b>{{rates.EUR | formatMoneyToString}}</b></span>
 </template>
 
 <script>
