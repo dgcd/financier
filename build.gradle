@@ -45,10 +45,6 @@ subprojects {
         }
     }
 
-    jacoco {
-        toolVersion = "$jacocoVersion"
-    }
-
     // tests configuration
     tasks.named('test') {
         useJUnitPlatform()
@@ -56,6 +52,9 @@ subprojects {
     }
     tasks.named('jacocoTestReport') {
         dependsOn test
+    }
+    jacoco {
+        toolVersion = "$jacocoVersion"
     }
 
     // enable preview features

@@ -19,7 +19,7 @@ public class ZonkyTest {
         var version = jdbcTemplate.queryForObject("select version();", String.class);
 
         assertThat(version).isNotNull();
-        assertThat(version).contains("PostgreSQL 15.3");
+        assertThat(version).contains("PostgreSQL 16.0");
     }
 
 }

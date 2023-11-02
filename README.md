@@ -15,7 +15,7 @@ Simple personal finance manager and playground for new features. Clean architect
 
 ## Uses
 
-* JDK 19 (with preview features enabled)
+* JDK 21
 * PostgreSQL 15
 * Node.js 19
 
