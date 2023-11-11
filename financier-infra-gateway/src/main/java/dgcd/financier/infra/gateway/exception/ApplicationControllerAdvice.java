@@ -65,7 +65,11 @@ public class ApplicationControllerAdvice {
             String errorMessage,
             HttpStatus responseStatus
     ) {
-        log.warn("Exception occurred: ", exception);
+        if (log.isDebugEnabled()) {
+            log.debug("Exception occurred: ", exception);
+        } else {
+            log.warn("Exception occurred: {}", exception.getMessage());
+        }
 
         var httpHeaders = new HttpHeaders();
         httpHeaders.add(CONTENT_TYPE, APPLICATION_JSON_VALUE);
