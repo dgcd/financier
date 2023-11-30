@@ -18,8 +18,8 @@ subprojects {
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
     java {
-        sourceCompatibility = JavaVersion.VERSION_20
-        targetCompatibility = JavaVersion.VERSION_20
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     repositories {
@@ -45,10 +45,6 @@ subprojects {
         }
     }
 
-    jacoco {
-        toolVersion = "$jacocoVersion"
-    }
-
     // tests configuration
     tasks.named('test') {
         useJUnitPlatform()
@@ -56,6 +52,9 @@ subprojects {
     }
     tasks.named('jacocoTestReport') {
         dependsOn test
+    }
+    jacoco {
+        toolVersion = "$jacocoVersion"
     }
 
     // enable preview features

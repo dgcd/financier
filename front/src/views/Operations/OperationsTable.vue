@@ -1,7 +1,6 @@
 <template>
     <table class="tbl">
         <tr>
-            <!-- <th>Id</th> -->
             <th>Date</th>
             <th>Currency</th>
             <th>Account</th>
@@ -18,7 +17,6 @@
             <th>Cancel</th>
         </tr>
         <tr>
-            <!-- <td></td> -->
             <td></td>
             <td><select-list v-model="currency" :valuesList="currencies"/></td>
             <td><select-list v-model="accountTitle" :valuesList="accountTitles"/></td>
@@ -35,8 +33,7 @@
             <td></td>
         </tr>
         <tr v-for="o in sortedOperations" :key="o.id">
-            <!-- <td>{{ o.id }}</td> -->
-            <td style="min-width:100px">{{ o.date }}</td>
+            <td style="min-width:100px" :title="o.id">{{ o.date }}</td>
             <td>{{ o.currency }}</td>
             <td style="min-width:120px">{{ o.accountTitle | removeUnderscores }}</td>
 
