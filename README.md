@@ -11,7 +11,7 @@ Simple personal finance manager and playground for new features. Clean architect
 * Java modularity
 * SpringDoc OpenAPI UI
 * Apache POI OOXML
-* Front: Vue.js
+* Front: Vue.js 2.7
 
 ## Uses
 
