@@ -108,6 +108,7 @@ public class AlldataImportUsecaseImpl implements AlldataImportUsecase {
 
         var operations = parsedOperations.stream()
                 .map(op -> {
+                    // todo: optimize
                     var subcategory = BASE.equals(op.type()) ?
                             null :
                             subcategories.stream()
