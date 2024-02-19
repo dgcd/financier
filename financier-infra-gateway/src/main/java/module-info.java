@@ -5,6 +5,7 @@ module financier.infra.gateway {
     requires spring.context;
     requires spring.core;
     requires spring.web;
+    requires spring.webmvc;
     requires spring.tx;
     requires org.aspectj.weaver;
     requires jakarta.validation;
