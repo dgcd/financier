@@ -41,7 +41,7 @@ public class ExchangeService {
             var url = String.format(exchangeUrl, exchangeApiKey);
             var response = restTemplate.getForObject(url, ExchangeResponse.class);
             log.debug("updateRates response: {}", response);
-            if (!response.isSuccess()) {
+            if (response == null || !response.isSuccess()) {
                 log.warn("updateRates failed");
                 return;
             }

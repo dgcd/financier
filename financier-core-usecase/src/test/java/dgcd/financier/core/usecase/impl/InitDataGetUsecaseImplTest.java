@@ -88,7 +88,7 @@ class InitDataGetUsecaseImplTest {
 
         // then
         assertThat(response.getAccounts()).hasSize(1);
-        assertThat(response.getAccounts().get(0)).isEqualTo(account);
+        assertThat(response.getAccounts().getFirst()).isEqualTo(account);
 
         assertThat(response.getCategories()).hasSize(3);
         assertThat(response.getCategories()).allMatch(cat -> cat.isParent() || cat.getParent().equals(parentCategory));

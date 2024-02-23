@@ -146,13 +146,14 @@ public class AlldataParseExcelService {
         if (isNull(cell) || BLANK.equals(cell.getCellType())) {
             return null;
         }
+        // todo: needs refactoring, repeated exception handling
         try {
             var stringValue = cell.getStringCellValue();
             return hasText(stringValue) ?
                     stringValue.trim() :
                     null;
         } catch (RuntimeException exception) {
-            log.warn("Parsing error: " + exception.getMessage());
+            log.warn("Parsing error: {}", exception.getMessage());
             throw new AlldataImportException("Parsing error: " + exception.getMessage());
         }
     }
@@ -169,7 +170,7 @@ public class AlldataParseExcelService {
                     LocalDate.parse(stringValue.trim()) :
                     null;
         } catch (RuntimeException exception) {
-            log.warn("Parsing error: " + exception.getMessage());
+            log.warn("Parsing error: {}", exception.getMessage());
             throw new AlldataImportException("Parsing error: " + exception.getMessage());
         }
     }
@@ -190,7 +191,7 @@ public class AlldataParseExcelService {
         try {
             return Enum.valueOf(enumClass, stringValue);
         } catch (RuntimeException exception) {
-            log.warn("Parsing error: " + exception.getMessage());
+            log.warn("Parsing error: {}", exception.getMessage());
             throw new AlldataImportException("Parsing error: " + exception.getMessage());
         }
     }
@@ -204,7 +205,7 @@ public class AlldataParseExcelService {
         try {
             return BigDecimal.valueOf(cell.getNumericCellValue()).stripTrailingZeros();
         } catch (RuntimeException exception) {
-            log.warn("Parsing error: " + exception.getMessage());
+            log.warn("Parsing error: {}", exception.getMessage());
             throw new AlldataImportException("Parsing error: " + exception.getMessage());
         }
     }
@@ -218,7 +219,7 @@ public class AlldataParseExcelService {
         try {
             return cell.getBooleanCellValue();
         } catch (RuntimeException exception) {
-            log.warn("Parsing error: " + exception.getMessage());
+            log.warn("Parsing error: {}", exception.getMessage());
             throw new AlldataImportException("Parsing error: " + exception.getMessage());
         }
     }
