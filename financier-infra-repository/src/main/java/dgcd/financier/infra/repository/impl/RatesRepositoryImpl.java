@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static java.math.BigDecimal.ZERO;
 
@@ -19,6 +20,18 @@ import static java.math.BigDecimal.ZERO;
 public class RatesRepositoryImpl implements RatesRepository {
 
     private final RatesJpaRepository ratesJpaRepository;
+
+    @Override
+    public List<Rates> findAll() {
+        var rates = ratesJpaRepository.findAll()
+                .stream()
+                .map(r -> RatesFactory.make(r.getDate(), r.getEur(), r.getUsd()))
+                .toList();
+
+        log.debug("[findAll] rates size: {}", rates.size());
+
+        return rates;
+    }
 
     @Override
     public Rates getRates() {

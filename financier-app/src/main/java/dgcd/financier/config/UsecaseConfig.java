@@ -95,12 +95,14 @@ public class UsecaseConfig {
     public AlldataExportUsecase alldataExportUsecase(
             AccountsRepository accountsRepository,
             CategoriesRepository categoriesRepository,
-            OperationsRepository operationsRepository
+            OperationsRepository operationsRepository,
+            RatesRepository ratesRepository
     ) {
         return new AlldataExportUsecaseImpl(
                 accountsRepository,
                 categoriesRepository,
-                operationsRepository
+                operationsRepository,
+                ratesRepository
         );
     }
 
