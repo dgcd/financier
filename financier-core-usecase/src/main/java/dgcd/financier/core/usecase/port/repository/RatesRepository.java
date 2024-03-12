@@ -12,4 +12,6 @@ public interface RatesRepository {
 
     void updateRates(Rates rates);
 
+    List<Rates> saveAll(List<Rates> rates);
+
 }

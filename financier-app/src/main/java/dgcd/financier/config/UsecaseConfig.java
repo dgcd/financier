@@ -111,12 +111,14 @@ public class UsecaseConfig {
     public AlldataImportUsecase alldataImportUsecase(
             AccountsRepository accountsRepository,
             CategoriesRepository categoriesRepository,
-            OperationsRepository operationsRepository
+            OperationsRepository operationsRepository,
+            RatesRepository ratesRepository
     ) {
         return new AlldataImportUsecaseImpl(
                 accountsRepository,
                 categoriesRepository,
-                operationsRepository
+                operationsRepository,
+                ratesRepository
         );
     }
 

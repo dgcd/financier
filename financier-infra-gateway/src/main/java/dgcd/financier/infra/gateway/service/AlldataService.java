@@ -15,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
-
 @Service
 @RequiredArgsConstructor
 public class AlldataService {
@@ -43,7 +41,7 @@ public class AlldataService {
                     parsedData.accounts(),
                     parsedData.categories(),
                     parsedData.operations(),
-                    emptyList()
+                    parsedData.rates()
             )));
             return new AlldataImportResponseDto();
         } catch (IOException e) {
@@ -55,7 +53,8 @@ public class AlldataService {
     public record ParsedData(
             List<AlldataUsecase.AccountRow> accounts,
             List<AlldataUsecase.CategoryRow> categories,
-            List<AlldataUsecase.OperationRow> operations
+            List<AlldataUsecase.OperationRow> operations,
+            List<AlldataUsecase.RatesRow> rates
     ) {}
 
 }

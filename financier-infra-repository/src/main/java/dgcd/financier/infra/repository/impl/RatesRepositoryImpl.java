@@ -52,4 +52,22 @@ public class RatesRepositoryImpl implements RatesRepository {
         log.debug("[updateRates] rates: {}", savedEntity);
     }
 
+
+    @Override
+    public List<Rates> saveAll(List<Rates> rates) {
+        var ratesEntities = rates.stream()
+                .map(r -> new RatesEntity(r.getDate(), r.getEurRate(), r.getUsdRate()))
+                .toList();
+        var savedRates = ratesJpaRepository.saveAll(ratesEntities)
+                .stream()
+                .map(re -> RatesFactory.make(re.getDate(), re.getEur(), re.getUsd()))
+                .toList();
+
+        if (log.isDebugEnabled()) {
+            savedRates.forEach(r -> log.debug("[saveAll] rates: {}", r));
+        }
+
+        return savedRates;
+    }
+
 }
