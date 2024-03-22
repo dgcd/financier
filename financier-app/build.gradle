@@ -3,10 +3,6 @@ plugins {
 }
 
 dependencies {
-    // bump versions
-    implementation 'org.apache.commons:commons-compress:1.26.0'
-    implementation 'commons-io:commons-io:2.15.1'
-
     implementation project(':financier-core-usecase')
     implementation project(':financier-infra-repository')
     implementation project(':financier-infra-gateway')
@@ -23,7 +19,7 @@ dependencies {
 
     // database
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-database-postgresql'
     runtimeOnly 'org.postgresql:postgresql'
 
     // testing
