@@ -5,6 +5,7 @@ import dgcd.financier.core.domain.Category;
 import dgcd.financier.core.domain.Currency;
 import dgcd.financier.core.domain.Operation;
 import dgcd.financier.core.domain.OperationType;
+import dgcd.financier.core.domain.Rates;
 import lombok.NonNull;
 
 import java.math.BigDecimal;
@@ -22,7 +23,8 @@ public interface AlldataUsecase<REQ extends Usecase.Request, RESP extends Usecas
     record AlldataRows(
             @NonNull List<AccountRow> accounts,
             @NonNull List<CategoryRow> categories,
-            @NonNull List<OperationRow> operations
+            @NonNull List<OperationRow> operations,
+            @NonNull List<RatesRow> rates
     ) {}
 
 
@@ -86,6 +88,24 @@ public interface AlldataUsecase<REQ extends Usecase.Request, RESP extends Usecas
                     operation.getComment(),
                     operation.getCounterparty(),
                     operation.getCorrelationId()
+            );
+        }
+
+    }
+
+
+    record RatesRow(
+            @NonNull LocalDate date,
+            @NonNull BigDecimal eurRate,
+            @NonNull BigDecimal usdRate
+
+    ) {
+
+        public static RatesRow of(Rates rates) {
+            return new RatesRow(
+                    rates.getDate(),
+                    rates.getEurRate(),
+                    rates.getUsdRate()
             );
         }
 

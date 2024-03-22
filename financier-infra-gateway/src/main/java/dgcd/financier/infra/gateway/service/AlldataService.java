@@ -40,7 +40,8 @@ public class AlldataService {
             alldataImportUsecase.execute(new AlldataImportUsecase.Request(new AlldataUsecase.AlldataRows(
                     parsedData.accounts(),
                     parsedData.categories(),
-                    parsedData.operations()
+                    parsedData.operations(),
+                    parsedData.rates()
             )));
             return new AlldataImportResponseDto();
         } catch (IOException e) {
@@ -52,7 +53,8 @@ public class AlldataService {
     public record ParsedData(
             List<AlldataUsecase.AccountRow> accounts,
             List<AlldataUsecase.CategoryRow> categories,
-            List<AlldataUsecase.OperationRow> operations
+            List<AlldataUsecase.OperationRow> operations,
+            List<AlldataUsecase.RatesRow> rates
     ) {}
 
 }

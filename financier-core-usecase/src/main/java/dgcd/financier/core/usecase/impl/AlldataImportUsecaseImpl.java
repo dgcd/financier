@@ -5,11 +5,13 @@ import dgcd.financier.core.domain.Category;
 import dgcd.financier.core.domain.factory.AccountFactory;
 import dgcd.financier.core.domain.factory.CategoryFactory;
 import dgcd.financier.core.domain.factory.OperationFactory;
+import dgcd.financier.core.domain.factory.RatesFactory;
 import dgcd.financier.core.usecase.AlldataImportUsecase;
 import dgcd.financier.core.usecase.exception.DatabaseIsNotEmptyException;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
 import dgcd.financier.core.usecase.port.repository.OperationsRepository;
+import dgcd.financier.core.usecase.port.repository.RatesRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +29,7 @@ public class AlldataImportUsecaseImpl implements AlldataImportUsecase {
     private final AccountsRepository accountsRepository;
     private final CategoriesRepository categoriesRepository;
     private final OperationsRepository operationsRepository;
+    private final RatesRepository ratesRepository;
 
     @Override
     public Response execute(Request request) {
@@ -35,6 +38,7 @@ public class AlldataImportUsecaseImpl implements AlldataImportUsecase {
         var savedAccounts = saveAccounts(alldataRows.accounts());
         var savedCategories = saveCategories(alldataRows.categories());
         saveOperations(alldataRows.operations(), savedAccounts, savedCategories);
+        saveRates(alldataRows.rates());
         return new Response();
     }
 
@@ -130,6 +134,18 @@ public class AlldataImportUsecaseImpl implements AlldataImportUsecase {
                 .toList();
 
         operationsRepository.saveAll(operations);
+    }
+
+
+    private void saveRates(@NonNull List<RatesRow> ratesRows) {
+        var rates = ratesRows.stream()
+                .map(r -> RatesFactory.make(
+                        r.date(),
+                        r.eurRate(),
+                        r.usdRate()
+                ))
+                .toList();
+        ratesRepository.saveAll(rates);
     }
 
 

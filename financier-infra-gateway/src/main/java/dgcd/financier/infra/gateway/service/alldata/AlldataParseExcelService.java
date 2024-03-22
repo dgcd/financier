@@ -21,9 +21,11 @@ import java.util.List;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.ACCOUNT_COLUMNS_COUNT;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.CATEGORY_COLUMNS_COUNT;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.OPERATION_COLUMNS_COUNT;
+import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.RATES_COLUMNS_COUNT;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEET_ACCOUNTS;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEET_CATEGORIES;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEET_OPERATIONS;
+import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEET_RATES;
 import static java.util.Objects.isNull;
 import static org.apache.poi.ss.usermodel.CellType.BLANK;
 import static org.springframework.util.StringUtils.hasText;
@@ -38,7 +40,8 @@ public class AlldataParseExcelService {
             return new AlldataService.ParsedData(
                     parseAccounts(workbook),
                     parseCategories(workbook),
-                    parseOperations(workbook)
+                    parseOperations(workbook),
+                    parseRates(workbook)
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -113,6 +116,27 @@ public class AlldataParseExcelService {
             operations.add(parsedOperation);
         }
         return operations;
+    }
+
+
+    private List<AlldataUsecase.RatesRow> parseRates(XSSFWorkbook workbook) {
+        var sheet = validateAndGetSheet(workbook, SHEET_RATES);
+        var rates = new ArrayList<AlldataUsecase.RatesRow>();
+        var rowNum = 0;
+        while (true) {
+            var row = sheet.getRow(rowNum++);
+            if (isEmptyRow(row, RATES_COLUMNS_COUNT)) {
+                break;
+            }
+            var cellNum = 0;
+            var parsedRates = new AlldataUsecase.RatesRow(
+                    readLocalDate(row, cellNum++),
+                    readBigDecimal(row, cellNum++),
+                    readBigDecimal(row, cellNum++)
+            );
+            rates.add(parsedRates);
+        }
+        return rates;
     }
 
     /////////////////////////////////////////////////////////
