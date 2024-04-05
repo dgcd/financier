@@ -15,6 +15,7 @@ import java.util.List;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEET_ACCOUNTS;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEET_CATEGORIES;
 import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEET_OPERATIONS;
+import static dgcd.financier.infra.gateway.service.alldata.AlldataConstants.SHEET_RATES;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,7 @@ public class AlldataGenerateExcelService {
             writeAccounts(workbook, alldataRows.accounts());
             writeCategories(workbook, alldataRows.categories());
             writeOperations(workbook, alldataRows.operations());
+            writeRates(workbook, alldataRows.rates());
             workbook.write(outputStream);
         }
     }
@@ -94,6 +96,27 @@ public class AlldataGenerateExcelService {
         createCell(row, colInx++, operation.comment());
         createCell(row, colInx++, operation.counterparty());
         createCell(row, colInx, operation.correlationId());
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////
+
+
+    private void writeRates(XSSFWorkbook workbook, List<AlldataUsecase.RatesRow> rates) {
+        var sheet = workbook.createSheet(SHEET_RATES);
+        var rowInx = 0;
+        for (var rate : rates) {
+            writeRateRow(sheet, rowInx++, rate);
+        }
+    }
+
+    private void writeRateRow(XSSFSheet sheet, int rowInx, AlldataUsecase.RatesRow rate) {
+        var row = sheet.createRow(rowInx);
+        var colInx = 0;
+        createCell(row, colInx++, rate.date().toString());  // todo: toString ???
+        createCell(row, colInx++, rate.eurRate());
+        createCell(row, colInx++, rate.usdRate());
     }
 
     /////////////////////////////////////////////////////////////////////////////

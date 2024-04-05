@@ -3,11 +3,13 @@ package dgcd.financier.core.usecase.impl;
 import dgcd.financier.core.domain.Account;
 import dgcd.financier.core.domain.Category;
 import dgcd.financier.core.domain.Operation;
+import dgcd.financier.core.domain.Rates;
 import dgcd.financier.core.usecase.AlldataExportUsecase;
 import dgcd.financier.core.usecase.AlldataUsecase;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
 import dgcd.financier.core.usecase.port.repository.OperationsRepository;
+import dgcd.financier.core.usecase.port.repository.RatesRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Comparator;
@@ -32,10 +34,14 @@ public class AlldataExportUsecaseImpl implements AlldataExportUsecase {
             .thenComparing(Operation::getType)
             .thenComparing(Operation::getIdentity);
 
+    private static final Comparator<Rates> RATES_COMPARATOR = Comparator
+            .comparing(Rates::getDate);
+
 
     private final AccountsRepository accountsRepository;
     private final CategoriesRepository categoriesRepository;
     private final OperationsRepository operationsRepository;
+    private final RatesRepository ratesRepository;
 
 
     @Override
@@ -43,7 +49,8 @@ public class AlldataExportUsecaseImpl implements AlldataExportUsecase {
         return new Response(new AlldataUsecase.AlldataRows(
                 getAndSortAccounts(),
                 getAndSortCategories(),
-                getAndSortOperations()
+                getAndSortOperations(),
+                getAndSortRates()
         ));
     }
 
@@ -72,6 +79,15 @@ public class AlldataExportUsecaseImpl implements AlldataExportUsecase {
                 .stream()
                 .sorted(OPERATIONS_COMPARATOR)
                 .map(OperationRow::of)
+                .toList();
+    }
+
+
+    private List<RatesRow> getAndSortRates() {
+        return ratesRepository.findAll()
+                .stream()
+                .sorted(RATES_COMPARATOR)
+                .map(RatesRow::of)
                 .toList();
     }
 
