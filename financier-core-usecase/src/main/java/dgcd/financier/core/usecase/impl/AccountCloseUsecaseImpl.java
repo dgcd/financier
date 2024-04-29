@@ -21,7 +21,7 @@ public class AccountCloseUsecaseImpl implements AccountCloseUsecase {
 
 
     @Override
-    public AccountCloseUsecase.Response execute(Request request) {
+    public Response execute(Request request) {
         validate(request);
 
         var accountOptional = accountsRepository.findByIdentity(request.getIdentity());

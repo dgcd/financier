@@ -28,7 +28,7 @@ public class AlldataService {
 
     @Transactional(readOnly = true)
     public void exportAllDataToExcel(ServletOutputStream outputStream) throws IOException {
-        var alldataRows = alldataExportUsecase.execute(null).getAlldataRows();
+        var alldataRows = alldataExportUsecase.execute().getAlldataRows();
         alldataGenerateExcelService.generateExcel(outputStream, alldataRows);
     }
 

@@ -10,15 +10,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface OperationCreateUsecase extends Usecase<OperationCreateUsecase.Request, OperationCreateUsecase.Response> {
+@FunctionalInterface
+public interface OperationCreateUsecase {
 
-    @Override
-    OperationCreateUsecase.Response execute(OperationCreateUsecase.Request request);
+    Response execute(Request request);
 
 
     @Getter
     @RequiredArgsConstructor
-    class Request implements Usecase.Request {
+    class Request {
 
         private final LocalDate date;
         private final Long accountIdentity;
@@ -39,7 +39,7 @@ public interface OperationCreateUsecase extends Usecase<OperationCreateUsecase.R
 
     @Getter
     @RequiredArgsConstructor
-    class Response implements Usecase.Response {
+    class Response {
 
         private final List<Operation> newOperations;
         private final List<Account> updatedAccounts;

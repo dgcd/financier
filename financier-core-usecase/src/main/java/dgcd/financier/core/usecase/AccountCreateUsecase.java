@@ -5,15 +5,15 @@ import dgcd.financier.core.domain.Currency;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-public interface AccountCreateUsecase extends Usecase<AccountCreateUsecase.Request, AccountCreateUsecase.Response> {
+@FunctionalInterface
+public interface AccountCreateUsecase {
 
-    @Override
-    AccountCreateUsecase.Response execute(AccountCreateUsecase.Request request);
+    Response execute(Request request);
 
 
     @Getter
     @RequiredArgsConstructor
-    class Request implements Usecase.Request {
+    class Request {
 
         private final String title;
         private final Currency currency;
@@ -22,7 +22,7 @@ public interface AccountCreateUsecase extends Usecase<AccountCreateUsecase.Reque
 
     @Getter
     @RequiredArgsConstructor
-    class Response implements Usecase.Response {
+    class Response {
 
         private final Account account;
 

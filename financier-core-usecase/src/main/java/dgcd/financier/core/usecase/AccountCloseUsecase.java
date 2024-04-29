@@ -4,15 +4,15 @@ import dgcd.financier.core.domain.Account;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-public interface AccountCloseUsecase extends Usecase<AccountCloseUsecase.Request, AccountCloseUsecase.Response> {
+@FunctionalInterface
+public interface AccountCloseUsecase {
 
-    @Override
-    AccountCloseUsecase.Response execute(AccountCloseUsecase.Request request);
+    Response execute(Request request);
 
 
     @Getter
     @RequiredArgsConstructor
-    class Request implements Usecase.Request {
+    class Request {
 
         private final Long identity;
 
@@ -20,7 +20,7 @@ public interface AccountCloseUsecase extends Usecase<AccountCloseUsecase.Request
 
     @Getter
     @RequiredArgsConstructor
-    class Response implements Usecase.Response {
+    class Response {
 
         private final Account account;
 

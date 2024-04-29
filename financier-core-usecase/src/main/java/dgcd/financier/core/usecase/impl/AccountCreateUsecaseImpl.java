@@ -14,7 +14,7 @@ public class AccountCreateUsecaseImpl implements AccountCreateUsecase {
     private final AccountsRepository accountsRepository;
 
     @Override
-    public AccountCreateUsecase.Response execute(AccountCreateUsecase.Request request) {
+    public Response execute(Request request) {
         validate(request);
 
         if (accountsRepository.existByTitle(request.getTitle())) {

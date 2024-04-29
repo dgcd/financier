@@ -14,11 +14,7 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 
-public interface AlldataUsecase<REQ extends Usecase.Request, RESP extends Usecase.Response> extends Usecase<REQ, RESP> {
-
-    @Override
-    RESP execute(REQ request);
-
+public interface AlldataUsecase {
 
     record AlldataRows(
             @NonNull List<AccountRow> accounts,

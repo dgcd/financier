@@ -13,7 +13,6 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -27,12 +26,6 @@ public class ApplicationControllerAdvice {
                 .getFirst()
                 .getDefaultMessage();
         return makeResponse(exception, message, BAD_REQUEST);
-    }
-
-
-    @ExceptionHandler(ServiceException.class)
-    protected ResponseEntity<CommonResponseDto> serviceException(ServiceException exception) {
-        return makeResponse(exception, NOT_ACCEPTABLE);
     }
 
 

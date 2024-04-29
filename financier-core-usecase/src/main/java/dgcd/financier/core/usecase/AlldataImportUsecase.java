@@ -3,15 +3,15 @@ package dgcd.financier.core.usecase;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-public interface AlldataImportUsecase extends AlldataUsecase<AlldataImportUsecase.Request, AlldataImportUsecase.Response> {
+@FunctionalInterface
+public interface AlldataImportUsecase extends AlldataUsecase {
 
-    @Override
-    AlldataImportUsecase.Response execute(AlldataImportUsecase.Request request);
+    Response execute(Request request);
 
 
     @Getter
     @RequiredArgsConstructor
-    class Request implements AlldataUsecase.Request {
+    class Request {
 
         private final AlldataRows alldataRows;
 
@@ -19,7 +19,7 @@ public interface AlldataImportUsecase extends AlldataUsecase<AlldataImportUsecas
 
     @Getter
     @RequiredArgsConstructor
-    class Response implements AlldataUsecase.Response {
+    class Response {
     }
 
 }

@@ -3,9 +3,10 @@ package dgcd.financier.core.usecase;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@FunctionalInterface
 public interface RatesUpdateUsecase {
 
-    void execute(RatesUpdateUsecase.Request request);
+    void execute(Request request);
 
 
     record Request(

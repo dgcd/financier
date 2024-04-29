@@ -5,7 +5,6 @@ import dgcd.financier.core.domain.Category;
 import dgcd.financier.core.domain.Operation;
 import dgcd.financier.core.domain.Rates;
 import dgcd.financier.core.usecase.AlldataExportUsecase;
-import dgcd.financier.core.usecase.AlldataUsecase;
 import dgcd.financier.core.usecase.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
 import dgcd.financier.core.usecase.port.repository.OperationsRepository;
@@ -45,8 +44,8 @@ public class AlldataExportUsecaseImpl implements AlldataExportUsecase {
 
 
     @Override
-    public Response execute(Request request) {
-        return new Response(new AlldataUsecase.AlldataRows(
+    public Response execute() {
+        return new Response(new AlldataRows(
                 getAndSortAccounts(),
                 getAndSortCategories(),
                 getAndSortOperations(),

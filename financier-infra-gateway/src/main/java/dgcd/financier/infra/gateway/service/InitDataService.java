@@ -16,7 +16,7 @@ public class InitDataService {
 
     @Transactional(readOnly = true)
     public InitDataResponseDto getInitData() {
-        var response = initDataGetUsecase.execute(null);
+        var response = initDataGetUsecase.execute();
         return initDataMapper.fromUsecase(response);
     }
 
