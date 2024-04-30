@@ -6,7 +6,7 @@ Simple personal finance manager and playground for new features. Clean architect
 
 ## Features
 
-* Spring Boot 3
+* Spring Boot 3.3
 * Clean architecture
 * Java modularity
 * SpringDoc OpenAPI UI
@@ -15,7 +15,7 @@ Simple personal finance manager and playground for new features. Clean architect
 
 ## Uses
 
-* JDK 21
+* JDK 22
 * PostgreSQL 16
 * Node.js 20
 

@@ -44,5 +44,7 @@ tasks.named('jar') {
 }
 
 springBoot {
+    // todo remove after issue resolved
+    mainClass = 'dgcd.financier.FinancierApplication'
     buildInfo()
 }
