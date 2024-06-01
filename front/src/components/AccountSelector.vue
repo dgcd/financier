@@ -35,7 +35,7 @@ export default {
 
         accountTitles() {
             return this.filteredAccounts
-                .filter(acc => !acc.isClosed)
+                .filter(acc => !acc.closed)
                 .map(a => a.title)
                 .sort((t1, t2) => t1.localeCompare(t2));
         },

@@ -12,8 +12,10 @@ module financier.app {
     requires com.fasterxml.jackson.annotation;
     requires org.apache.tomcat.embed.core;
 
-    requires financier.core.usecase;
-    requires financier.infra.gateway;
-    requires financier.infra.repository;
-    requires financier.infra.exchange;
+//    requires financier.core.domain;
+    requires financier.core.usecase.api;
+    requires financier.core.usecase.impl;
+    requires financier.port.gateway;
+    requires financier.port.repository;
+//    requires financier.port.exchange;
 }

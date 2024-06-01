@@ -13,7 +13,7 @@
                 <!-- <td>{{ a.id }}</td> -->
                 <td align="left" style="min-width:250px">
                     {{ a.title }}
-                    <button class="btn btn-link btn-sm py-0" v-if="a.id && !a.balance && !a.isClosed" @click="closeAccountHandler(a)">X</button>
+                    <button class="btn btn-link btn-sm py-0" v-if="a.id && !a.balance && !a.closed" @click="closeAccountHandler(a)">X</button>
                 </td>
                 <td>{{ a.currency }}</td>
                 <td align="right" style="font-weight: bold">{{ a.balance | formatMoneyToString }}</td>
@@ -69,12 +69,12 @@ export default {
                 });
 
             const result = checkedAccounts
-                    .filter(acc => !acc.isClosed)
+                    .filter(acc => !acc.closed)
                     .filter(acc => this.selections.showEmptyAccounts || !!acc.balance || !!acc.checkedBalance);
 
             if (this.selections.showEmptyAccounts && this.selections.showClosedAccounts) {
                 result.push({ title: "---", currency: "---"});
-                const closed = checkedAccounts.filter(acc => acc.isClosed);
+                const closed = checkedAccounts.filter(acc => acc.closed);
                 for (let clsd of closed) {
                     result.push(clsd);
                 }

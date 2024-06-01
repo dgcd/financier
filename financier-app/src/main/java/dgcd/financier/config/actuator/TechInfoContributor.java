@@ -1,6 +1,5 @@
 package dgcd.financier.config.actuator;
 
-import dgcd.financier.core.usecase.port.service.TechInfoService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.actuate.info.Info;
@@ -19,7 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
-public class TechInfoContributor implements InfoContributor, TechInfoService {
+public class TechInfoContributor implements InfoContributor {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 

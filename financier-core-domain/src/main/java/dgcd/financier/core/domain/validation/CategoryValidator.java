@@ -1,27 +1,22 @@
 package dgcd.financier.core.domain.validation;
 
-import dgcd.financier.core.domain.Category;
-import dgcd.financier.core.domain.exception.IllegalCategoryTitleException;
+import dgcd.financier.core.domain.model.Category;
 
 import static dgcd.financier.core.domain.Constants.CATEGORY_TITLE_MAX_LENGTH;
 import static dgcd.financier.core.domain.Constants.CATEGORY_TITLE_MIN_LENGTH;
-import static dgcd.financier.core.domain.validation.ValidationUtils.checkIdentity;
-import static dgcd.financier.core.domain.validation.ValidationUtils.checkStringBoundaries;
-import static java.util.Objects.requireNonNull;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkId;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkLength;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkNonNull;
 
 public class CategoryValidator {
 
     public static void validate(Category category) {
-        checkIdentity(category.getIdentity());
+        checkId(category.getId(), "id");
 
-        var title = category.getTitle();
-        requireNonNull(title, "Title can not be null");
-        checkStringBoundaries(
-                title,
-                CATEGORY_TITLE_MIN_LENGTH,
-                CATEGORY_TITLE_MAX_LENGTH,
-                IllegalCategoryTitleException::new
-        );
+        checkNonNull(category.getTitle(), "title");
+        checkLength(category.getTitle(), CATEGORY_TITLE_MIN_LENGTH, CATEGORY_TITLE_MAX_LENGTH, "title");
+
+        checkId(category.getParentId(), "parentId");
     }
 
 }
