@@ -6,15 +6,15 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-public interface OperationCancelUsecase extends Usecase<OperationCancelUsecase.Request, OperationCancelUsecase.Response> {
+@FunctionalInterface
+public interface OperationCancelUsecase {
 
-    @Override
-    OperationCancelUsecase.Response execute(OperationCancelUsecase.Request request);
+    Response execute(Request request);
 
 
     @Getter
     @RequiredArgsConstructor
-    class Request implements Usecase.Request {
+    class Request {
 
         private final Long operationIdentity;
 
@@ -22,7 +22,7 @@ public interface OperationCancelUsecase extends Usecase<OperationCancelUsecase.R
 
     @Getter
     @RequiredArgsConstructor
-    class Response implements Usecase.Response {
+    class Response {
 
         private final List<Long> canceledOperationsIdentities;
         private final List<Account> updatedAccounts;

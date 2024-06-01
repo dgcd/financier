@@ -52,9 +52,6 @@ class InitDataGetUsecaseImplTest {
     @Test
     void test_execute_OK() {
         // given
-        var request = new InitDataGetUsecase.Request();
-
-        // and
         var account = AccountFactory.makeNew("account", RUB);
         var accounts = List.of(account);
 
@@ -84,7 +81,7 @@ class InitDataGetUsecaseImplTest {
         when(techInfoService.getTechInfo()).thenReturn(techInfo);
 
         // when
-        var response = initDataGetUsecase.execute(request);
+        var response = initDataGetUsecase.execute();
 
         // then
         assertThat(response.getAccounts()).hasSize(1);

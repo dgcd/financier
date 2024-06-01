@@ -21,13 +21,12 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
     private final AccountsRepository accountsRepository;
     private final CategoriesRepository categoriesRepository;
     private final OperationsRepository operationsRepository;
-
     private final RatesRepository ratesRepository;
     private final TechInfoService techInfoService;
 
 
     @Override
-    public Response execute(Request ignored) {
+    public Response execute() {
         return new Response(
                 accountsRepository.findAll(),
                 categoriesRepository.findAll(),

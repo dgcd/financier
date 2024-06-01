@@ -4,15 +4,15 @@ import dgcd.financier.core.domain.Category;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-public interface CategoryCreateUsecase extends Usecase<CategoryCreateUsecase.Request, CategoryCreateUsecase.Response> {
+@FunctionalInterface
+public interface CategoryCreateUsecase {
 
-    @Override
-    CategoryCreateUsecase.Response execute(CategoryCreateUsecase.Request request);
+    Response execute(Request request);
 
 
     @Getter
     @RequiredArgsConstructor
-    class Request implements Usecase.Request {
+    class Request {
 
         private final String title;
         private final Long parentIdentity;
@@ -21,7 +21,7 @@ public interface CategoryCreateUsecase extends Usecase<CategoryCreateUsecase.Req
 
     @Getter
     @RequiredArgsConstructor
-    class Response implements Usecase.Response {
+    class Response {
 
         private final Category category;
 

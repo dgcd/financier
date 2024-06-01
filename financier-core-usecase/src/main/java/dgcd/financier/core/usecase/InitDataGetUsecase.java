@@ -10,18 +10,15 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-public interface InitDataGetUsecase extends Usecase<InitDataGetUsecase.Request, InitDataGetUsecase.Response> {
+@FunctionalInterface
+public interface InitDataGetUsecase {
 
-    @Override
-    InitDataGetUsecase.Response execute(InitDataGetUsecase.Request request);
+    Response execute();
 
-
-    class Request implements Usecase.Request {
-    }
 
     @Getter
     @RequiredArgsConstructor
-    class Response implements Usecase.Response {
+    class Response {
 
         private final List<Account> accounts;
         private final List<Category> categories;
