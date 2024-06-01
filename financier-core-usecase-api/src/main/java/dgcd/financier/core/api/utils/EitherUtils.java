@@ -1,4 +1,4 @@
-package dgcd.financier.core.usecase.impl.utils;
+package dgcd.financier.core.api.utils;
 
 import dgcd.financier.core.api.error.CommonError;
 import io.vavr.control.Either;

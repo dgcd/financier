@@ -1,8 +1,11 @@
 package dgcd.financier.config;
 
+import dgcd.financier.core.api.AccountCreateUsecase;
 import dgcd.financier.core.api.InitDataGetUsecase;
+import dgcd.financier.core.api.port.repository.AccountsRepository;
 import dgcd.financier.core.api.port.repository.OperationsRepository;
 import dgcd.financier.core.api.port.repository.RatesRepository;
+import dgcd.financier.core.usecase.impl.AccountCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.InitDataGetUsecaseImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,12 +24,11 @@ public class UsecaseConfig {
         );
     }
 
-//    @Bean
-//    public AccountCreateUsecase accountCreateUsecase(AccountsRepository accountsRepository) {
-//        return new AccountCreateUsecaseImpl(accountsRepository);
-//    }
-//
-//
+    @Bean
+    public AccountCreateUsecase accountCreateUsecase(AccountsRepository accountsRepository) {
+        return new AccountCreateUsecaseImpl(accountsRepository);
+    }
+
 //    @Bean
 //    public AccountCloseUsecase accountCloseUsecase(AccountsRepository accountsRepository) {
 //        return new AccountCloseUsecaseImpl(accountsRepository);

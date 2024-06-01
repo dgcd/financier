@@ -7,7 +7,7 @@ import static dgcd.financier.core.domain.validation.ValidationUtils.checkNonNull
 
 public class RateValidator {
 
-    public static void validate(Rate rate) {
+    public static Rate validate(Rate rate) {
         checkNonNull(rate.getDate(), "date");
 
         checkNonNull(rate.getUsd(), "usd rate");
@@ -15,6 +15,8 @@ public class RateValidator {
 
         checkNonNull(rate.getEur(), "euro rate");
         checkGreaterThenZero(rate.getEur(), "euro rate");
+
+        return rate;
     }
 
 }

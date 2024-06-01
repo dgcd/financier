@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
-public final class Category implements Validatable {
+public final class Category implements Validatable<Category> {
 
     private Long id;
     private String title;
@@ -30,8 +30,8 @@ public final class Category implements Validatable {
 
 
     @Override
-    public void validate() {
-        CategoryValidator.validate(this);
+    public Category validate() {
+        return CategoryValidator.validate(this);
     }
 
 }

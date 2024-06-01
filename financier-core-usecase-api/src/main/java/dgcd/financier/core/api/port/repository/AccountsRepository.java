@@ -9,11 +9,11 @@ public interface AccountsRepository {
     List<Account> findAll();
 
 //    Optional<Account> findById(Long id);
-//
-//    boolean existByTitle(String title);
-//
-//    Account save(Account account);
-//
+
+    boolean existByTitle(String title);
+
+    Account save(Account account);
+
 //    List<Account> saveAll(List<Account> accounts);
 
 }

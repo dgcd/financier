@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class Rate implements Validatable {
+public class Rate implements Validatable<Rate> {
 
     private LocalDate date;
     private BigDecimal usd;
@@ -26,8 +26,8 @@ public class Rate implements Validatable {
 
 
     @Override
-    public void validate() {
-        RateValidator.validate(this);
+    public Rate validate() {
+        return RateValidator.validate(this);
     }
 
 }

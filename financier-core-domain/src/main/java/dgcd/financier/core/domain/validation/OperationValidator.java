@@ -17,7 +17,7 @@ import static java.util.Objects.nonNull;
 
 public class OperationValidator {
 
-    public static void validate(Operation operation) {
+    public static Operation validate(Operation operation) {
         checkId(operation.getId(), "id");
 
         checkNonNull(operation.getDate(), "date");
@@ -48,6 +48,8 @@ public class OperationValidator {
         checkLength(operation.getCounterparty(), OPERATION_COUNTERPARTY_MIN_LENGTH, OPERATION_COUNTERPARTY_MAX_LENGTH, "counterparty");
 
         checkLength(operation.getCorrelationId(), OPERATION_CORRELATION_MIN_LENGTH, OPERATION_CORRELATION_MAX_LENGTH, "correlationId");
+
+        return operation;
     }
 
 }

@@ -1,7 +1,7 @@
 package dgcd.financier.core.domain;
 
-public interface Validatable {
+public interface Validatable<T> {
 
-    void validate();
+    T validate();
 
 }

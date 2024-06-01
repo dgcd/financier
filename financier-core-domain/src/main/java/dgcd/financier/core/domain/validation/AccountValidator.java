@@ -10,7 +10,7 @@ import static dgcd.financier.core.domain.validation.ValidationUtils.checkNonNull
 
 public class AccountValidator {
 
-    public static void validate(Account account) {
+    public static Account validate(Account account) {
         checkId(account.getId(), "id");
 
         checkNonNull(account.getTitle(), "title");
@@ -18,6 +18,8 @@ public class AccountValidator {
 
         checkNonNull(account.getCurrency(), "currency");
         checkNonNull(account.getBalance(), "balance");
+
+        return account;
     }
 
 }

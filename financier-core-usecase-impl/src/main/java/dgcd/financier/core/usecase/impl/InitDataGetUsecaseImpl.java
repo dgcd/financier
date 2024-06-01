@@ -22,11 +22,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import static dgcd.financier.core.api.utils.EitherUtils.toRight;
 import static dgcd.financier.core.domain.CurrencyType.EUR;
 import static dgcd.financier.core.domain.CurrencyType.USD;
-import static dgcd.financier.core.usecase.impl.utils.EitherUtils.toRight;
 import static io.vavr.control.Either.right;
 import static java.math.BigDecimal.ONE;
 import static java.util.stream.Collectors.toSet;
@@ -42,8 +41,8 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
     public Either<CommonError, InitDataGetResponseDto> execute() {
         return createContext()
                 .flatMap(this::retrieveOperations)
-                .flatMap(this::gatherCategories)
-                .flatMap(this::gatherAccounts)
+                .flatMap(this::collectCategories)
+                .flatMap(this::collectAccounts)
                 .flatMap(this::retrieveRate)
                 .map(this::mapResponse);
     }
@@ -60,8 +59,8 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
     }
 
 
-    private Either<CommonError, Context> gatherCategories(Context context) {
-        Set<Category> categories = new HashSet<>();
+    private Either<CommonError, Context> collectCategories(Context context) {
+        var categories = new HashSet<Category>();
         context.getOperations().forEach(o -> {
             categories.add(o.getSubcategory());
             if (!o.getSubcategory().isParent()) {
@@ -73,7 +72,7 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
     }
 
 
-    private Either<CommonError, Context> gatherAccounts(Context context) {
+    private Either<CommonError, Context> collectAccounts(Context context) {
         var accounts = context.getOperations().stream()
                 .map(Operation::getAccount)
                 .collect(toSet());

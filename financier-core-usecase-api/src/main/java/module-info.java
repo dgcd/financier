@@ -10,4 +10,5 @@ module financier.core.usecase.api {
     exports dgcd.financier.core.api.error;
     exports dgcd.financier.core.api.port.repository;
     exports dgcd.financier.core.api.port.service;
+    exports dgcd.financier.core.api.utils;
 }

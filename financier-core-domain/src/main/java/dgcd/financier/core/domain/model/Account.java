@@ -20,7 +20,7 @@ import static java.math.BigDecimal.ZERO;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
-public final class Account implements Validatable {
+public final class Account implements Validatable<Account> {
 
     private Long id;
     private String title;
@@ -29,8 +29,8 @@ public final class Account implements Validatable {
     private boolean closed = false;
 
     @Override
-    public void validate() {
-        AccountValidator.validate(this);
+    public Account validate() {
+        return AccountValidator.validate(this);
     }
 
 }

@@ -17,10 +17,10 @@ public record CommonResponseDto(
     }
 
     public static CommonResponseDto error(CommonError error) {
-        return new CommonResponseDto(null, error.getMessage());
+        return new CommonResponseDto(null, error.message());
     }
 
-    public static CommonResponseDto fromEither(Either<CommonError, InitDataResponseDto> either) {
+    public static CommonResponseDto fromEither(Either<CommonError, ?> either) {
         return either.fold(CommonResponseDto::error, CommonResponseDto::ok);
     }
 

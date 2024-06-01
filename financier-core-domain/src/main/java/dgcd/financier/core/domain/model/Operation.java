@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
-public class Operation implements Validatable {
+public class Operation implements Validatable<Operation> {
 
     private Long id;
     private LocalDate date;
@@ -38,8 +38,8 @@ public class Operation implements Validatable {
 
 
     @Override
-    public void validate() {
-        OperationValidator.validate(this);
+    public Operation validate() {
+        return OperationValidator.validate(this);
     }
 
 }

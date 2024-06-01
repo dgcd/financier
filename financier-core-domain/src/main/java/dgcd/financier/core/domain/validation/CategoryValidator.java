@@ -10,13 +10,15 @@ import static dgcd.financier.core.domain.validation.ValidationUtils.checkNonNull
 
 public class CategoryValidator {
 
-    public static void validate(Category category) {
+    public static Category validate(Category category) {
         checkId(category.getId(), "id");
 
         checkNonNull(category.getTitle(), "title");
         checkLength(category.getTitle(), CATEGORY_TITLE_MIN_LENGTH, CATEGORY_TITLE_MAX_LENGTH, "title");
 
         checkId(category.getParentId(), "parentId");
+
+        return category;
     }
 
 }
