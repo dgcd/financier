@@ -1,4 +1,4 @@
-package dgcd.financier.core.api.port.repository;
+package dgcd.financier.core.usecase.api.port.repository;
 
 import dgcd.financier.core.domain.model.Rate;
 

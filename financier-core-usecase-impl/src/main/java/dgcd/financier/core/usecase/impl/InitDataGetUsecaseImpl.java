@@ -1,14 +1,16 @@
 package dgcd.financier.core.usecase.impl;
 
-import dgcd.financier.core.api.InitDataGetUsecase;
-import dgcd.financier.core.api.dto.InitDataGetResponseDto;
-import dgcd.financier.core.api.error.CommonError;
-import dgcd.financier.core.api.port.repository.OperationsRepository;
-import dgcd.financier.core.api.port.repository.RatesRepository;
 import dgcd.financier.core.domain.model.Account;
 import dgcd.financier.core.domain.model.Category;
 import dgcd.financier.core.domain.model.Operation;
 import dgcd.financier.core.domain.model.Rate;
+import dgcd.financier.core.usecase.api.InitDataGetUsecase;
+import dgcd.financier.core.usecase.api.dto.InitDataGetResponseDto;
+import dgcd.financier.core.usecase.api.error.CommonError;
+import dgcd.financier.core.usecase.api.port.repository.AccountsRepository;
+import dgcd.financier.core.usecase.api.port.repository.CategoriesRepository;
+import dgcd.financier.core.usecase.api.port.repository.OperationsRepository;
+import dgcd.financier.core.usecase.api.port.repository.RatesRepository;
 import dgcd.financier.core.usecase.impl.mapper.AccountMapper;
 import dgcd.financier.core.usecase.impl.mapper.CategoryMapper;
 import dgcd.financier.core.usecase.impl.mapper.OperationMapper;
@@ -18,21 +20,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import static dgcd.financier.core.api.utils.EitherUtils.toRight;
 import static dgcd.financier.core.domain.CurrencyType.EUR;
 import static dgcd.financier.core.domain.CurrencyType.USD;
+import static dgcd.financier.core.usecase.api.utils.EitherUtils.toRight;
 import static io.vavr.control.Either.right;
 import static java.math.BigDecimal.ONE;
-import static java.util.stream.Collectors.toSet;
 
 @RequiredArgsConstructor
 public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
 
+    private final AccountsRepository accountsRepository;
+    private final CategoriesRepository categoriesRepository;
     private final OperationsRepository operationsRepository;
     private final RatesRepository ratesRepository;
 
@@ -40,9 +41,9 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
     @Override
     public Either<CommonError, InitDataGetResponseDto> execute() {
         return createContext()
+                .flatMap(this::retrieveAccounts)
+                .flatMap(this::retrieveCategories)
                 .flatMap(this::retrieveOperations)
-                .flatMap(this::collectCategories)
-                .flatMap(this::collectAccounts)
                 .flatMap(this::retrieveRate)
                 .map(this::mapResponse);
     }
@@ -53,31 +54,21 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
     }
 
 
+    private Either<CommonError, Context> retrieveAccounts(Context context) {
+        return toRight(accountsRepository.findAll())
+                .map(context::setAccounts);
+    }
+
+
+    private Either<CommonError, Context> retrieveCategories(Context context) {
+        return toRight(categoriesRepository.findAll())
+                .map(context::setCategories);
+    }
+
+
     private Either<CommonError, Context> retrieveOperations(Context context) {
         return toRight(operationsRepository.findAllNotCanceled())
                 .map(context::setOperations);
-    }
-
-
-    private Either<CommonError, Context> collectCategories(Context context) {
-        var categories = new HashSet<Category>();
-        context.getOperations().forEach(o -> {
-            categories.add(o.getSubcategory());
-            if (!o.getSubcategory().isParent()) {
-                categories.add(o.getSubcategory().getParent());
-            }
-        });
-        context.setCategories(new ArrayList<>(categories));
-        return toRight(context);
-    }
-
-
-    private Either<CommonError, Context> collectAccounts(Context context) {
-        var accounts = context.getOperations().stream()
-                .map(Operation::getAccount)
-                .collect(toSet());
-        context.setAccounts(new ArrayList<>(accounts));
-        return toRight(context);
     }
 
 

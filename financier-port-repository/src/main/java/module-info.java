@@ -1,4 +1,5 @@
 module financier.port.repository {
+    requires java.sql;
     requires lombok;
     requires org.slf4j;
     requires org.mapstruct;
@@ -6,9 +7,9 @@ module financier.port.repository {
     requires spring.tx;
     requires spring.context;
     requires jakarta.validation;
-    requires jakarta.persistence;
-    requires org.hibernate.orm.core;
-    requires spring.data.jpa;
+//    requires jakarta.persistence;
+//    requires org.hibernate.orm.core;
+//    requires spring.data.jpa;
 
     requires financier.core.domain;
     requires financier.core.usecase.api;

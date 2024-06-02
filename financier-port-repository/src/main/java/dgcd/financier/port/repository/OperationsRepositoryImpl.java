@@ -1,8 +1,8 @@
 package dgcd.financier.port.repository;
 
-import dgcd.financier.core.api.port.repository.OperationsRepository;
 import dgcd.financier.core.domain.OperationType;
 import dgcd.financier.core.domain.model.Operation;
+import dgcd.financier.core.usecase.api.port.repository.OperationsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;

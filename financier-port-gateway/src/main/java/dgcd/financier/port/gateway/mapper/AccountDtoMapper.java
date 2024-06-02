@@ -1,7 +1,7 @@
 package dgcd.financier.port.gateway.mapper;
 
-import dgcd.financier.core.api.dto.AccountCreateRequestDto;
-import dgcd.financier.core.api.dto.common.AccountDto;
+import dgcd.financier.core.usecase.api.dto.AccountCreateRequestDto;
+import dgcd.financier.core.usecase.api.dto.common.AccountDto;
 import dgcd.financier.port.gateway.dto.AccountResponseDto;
 import org.mapstruct.Mapper;
 

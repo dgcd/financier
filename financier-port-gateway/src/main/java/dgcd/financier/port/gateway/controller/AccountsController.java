@@ -2,6 +2,7 @@ package dgcd.financier.port.gateway.controller;
 
 import dgcd.financier.port.gateway.aspects.LogControllerData;
 import dgcd.financier.port.gateway.dto.AccountCreateRequestDto;
+import dgcd.financier.port.gateway.dto.CommonIdDto;
 import dgcd.financier.port.gateway.dto.CommonResponseDto;
 import dgcd.financier.port.gateway.service.AccountsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static dgcd.financier.port.gateway.WebConstants.ACCOUNTS_CLOSE_PATH;
 import static dgcd.financier.port.gateway.WebConstants.ACCOUNTS_CREATE_PATH;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -34,12 +36,12 @@ class AccountsController {
         return CommonResponseDto.fromEither(result);
     }
 
-//    @LogControllerData
-//    @PostMapping(ACCOUNTS_CLOSE_PATH)
-//    @Operation(summary = "Close account with zero balance")
-//    public CommonResponseDto closeAccount(@Valid @RequestBody CommonIdDto dto) {
-//        var payload = accountsService.closeAccount(dto);
-//        return CommonResponseDto.ok(payload);
-//    }
+    @LogControllerData
+    @PostMapping(ACCOUNTS_CLOSE_PATH)
+    @Operation(summary = "Close account with zero balance")
+    public CommonResponseDto closeAccount(@Valid @RequestBody CommonIdDto dto) {
+        var result = accountsService.closeAccount(dto);
+        return CommonResponseDto.fromEither(result);
+    }
 
 }

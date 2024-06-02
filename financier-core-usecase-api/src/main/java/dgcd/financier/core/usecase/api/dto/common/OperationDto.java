@@ -1,4 +1,4 @@
-package dgcd.financier.core.api.dto.common;
+package dgcd.financier.core.usecase.api.dto.common;
 
 import dgcd.financier.core.domain.CurrencyType;
 import dgcd.financier.core.domain.OperationType;

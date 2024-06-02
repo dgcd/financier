@@ -1,7 +1,7 @@
 package dgcd.financier.port.repository;
 
-import dgcd.financier.core.api.port.repository.CategoriesRepository;
 import dgcd.financier.core.domain.model.Category;
+import dgcd.financier.core.usecase.api.port.repository.CategoriesRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;

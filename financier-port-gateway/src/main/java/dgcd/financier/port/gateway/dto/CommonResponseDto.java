@@ -1,6 +1,6 @@
 package dgcd.financier.port.gateway.dto;
 
-import dgcd.financier.core.api.error.CommonError;
+import dgcd.financier.core.usecase.api.error.CommonError;
 import io.vavr.control.Either;
 
 public record CommonResponseDto(

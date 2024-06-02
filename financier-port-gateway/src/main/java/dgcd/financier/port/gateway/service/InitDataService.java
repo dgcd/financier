@@ -1,7 +1,7 @@
 package dgcd.financier.port.gateway.service;
 
-import dgcd.financier.core.api.InitDataGetUsecase;
-import dgcd.financier.core.api.error.CommonError;
+import dgcd.financier.core.usecase.api.InitDataGetUsecase;
+import dgcd.financier.core.usecase.api.error.CommonError;
 import dgcd.financier.port.gateway.dto.InitDataResponseDto;
 import dgcd.financier.port.gateway.mapper.InitDataDtoMapper;
 import io.vavr.control.Either;

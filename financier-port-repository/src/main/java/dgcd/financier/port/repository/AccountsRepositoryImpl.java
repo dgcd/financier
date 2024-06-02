@@ -1,8 +1,8 @@
 package dgcd.financier.port.repository;
 
-import dgcd.financier.core.api.port.repository.AccountsRepository;
 import dgcd.financier.core.domain.CurrencyType;
 import dgcd.financier.core.domain.model.Account;
+import dgcd.financier.core.usecase.api.port.repository.AccountsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,10 +13,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static dgcd.financier.port.repository.utils.JdbcUtils.getEnum;
 import static dgcd.financier.port.repository.utils.JdbcUtils.getLong;
+import static dgcd.financier.port.repository.utils.JdbcUtils.queryForObjectSafely;
+import static java.util.Objects.requireNonNull;
 
+@SuppressWarnings("DataFlowIssue")
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -33,6 +37,16 @@ public class AccountsRepositoryImpl implements AccountsRepository {
                 a.closed as a_closed
             from main.accounts a""";
 
+    private static final String SELECT_BY_ID = """
+            select
+                a.id as a_id,
+                a.title as a_title,
+                a.currency as a_currency,
+                a.balance as a_balance,
+                a.closed as a_closed
+            from main.accounts a
+            where id = :id""";
+
     private static final String COUNT_BY_TITLE = """
             select count(*)
             from main.accounts
@@ -46,6 +60,13 @@ public class AccountsRepositoryImpl implements AccountsRepository {
                 :title,
                 :currency
             )""";
+
+    private static final String UPDATE = """
+            update main.accounts
+            set
+            	closed = :closed,
+            	title  = :title
+            where id = :id""";
 
 
     static final RowMapper<Account> ACCOUNT_ROW_MAPPER = (rs, _) -> new Account()
@@ -67,12 +88,19 @@ public class AccountsRepositoryImpl implements AccountsRepository {
         return accounts;
     }
 
-//    @Override
-//    public Optional<Account> findById(Long id) {
-//        log.debug("[findById] id: {}", id);
-////        log.debug("[findById] account: {}", accountOpt.orElse(null));
-//        return Optional.empty();
-//    }
+
+    @Override
+    public Optional<Account> findById(Long id) {
+        log.debug("[findById] id: {}", id);
+
+        requireNonNull(id);
+        var params = Map.of("id", id);
+
+        var accountOpt = queryForObjectSafely(jdbcTemplate, SELECT_BY_ID, params, ACCOUNT_ROW_MAPPER);
+
+        log.debug("[findById] accountOpt: {}", accountOpt);
+        return accountOpt;
+    }
 
 
     @Override
@@ -98,6 +126,22 @@ public class AccountsRepositoryImpl implements AccountsRepository {
         long id = keyHolder.getKey().longValue();
         log.debug("[save] account id: {}", id);
         return account.setId(id);
+    }
+
+    @Override
+    public Account update(Account account) {
+        log.debug("[update] account: {}", account);
+
+        requireNonNull(account.getId());
+        var params = Map.of(
+                "id", account.getId(),
+                "title", account.getTitle(),
+                "closed", account.isClosed()
+        );
+
+        int rows = jdbcTemplate.update(UPDATE, params);
+        log.debug("[update] updated rows: {}", rows);
+        return account;
     }
 
 //    @Override

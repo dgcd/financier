@@ -1,18 +1,21 @@
-package dgcd.financier.core.api.port.repository;
+package dgcd.financier.core.usecase.api.port.repository;
 
 import dgcd.financier.core.domain.model.Account;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AccountsRepository {
 
     List<Account> findAll();
 
-//    Optional<Account> findById(Long id);
+    Optional<Account> findById(Long id);
 
     boolean existByTitle(String title);
 
     Account save(Account account);
+
+    Account update(Account account);
 
 //    List<Account> saveAll(List<Account> accounts);
 

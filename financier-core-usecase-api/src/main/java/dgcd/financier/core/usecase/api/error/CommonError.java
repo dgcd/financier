@@ -1,4 +1,4 @@
-package dgcd.financier.core.api.error;
+package dgcd.financier.core.usecase.api.error;
 
 public interface CommonError {
 

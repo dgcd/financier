@@ -1,4 +1,4 @@
-package dgcd.financier.core.api.dto.common;
+package dgcd.financier.core.usecase.api.dto.common;
 
 public record CategoryDto(
         Long id,

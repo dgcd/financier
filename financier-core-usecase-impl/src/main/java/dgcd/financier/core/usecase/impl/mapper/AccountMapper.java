@@ -1,7 +1,7 @@
 package dgcd.financier.core.usecase.impl.mapper;
 
-import dgcd.financier.core.api.dto.common.AccountDto;
 import dgcd.financier.core.domain.model.Account;
+import dgcd.financier.core.usecase.api.dto.common.AccountDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

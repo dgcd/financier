@@ -1,10 +1,13 @@
 package dgcd.financier.config;
 
-import dgcd.financier.core.api.AccountCreateUsecase;
-import dgcd.financier.core.api.InitDataGetUsecase;
-import dgcd.financier.core.api.port.repository.AccountsRepository;
-import dgcd.financier.core.api.port.repository.OperationsRepository;
-import dgcd.financier.core.api.port.repository.RatesRepository;
+import dgcd.financier.core.usecase.api.AccountCloseUsecase;
+import dgcd.financier.core.usecase.api.AccountCreateUsecase;
+import dgcd.financier.core.usecase.api.InitDataGetUsecase;
+import dgcd.financier.core.usecase.api.port.repository.AccountsRepository;
+import dgcd.financier.core.usecase.api.port.repository.CategoriesRepository;
+import dgcd.financier.core.usecase.api.port.repository.OperationsRepository;
+import dgcd.financier.core.usecase.api.port.repository.RatesRepository;
+import dgcd.financier.core.usecase.impl.AccountCloseUsecaseImpl;
 import dgcd.financier.core.usecase.impl.AccountCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.InitDataGetUsecaseImpl;
 import org.springframework.context.annotation.Bean;
@@ -15,10 +18,14 @@ public class UsecaseConfig {
 
     @Bean
     public InitDataGetUsecase initDataGetUsecase(
+            AccountsRepository accountsRepository,
+            CategoriesRepository categoriesRepository,
             OperationsRepository operationsRepository,
             RatesRepository ratesRepository
     ) {
         return new InitDataGetUsecaseImpl(
+                accountsRepository,
+                categoriesRepository,
                 operationsRepository,
                 ratesRepository
         );
@@ -29,12 +36,11 @@ public class UsecaseConfig {
         return new AccountCreateUsecaseImpl(accountsRepository);
     }
 
-//    @Bean
-//    public AccountCloseUsecase accountCloseUsecase(AccountsRepository accountsRepository) {
-//        return new AccountCloseUsecaseImpl(accountsRepository);
-//    }
-//
-//
+    @Bean
+    public AccountCloseUsecase accountCloseUsecase(AccountsRepository accountsRepository) {
+        return new AccountCloseUsecaseImpl(accountsRepository);
+    }
+
 //    @Bean
 //    public CategoryCreateUsecase categoryCreateUsecase(CategoriesRepository categoriesRepository) {
 //        return new CategoryCreateUsecaseImpl(categoriesRepository);

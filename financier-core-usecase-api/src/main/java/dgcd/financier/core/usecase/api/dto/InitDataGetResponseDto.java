@@ -1,8 +1,8 @@
-package dgcd.financier.core.api.dto;
+package dgcd.financier.core.usecase.api.dto;
 
-import dgcd.financier.core.api.dto.common.AccountDto;
-import dgcd.financier.core.api.dto.common.CategoryDto;
-import dgcd.financier.core.api.dto.common.OperationDto;
+import dgcd.financier.core.usecase.api.dto.common.AccountDto;
+import dgcd.financier.core.usecase.api.dto.common.CategoryDto;
+import dgcd.financier.core.usecase.api.dto.common.OperationDto;
 
 import java.math.BigDecimal;
 import java.util.List;
