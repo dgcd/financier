@@ -15,6 +15,8 @@ public interface CategoriesRepository {
 
     Category save(Category category);
 
+    Category update(Category category);
+
 //    List<Category> saveAll(List<Category> categories);
 
 }

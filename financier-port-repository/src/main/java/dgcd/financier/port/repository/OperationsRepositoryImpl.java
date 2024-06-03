@@ -4,25 +4,34 @@ import dgcd.financier.core.domain.OperationType;
 import dgcd.financier.core.domain.model.Operation;
 import dgcd.financier.core.usecase.api.port.repository.OperationsRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static dgcd.financier.port.repository.AccountsRepositoryImpl.ACCOUNT_ROW_MAPPER;
 import static dgcd.financier.port.repository.CategoriesRepositoryImpl.CATEGORY_ROW_MAPPER;
+import static dgcd.financier.port.repository.utils.JdbcUtils.KEY_FIELD;
 import static dgcd.financier.port.repository.utils.JdbcUtils.getEnum;
 import static dgcd.financier.port.repository.utils.JdbcUtils.getLd;
 import static dgcd.financier.port.repository.utils.JdbcUtils.getLong;
+import static dgcd.financier.port.repository.utils.JdbcUtils.queryForObjectSafely;
 
 @Slf4j
 @Repository
 @RequiredArgsConstructor
+@SuppressWarnings({"DataFlowIssue", "OptionalGetWithoutIsPresent"})
 public class OperationsRepositoryImpl implements OperationsRepository {
 
-    private static final String SELECT_ALL_NOT_CANCELED = """
+    private static final String SELECT_ALL = """
             select
             	o.id as o_id,
             	o."date" as o_date,
@@ -51,8 +60,40 @@ public class OperationsRepositoryImpl implements OperationsRepository {
             left join main.categories c
             	on o.subcategory_id = c.id
             left join main.categories cp
-            	on c.parent_id = cp.id
-            where o.canceled = false""";
+            	on c.parent_id = cp.id""";
+
+    private static final String SELECT_ALL_NOT_CANCELED = SELECT_ALL + " where o.canceled = false";
+
+    private static final String SELECT_BY_ID = SELECT_ALL + " where c.id = :id";
+
+    private static final String INSERT = """
+            insert into main.operations (
+                "date",
+                account_id,
+                quantity,
+                amount,
+                "type",
+                subcategory_id,
+                "comment",
+                counterparty,
+                correlation_id
+            ) values (
+                :date,
+                :account_id,
+                :quantity,
+                :amount,
+                :type,
+                :subcategory_id,
+                :comment,
+                :counterparty,
+                :correlation_id
+            )""";
+
+    private static final String UPDATE = """
+            update main.operations
+            set
+            	canceled = :canceled
+            where id = :id""";
 
 
     private static final RowMapper<Operation> OPERATION_ROW_MAPPER = (rs, _) -> {
@@ -78,6 +119,9 @@ public class OperationsRepositoryImpl implements OperationsRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
+//    @Autowired
+//    private OperationsRepositoryImpl self;
+
 
     @Override
     public List<Operation> findAllNotCanceled() {
@@ -85,6 +129,19 @@ public class OperationsRepositoryImpl implements OperationsRepository {
         var operations = jdbcTemplate.query(SELECT_ALL_NOT_CANCELED, OPERATION_ROW_MAPPER);
         log.debug("[findAllNotCanceled] got operations: {}", operations);
         return operations;
+    }
+
+
+    @Override
+    public Optional<Operation> findById(Long id) {
+        log.debug("[findById] id: {}", id);
+
+        var params = Map.of("id", id);
+
+        var operationOpt = queryForObjectSafely(jdbcTemplate, SELECT_BY_ID, params, OPERATION_ROW_MAPPER);
+
+        log.debug("[findById] operationOpt: {}", operationOpt);
+        return operationOpt;
     }
 
 //    @Override
@@ -109,16 +166,34 @@ public class OperationsRepositoryImpl implements OperationsRepository {
 ////        }
 //        return Collections.emptyList();
 //    }
-//
-//
-//    @Override
-//    public Operation save(Operation operation) {
-//        log.debug("[save] operation: {}", operation);
-////        log.debug("[save] operation saved: {}", savedOperation);
-//        return null;
-//    }
-//
-//
+
+
+    @SneakyThrows
+    @Override
+    public Operation save(Operation operation) {
+        log.debug("[save] operation: {}", operation);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("date", operation.getDate());
+        params.put("account_id", operation.getAccountId());
+        params.put("quantity", operation.getQuantity());
+        params.put("amount", operation.getAmount());
+        params.put("type", operation.getType().name());
+        params.put("subcategory_id", operation.getSubcategoryId());
+        params.put("comment", operation.getComment());
+        params.put("counterparty", operation.getCounterparty());
+        params.put("correlation_id", operation.getCorrelationId());
+        var paramSource = new MapSqlParameterSource(params);
+
+        var keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(INSERT, paramSource, keyHolder, KEY_FIELD);
+        long id = keyHolder.getKey().longValue();
+        log.debug("[save] operation id: {}", id);
+
+        return operation.setId(id);
+//        return findById(id).get();
+    }
+
 //    @Override
 //    public List<Operation> saveAll(List<Operation> operations) {
 //        log.debug("[saveAll] operations count: {}", operations.size());

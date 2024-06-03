@@ -47,7 +47,7 @@ public class ExchangeService {
             }
 
             var rub = response.getRates().get("RUB");
-            var eur = BigDecimal.valueOf(rub).setScale(2, HALF_UP);
+            var eur = BigDecimal.valueOf(rub).setScale(RATE_SCALE, HALF_UP);
             var usd = BigDecimal.valueOf(rub / response.getRates().get("USD")).setScale(2, HALF_UP);
             log.info("updateRates RUB/EUR: {}, RUB/USD: {}, date: {}", eur, usd, response.getDate());
 

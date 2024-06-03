@@ -12,7 +12,7 @@ public record CategoryCreateRequestDto(
         @Size(
                 min = CATEGORY_TITLE_MIN_LENGTH,
                 max = CATEGORY_TITLE_MAX_LENGTH,
-                message = "Category title length must be 2..30"
+                message = "Category title length must be " + CATEGORY_TITLE_MIN_LENGTH + ".." + CATEGORY_TITLE_MAX_LENGTH
         )
         String title,
 

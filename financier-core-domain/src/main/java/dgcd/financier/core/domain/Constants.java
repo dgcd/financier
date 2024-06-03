@@ -5,8 +5,6 @@ public class Constants {
     public static final int ACCOUNT_TITLE_MIN_LENGTH = 5;
     public static final int ACCOUNT_TITLE_MAX_LENGTH = 40;
 
-    // todo add numbers constraints
-
     public static final int CATEGORY_TITLE_MIN_LENGTH = 2;
     public static final int CATEGORY_TITLE_MAX_LENGTH = 30;
 
@@ -18,5 +16,8 @@ public class Constants {
 
     public static final int OPERATION_CORRELATION_MIN_LENGTH = 5;
     public static final int OPERATION_CORRELATION_MAX_LENGTH = 20;
+
+    public static final int QUANTITY_SCALE = 6;
+    public static final int AMOUNT_SCALE = 2;
 
 }

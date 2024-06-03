@@ -12,7 +12,7 @@ public record AccountCreateRequestDto(
         @Size(
                 min = ACCOUNT_TITLE_MIN_LENGTH,
                 max = ACCOUNT_TITLE_MAX_LENGTH,
-                message = "Account title length must be 5..40"
+                message = "Account title length must be " + ACCOUNT_TITLE_MIN_LENGTH + ".." + ACCOUNT_TITLE_MAX_LENGTH
         )
         String title,
 

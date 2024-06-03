@@ -1,5 +1,6 @@
 package dgcd.financier.port.repository.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 
+@Slf4j
 public final class JdbcUtils {
 
     public static final String[] KEY_FIELD = new String[]{"id"};
@@ -59,6 +61,7 @@ public final class JdbcUtils {
         try {
             return Optional.ofNullable(template.queryForObject(queryString, params, rowMapper));
         } catch (EmptyResultDataAccessException e) {
+            log.error("queryForObjectSafely: {}", e.getMessage());
             return Optional.empty();
         }
     }

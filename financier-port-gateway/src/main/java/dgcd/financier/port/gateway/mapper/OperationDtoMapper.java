@@ -1,26 +1,22 @@
-//package dgcd.financier.infra.gateway.mapper;
-//
-//import dgcd.financier.core.domain.Operation;
-//import dgcd.financier.core.usecase.impl.OperationCancelUsecase;
-//import dgcd.financier.core.usecase.impl.OperationCreateUsecase;
-//import dgcd.financier.infra.gateway.dto.CommonIdDto;
-//import dgcd.financier.infra.gateway.dto.OperationCreateRequestDto;
-//import dgcd.financier.infra.gateway.dto.OperationResponseDto;
-//import dgcd.financier.infra.gateway.dto.OperationsCancelResponseDto;
-//import dgcd.financier.infra.gateway.dto.OperationsCreateResponseDto;
-//import org.mapstruct.Mapper;
-//import org.mapstruct.Mapping;
-//import org.mapstruct.Mappings;
-//
-//import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
-//
-//@Mapper(
-//        componentModel = SPRING,
+package dgcd.financier.port.gateway.mapper;
+
+import dgcd.financier.core.usecase.api.OperationCreateUsecase;
+import dgcd.financier.core.usecase.api.dto.common.OperationDto;
+import dgcd.financier.port.gateway.dto.OperationCreateRequestDto;
+import dgcd.financier.port.gateway.dto.OperationResponseDto;
+import dgcd.financier.port.gateway.dto.OperationsCreateResponseDto;
+import org.mapstruct.Mapper;
+
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
+
+@Mapper(
+        componentModel = SPRING
+//        ,
 //        uses = {AccountMapper.class, CategoryMapper.class}
-//)
-//public interface OperationMapper {
-//
-//    @Mappings({
+)
+public interface OperationDtoMapper {
+
+    //    @Mappings({
 //            @Mapping(target = "id", source = "operation.identity"),
 //
 //            @Mapping(target = "accountId", source = "operation.account.identity"),
@@ -32,20 +28,19 @@
 //            @Mapping(target = "subcategoryId", source = "operation.subcategory.identity"),
 //            @Mapping(target = "subcategoryTitle", source = "operation.subcategory.title"),
 //    })
-//    OperationResponseDto fromDomain(Operation operation);
-//
-//
-//    @Mappings({
+    OperationResponseDto fromUsecase(OperationDto operation);
+
+
+    //    @Mappings({
 //            @Mapping(target = "accountIdentity", source = "dto.accountId"),
 //            @Mapping(target = "accountToIdentity", source = "dto.accountToId"),
 //            @Mapping(target = "subcategoryIdentity", source = "dto.subcategoryId"),
 //    })
-//    OperationCreateUsecase.Request toCreateUsecase(OperationCreateRequestDto dto);
-//
-//
-//    OperationsCreateResponseDto fromCreateUsecase(OperationCreateUsecase.Response response);
-//
-//
+    OperationCreateUsecase.RequestDto toCreateUsecase(OperationCreateRequestDto dto);
+
+
+    OperationsCreateResponseDto fromCreateUsecase(OperationCreateUsecase.ResponseDto response);
+
 //    @Mappings({
 //            @Mapping(target = "operationIdentity", source = "dto.id"),
 //    })
@@ -56,5 +51,5 @@
 //            @Mapping(target = "canceledOperationsIds", source = "response.canceledOperationsIdentities"),
 //    })
 //    OperationsCancelResponseDto fromCancelUsecase(OperationCancelUsecase.Response response);
-//
-//}
+
+}

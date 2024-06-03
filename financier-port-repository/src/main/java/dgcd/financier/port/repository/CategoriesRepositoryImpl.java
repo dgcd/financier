@@ -50,6 +50,12 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
                 :parent_id
             )""";
 
+    private static final String UPDATE = """
+            update main.categories
+            set
+            	title = :title
+            where id = :id""";
+
 
     private static final RowMapper<Category> PARENT_ROW_MAPPER = (rs, _) -> new Category()
             .setId(getLong(rs, "cp_id"))
@@ -77,6 +83,7 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
         log.debug("[findAll] got categories: {}", categories);
         return categories;
     }
+
 
     @Override
     public List<Category> findAllByTitle(String title) {
@@ -120,6 +127,22 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
         log.debug("[save] category id: {}", id);
 
         return findById(id).get();
+    }
+
+
+    @Override
+    public Category update(Category category) {
+        log.debug("[update] category: {}", category);
+
+        var params = Map.of(
+                "id", category.getId(),
+                "title", category.getTitle()
+        );
+
+        int rows = jdbcTemplate.update(UPDATE, params);
+        log.debug("[update] updated rows: {}", rows);
+
+        return findById(category.getId()).get();
     }
 
 //    @Override

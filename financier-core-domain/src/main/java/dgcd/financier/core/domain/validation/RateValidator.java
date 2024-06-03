@@ -2,8 +2,8 @@ package dgcd.financier.core.domain.validation;
 
 import dgcd.financier.core.domain.model.Rate;
 
-import static dgcd.financier.core.domain.validation.ValidationUtils.checkGreaterThenZero;
 import static dgcd.financier.core.domain.validation.ValidationUtils.checkNonNull;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkPositive;
 
 public class RateValidator {
 
@@ -11,10 +11,10 @@ public class RateValidator {
         checkNonNull(rate.getDate(), "date");
 
         checkNonNull(rate.getUsd(), "usd rate");
-        checkGreaterThenZero(rate.getUsd(), "usd rate");
+        checkPositive(rate.getUsd(), "usd rate");
 
         checkNonNull(rate.getEur(), "euro rate");
-        checkGreaterThenZero(rate.getEur(), "euro rate");
+        checkPositive(rate.getEur(), "euro rate");
 
         return rate;
     }

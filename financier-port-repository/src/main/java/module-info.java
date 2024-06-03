@@ -14,6 +14,7 @@ module financier.port.repository {
     requires financier.core.domain;
     requires financier.core.usecase.api;
     requires spring.jdbc;
+    requires spring.beans;
 
     exports dgcd.financier.port.repository;
 }

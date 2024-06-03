@@ -55,8 +55,9 @@ public class AccountsRepositoryImpl implements AccountsRepository {
     private static final String UPDATE = """
             update main.accounts
             set
-            	closed = :closed,
-            	title  = :title
+            	title  = :title,
+            	balance  = :balance,
+            	closed = :closed
             where id = :id""";
 
 
@@ -103,6 +104,7 @@ public class AccountsRepositoryImpl implements AccountsRepository {
         return count > 0;
     }
 
+
     @Override
     public Account save(Account account) {
         log.debug("[save] account: {}", account);
@@ -116,23 +118,27 @@ public class AccountsRepositoryImpl implements AccountsRepository {
         jdbcTemplate.update(INSERT, paramSource, keyHolder, KEY_FIELD);
         long id = keyHolder.getKey().longValue();
         log.debug("[save] account id: {}", id);
+
         return account.setId(id);
     }
+
 
     @Override
     public Account update(Account account) {
         log.debug("[update] account: {}", account);
 
-        requireNonNull(account.getId());
         var params = Map.of(
                 "id", account.getId(),
                 "title", account.getTitle(),
+                "balance", account.getBalance(),
                 "closed", account.isClosed()
         );
 
         int rows = jdbcTemplate.update(UPDATE, params);
         log.debug("[update] updated rows: {}", rows);
-        return account;
+
+//        return account;
+        return findById(account.getId()).get();
     }
 
 //    @Override
