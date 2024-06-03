@@ -15,18 +15,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static dgcd.financier.port.repository.utils.JdbcUtils.KEY_FIELD;
 import static dgcd.financier.port.repository.utils.JdbcUtils.getEnum;
 import static dgcd.financier.port.repository.utils.JdbcUtils.getLong;
 import static dgcd.financier.port.repository.utils.JdbcUtils.queryForObjectSafely;
 import static java.util.Objects.requireNonNull;
 
-@SuppressWarnings("DataFlowIssue")
 @Slf4j
 @Repository
 @RequiredArgsConstructor
+@SuppressWarnings("DataFlowIssue")
 public class AccountsRepositoryImpl implements AccountsRepository {
-
-    private final static String[] keyField = new String[]{"id"};
 
     private static final String SELECT_ALL = """
             select
@@ -37,15 +36,7 @@ public class AccountsRepositoryImpl implements AccountsRepository {
                 a.closed as a_closed
             from main.accounts a""";
 
-    private static final String SELECT_BY_ID = """
-            select
-                a.id as a_id,
-                a.title as a_title,
-                a.currency as a_currency,
-                a.balance as a_balance,
-                a.closed as a_closed
-            from main.accounts a
-            where id = :id""";
+    private static final String SELECT_BY_ID = SELECT_ALL + " where a.id = :id";
 
     private static final String COUNT_BY_TITLE = """
             select count(*)
@@ -122,7 +113,7 @@ public class AccountsRepositoryImpl implements AccountsRepository {
         ));
 
         var keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(INSERT, paramSource, keyHolder, keyField);
+        jdbcTemplate.update(INSERT, paramSource, keyHolder, KEY_FIELD);
         long id = keyHolder.getKey().longValue();
         log.debug("[save] account id: {}", id);
         return account.setId(id);

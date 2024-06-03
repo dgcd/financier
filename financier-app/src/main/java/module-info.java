@@ -11,6 +11,7 @@ module financier.app {
     requires spring.boot.actuator;
     requires com.fasterxml.jackson.annotation;
     requires org.apache.tomcat.embed.core;
+    requires com.zaxxer.hikari;
 
 //    requires financier.core.domain;
     requires financier.core.usecase.api;

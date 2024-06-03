@@ -14,6 +14,4 @@ public interface AccountDtoMapper {
 
     AccountCreateRequestDto toCreateUsecase(dgcd.financier.port.gateway.dto.AccountCreateRequestDto dto);
 
-//     AccountCloseUsecase.Request toCloseUsecase(CommonIdDto dto);
-
 }

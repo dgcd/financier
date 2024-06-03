@@ -13,7 +13,10 @@ import java.util.Optional;
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 
-public class JdbcUtils {
+public final class JdbcUtils {
+
+    public static final String[] KEY_FIELD = new String[]{"id"};
+
 
     public static Long getLong(ResultSet rs, String fieldName) throws SQLException {
         requireNonNull(rs);

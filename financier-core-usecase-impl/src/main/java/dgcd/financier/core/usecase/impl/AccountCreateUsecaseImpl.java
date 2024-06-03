@@ -24,30 +24,25 @@ public class AccountCreateUsecaseImpl implements AccountCreateUsecase {
     @Override
     public Either<CommonError, AccountDto> execute(AccountCreateRequestDto request) {
         return toRight(request)
-                .map(this::createAccount)
                 .flatMap(this::checkNotExists)
-                .flatMap(this::validateAccount)
+                .flatMap(this::createAccount)
                 .map(accountsRepository::save)
                 .map(AccountMapper.INSTANCE::fromDomain);
     }
 
 
-    private Account createAccount(AccountCreateRequestDto request) {
-        return new Account()
-                .setTitle(request.title())
-                .setCurrency(request.currency());
-    }
-
-
-    private Either<CommonError, Account> checkNotExists(Account account) {
-        return accountsRepository.existByTitle(account.getTitle()) ?
+    private Either<CommonError, AccountCreateRequestDto> checkNotExists(AccountCreateRequestDto request) {
+        return accountsRepository.existByTitle(request.title()) ?
                 left(ACCOUNT_ALREADY_EXISTS) :
-                right(account);
+                right(request);
     }
 
 
-    private Either<CommonError, Account> validateAccount(Account account) {
+    private Either<CommonError, Account> createAccount(AccountCreateRequestDto request) {
         try {
+            var account = new Account()
+                    .setTitle(request.title())
+                    .setCurrency(request.currency());
             return right(account.validate());
         } catch (IllegalArgumentException ex) {
             return left(new UsecaseError(ex.getMessage()));

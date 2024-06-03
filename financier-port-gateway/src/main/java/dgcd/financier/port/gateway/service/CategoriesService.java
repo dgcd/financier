@@ -1,26 +1,31 @@
-//package dgcd.financier.infra.gateway.service;
-//
-//import dgcd.financier.core.usecase.CategoryCreateUsecase;
-//import dgcd.financier.infra.gateway.dto.CategoryCreateRequestDto;
-//import dgcd.financier.infra.gateway.dto.CategoryResponseDto;
-//import dgcd.financier.infra.gateway.mapper.CategoryMapper;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-//
-//@Service
-//@RequiredArgsConstructor
-//public class CategoriesService {
-//
-//    private final CategoryCreateUsecase categoryCreateUsecase;
-//    private final CategoryMapper categoryMapper;
-//
-//
-//    @Transactional
-//    public CategoryResponseDto createCategory(CategoryCreateRequestDto dto) {
-//        var request = categoryMapper.toCreateUsecase(dto);
-//        var response = categoryCreateUsecase.execute(request);
-//        return categoryMapper.fromDomain(response.getCategory());
-//    }
-//
-//}
+package dgcd.financier.port.gateway.service;
+
+import dgcd.financier.core.usecase.api.CategoryCreateUsecase;
+import dgcd.financier.core.usecase.api.error.CommonError;
+import dgcd.financier.port.gateway.dto.CategoryCreateRequestDto;
+import dgcd.financier.port.gateway.dto.CategoryResponseDto;
+import dgcd.financier.port.gateway.mapper.CategoryDtoMapper;
+import io.vavr.control.Either;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import static dgcd.financier.core.usecase.api.utils.EitherUtils.toRight;
+
+@Service
+@RequiredArgsConstructor
+public class CategoriesService {
+
+    private final CategoryCreateUsecase categoryCreateUsecase;
+    private final CategoryDtoMapper categoryMapper;
+
+
+    @Transactional
+    public Either<CommonError, CategoryResponseDto> createCategory(CategoryCreateRequestDto dto) {
+        return toRight(dto)
+                .map(categoryMapper::toCreateUsecase)
+                .flatMap(categoryCreateUsecase::execute)
+                .map(categoryMapper::fromUsecase);
+    }
+
+}

@@ -19,8 +19,9 @@ create table main.categories (
     title       varchar(30)             not null,
     parent_id   int8                    null,
 
-    constraint  categories_pkey             primary key (id),
-    constraint  categories_parent_id_fkey   foreign key (parent_id) references main.categories(id)
+    constraint  categories_pkey                     primary key (id),
+    constraint  categories_parent_id_fkey           foreign key (parent_id) references main.categories(id),
+    constraint  categories_title_parent_unique_key  unique nulls not distinct (title, parent_id)
 );
 
 

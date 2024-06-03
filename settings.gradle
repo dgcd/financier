@@ -10,7 +10,6 @@ rootProject.name = 'financier'
 include 'financier-app'
 
 include 'financier-core-domain'
-
 include 'financier-core-usecase-api'
 include 'financier-core-usecase-impl'
 

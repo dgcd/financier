@@ -26,7 +26,6 @@ import java.util.Map;
 import static dgcd.financier.core.domain.CurrencyType.EUR;
 import static dgcd.financier.core.domain.CurrencyType.USD;
 import static dgcd.financier.core.usecase.api.utils.EitherUtils.toRight;
-import static io.vavr.control.Either.right;
 import static java.math.BigDecimal.ONE;
 
 @RequiredArgsConstructor
@@ -40,17 +39,12 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
 
     @Override
     public Either<CommonError, InitDataGetResponseDto> execute() {
-        return createContext()
+        return toRight(new Context())
                 .flatMap(this::retrieveAccounts)
                 .flatMap(this::retrieveCategories)
                 .flatMap(this::retrieveOperations)
                 .flatMap(this::retrieveRate)
                 .map(this::mapResponse);
-    }
-
-
-    private static Either<CommonError, Context> createContext() {
-        return right(new Context());
     }
 
 
@@ -85,7 +79,10 @@ public class InitDataGetUsecaseImpl implements InitDataGetUsecase {
                 AccountMapper.INSTANCE.fromDomain(context.getAccounts()),
                 CategoryMapper.INSTANCE.fromDomain(context.getCategories()),
                 OperationMapper.INSTANCE.fromDomain(context.getOperations()),
-                Map.of(USD.name(), rate.getUsd(), EUR.name(), rate.getEur())
+                Map.of(
+                        USD.name(), rate.getUsd(),
+                        EUR.name(), rate.getEur()
+                )
         );
     }
 

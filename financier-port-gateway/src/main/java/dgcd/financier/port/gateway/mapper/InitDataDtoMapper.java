@@ -7,10 +7,8 @@ import org.mapstruct.Mapper;
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Mapper(
-        componentModel = SPRING,
-        uses = {AccountDtoMapper.class
-//                , CategoryMapper.class, OperationMapper.class
-        }
+        componentModel = SPRING
+//        ,uses = {AccountDtoMapper.class, CategoryDtoMapper.class, OperationDtoMapper.class}
 )
 public interface InitDataDtoMapper {
 

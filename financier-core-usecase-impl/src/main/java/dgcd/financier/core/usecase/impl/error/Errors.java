@@ -10,6 +10,10 @@ public enum Errors implements CommonError {
     ACCOUNT_NOT_FOUND("Account is not found"),
     ACCOUNT_ALREADY_CLOSED("Account is already closed"),
     ACCOUNT_NOT_EMPTY("Account is not empty"),
+
+    CATEGORY_ALREADY_EXISTS("Category with this title already exists"),
+    CATEGORY_PARENT_NOT_FOUND("Parent category is not found"),
+    CATEGORY_CAN_NOT_BE_PARENT("Subcategory can not be parent"),
     ;
 
     private final String message;
