@@ -26,7 +26,7 @@ public class AccountCreateUsecaseImpl implements AccountCreateUsecase {
         return toRight(request)
                 .flatMap(this::checkNotExists)
                 .flatMap(this::createAccount)
-                .map(accountsRepository::save)
+                .map(accountsRepository::create)
                 .map(AccountMapper.INSTANCE::fromDomain);
     }
 

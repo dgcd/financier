@@ -19,6 +19,10 @@ public enum Errors implements CommonError {
 
     CURRENCIES_DIFFER("Currencies must match"),
     CURRENCIES_MATCH("Currencies must differ"),
+
+    OPERATION_NOT_FOUND("Operation is not found"),
+    TOO_MANY_OPERATIONS_FOUND("Too many operations found"),
+    OPERATION_ALREADY_CANCELED("Operation is already canceled"),
     ;
 
     private final String message;

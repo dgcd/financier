@@ -1,8 +1,11 @@
 package dgcd.financier.port.gateway.service;
 
+import dgcd.financier.core.usecase.api.OperationCancelUsecase;
 import dgcd.financier.core.usecase.api.OperationCreateUsecase;
 import dgcd.financier.core.usecase.api.error.CommonError;
+import dgcd.financier.port.gateway.dto.CommonIdDto;
 import dgcd.financier.port.gateway.dto.OperationCreateRequestDto;
+import dgcd.financier.port.gateway.dto.OperationsCancelResponseDto;
 import dgcd.financier.port.gateway.dto.OperationsCreateResponseDto;
 import dgcd.financier.port.gateway.mapper.OperationDtoMapper;
 import io.vavr.control.Either;
@@ -18,7 +21,7 @@ public class OperationsService {
 
     private final OperationDtoMapper operationDtoMapper;
     private final OperationCreateUsecase operationCreateUsecase;
-//    private final OperationCancelUsecase operationCancelUsecase;
+    private final OperationCancelUsecase operationCancelUsecase;
 
 
     @Transactional
@@ -29,11 +32,12 @@ public class OperationsService {
                 .map(operationDtoMapper::fromCreateUsecase);
     }
 
-//    @Transactional
-//    public OperationsCancelResponseDto cancelOperation(CommonIdDto dto) {
-//        var request = operationMapper.toCancelUsecase(dto);
-//        var response = operationCancelUsecase.execute(request);
-//        return operationMapper.fromCancelUsecase(response);
-//    }
+    @Transactional
+    public Either<CommonError, OperationsCancelResponseDto> cancelOperation(CommonIdDto dto) {
+        return toRight(dto)
+                .map(CommonIdDto::id)
+                .flatMap(operationCancelUsecase::execute)
+                .map(operationDtoMapper::fromCancelUsecase);
+    }
 
 }

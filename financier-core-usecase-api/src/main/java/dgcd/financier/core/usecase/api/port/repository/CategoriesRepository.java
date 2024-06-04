@@ -13,7 +13,7 @@ public interface CategoriesRepository {
 
     Optional<Category> findById(Long id);
 
-    Category save(Category category);
+    Category create(Category category);
 
     Category update(Category category);
 

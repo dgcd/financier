@@ -211,15 +211,14 @@ public class OperationCreateUsecaseImpl implements OperationCreateUsecase {
         try {
             var balance = account.getBalance().add(amount);
             account.setBalance(balance).validate();
-
-            var savedAccount = accountsRepository.update(account);
+            accountsRepository.update(account);
 
             var type = request.operationType();
             var quantity = isPaired ? ONE : request.quantity();
             var subcategoryId = BASE.equals(type) ? null : subcategory.getId();
             var operation = new Operation()
                     .setDate(request.date())
-                    .setAccountId(savedAccount.getId())
+                    .setAccountId(account.getId())
                     .setType(type)
                     .setQuantity(quantity)
                     .setAmount(amount)
@@ -227,10 +226,9 @@ public class OperationCreateUsecaseImpl implements OperationCreateUsecase {
                     .setComment(request.comment())
                     .setCounterparty(request.counterparty())
                     .setCorrelationId(correlationId)
-                    .setSubcategory(subcategory).setAccount(account)   // todo: fix findById problem and delete
                     .validate();
 
-            var savedOperation = operationsRepository.save(operation);
+            var savedOperation = operationsRepository.create(operation);
             return right(savedOperation);
         } catch (IllegalArgumentException ex) {
             return left(new UsecaseError(ex.getMessage()));
@@ -241,10 +239,11 @@ public class OperationCreateUsecaseImpl implements OperationCreateUsecase {
 
 
     private ResponseDto mapResponse(Context context) {
-        var operations = context.getOperations().stream()
+        var operations = context.getResultOperations().stream()
                 .map(OperationMapper.INSTANCE::fromDomain)
                 .toList();
-        var accounts = context.getAccounts().stream()
+        var accounts = context.getResultOperations().stream()
+                .map(Operation::getAccount)
                 .map(AccountMapper.INSTANCE::fromDomain)
                 .toList();
         return new ResponseDto(operations, accounts);
@@ -269,8 +268,7 @@ public class OperationCreateUsecaseImpl implements OperationCreateUsecase {
         private String correlationPrefix;
 
         // result
-        private final List<Account> accounts = new ArrayList<>();
-        private final List<Operation> operations = new ArrayList<>();
+        private final List<Operation> resultOperations = new ArrayList<>();
 
 
         boolean isPaired() {
@@ -278,8 +276,7 @@ public class OperationCreateUsecaseImpl implements OperationCreateUsecase {
         }
 
         Context toResult(Operation operation) {
-            this.operations.add(operation);
-            this.accounts.add(operation.getAccount());
+            this.resultOperations.add(operation);
             return this;
         }
 

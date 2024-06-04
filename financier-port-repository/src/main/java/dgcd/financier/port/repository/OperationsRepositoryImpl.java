@@ -64,7 +64,9 @@ public class OperationsRepositoryImpl implements OperationsRepository {
 
     private static final String SELECT_ALL_NOT_CANCELED = SELECT_ALL + " where o.canceled = false";
 
-    private static final String SELECT_BY_ID = SELECT_ALL + " where c.id = :id";
+    private static final String SELECT_ALL_BY_CORRELATION = SELECT_ALL + " where o.correlation_id like :prefix";
+
+    private static final String SELECT_BY_ID = SELECT_ALL + " where o.id = :id";
 
     private static final String INSERT = """
             insert into main.operations (
@@ -119,9 +121,6 @@ public class OperationsRepositoryImpl implements OperationsRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-//    @Autowired
-//    private OperationsRepositoryImpl self;
-
 
     @Override
     public List<Operation> findAllNotCanceled() {
@@ -135,11 +134,8 @@ public class OperationsRepositoryImpl implements OperationsRepository {
     @Override
     public Optional<Operation> findById(Long id) {
         log.debug("[findById] id: {}", id);
-
         var params = Map.of("id", id);
-
         var operationOpt = queryForObjectSafely(jdbcTemplate, SELECT_BY_ID, params, OPERATION_ROW_MAPPER);
-
         log.debug("[findById] operationOpt: {}", operationOpt);
         return operationOpt;
     }
@@ -150,28 +146,22 @@ public class OperationsRepositoryImpl implements OperationsRepository {
 ////        log.debug("[findAll] operations size: {}", operations.size());
 //        return Collections.emptyList();
 //    }
-//    @Override
-//    public Optional<Operation> findById(Long id) {
-//        log.debug("[findById] id: {}", id);
-////        log.debug("[findById] category: {}", operationOpt.orElse(null));
-//        return Optional.empty();
-//    }
-//
-//
-//    @Override
-//    public List<Operation> findByCorrelationIdStartingWith(String prefix) {
-//        log.debug("[findByCorrelationIdStartingWith] prefix: {}", prefix);
-////        if (log.isDebugEnabled()) {
-////            operations.forEach(operation -> log.debug("[findByCorrelationIdStartingWith] operation: {}", operation));
-////        }
-//        return Collections.emptyList();
-//    }
+
+
+    @Override
+    public List<Operation> findByCorrelationIdStartingWith(String prefix) {
+        log.debug("[findByCorrelationIdStartingWith] prefix: {}", prefix);
+        var params = Map.of("prefix", prefix.concat("%"));
+        var operations = jdbcTemplate.query(SELECT_ALL_BY_CORRELATION, params, OPERATION_ROW_MAPPER);
+        log.debug("[findByCorrelationIdStartingWith] got operations: {}", operations);
+        return operations;
+    }
 
 
     @SneakyThrows
     @Override
-    public Operation save(Operation operation) {
-        log.debug("[save] operation: {}", operation);
+    public Operation create(Operation operation) {
+        log.debug("[create] operation: {}", operation);
 
         Map<String, Object> params = new HashMap<>();
         params.put("date", operation.getDate());
@@ -188,10 +178,25 @@ public class OperationsRepositoryImpl implements OperationsRepository {
         var keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(INSERT, paramSource, keyHolder, KEY_FIELD);
         long id = keyHolder.getKey().longValue();
-        log.debug("[save] operation id: {}", id);
+        log.debug("[create] operation id: {}", id);
 
-        return operation.setId(id);
-//        return findById(id).get();
+        return findById(id).get();
+    }
+
+
+    @Override
+    public Operation update(Operation operation) {
+        log.debug("[update] operation: {}", operation);
+
+        var params = Map.of(
+                "id", operation.getId(),
+                "canceled", operation.isCanceled()
+        );
+
+        var rows = jdbcTemplate.update(UPDATE, params);
+        log.debug("[update] updated rows: {}", rows);
+
+        return findById(operation.getId()).get();
     }
 
 //    @Override

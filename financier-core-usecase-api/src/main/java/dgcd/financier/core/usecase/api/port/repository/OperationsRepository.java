@@ -12,12 +12,12 @@ public interface OperationsRepository {
     Optional<Operation> findById(Long id);
 
 //    List<Operation> findAll();
-//
-//    Optional<Operation> findById(Long id);
-//
-//    List<Operation> findByCorrelationIdStartingWith(String prefix);
 
-    Operation save(Operation operation);
+    List<Operation> findByCorrelationIdStartingWith(String prefix);
+
+    Operation create(Operation operation);
+
+    Operation update(Operation operation);
 
 //    List<Operation> saveAll(List<Operation> operations);
 

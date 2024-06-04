@@ -24,7 +24,7 @@ import static java.util.Objects.requireNonNull;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-@SuppressWarnings("DataFlowIssue")
+@SuppressWarnings({"DataFlowIssue", "OptionalGetWithoutIsPresent"})
 public class AccountsRepositoryImpl implements AccountsRepository {
 
     private static final String SELECT_ALL = """
@@ -55,10 +55,10 @@ public class AccountsRepositoryImpl implements AccountsRepository {
     private static final String UPDATE = """
             update main.accounts
             set
-            	title  = :title,
-            	balance  = :balance,
-            	closed = :closed
-            where id = :id""";
+            	title   = :title,
+            	balance = :balance,
+            	closed  = :closed
+            where id    = :id""";
 
 
     static final RowMapper<Account> ACCOUNT_ROW_MAPPER = (rs, _) -> new Account()
@@ -106,20 +106,21 @@ public class AccountsRepositoryImpl implements AccountsRepository {
 
 
     @Override
-    public Account save(Account account) {
-        log.debug("[save] account: {}", account);
+    public Account create(Account account) {
+        log.debug("[create] account: {}", account);
 
-        var paramSource = new MapSqlParameterSource(Map.of(
+        var params = Map.of(
                 "title", account.getTitle(),
                 "currency", account.getCurrency().name()
-        ));
-
+        );
+        var paramSource = new MapSqlParameterSource(params);
         var keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(INSERT, paramSource, keyHolder, KEY_FIELD);
-        long id = keyHolder.getKey().longValue();
-        log.debug("[save] account id: {}", id);
 
-        return account.setId(id);
+        jdbcTemplate.update(INSERT, paramSource, keyHolder, KEY_FIELD);
+        var id = keyHolder.getKey().longValue();
+        log.debug("[create] account id: {}", id);
+
+        return findById(id).get();
     }
 
 
@@ -134,10 +135,9 @@ public class AccountsRepositoryImpl implements AccountsRepository {
                 "closed", account.isClosed()
         );
 
-        int rows = jdbcTemplate.update(UPDATE, params);
+        var rows = jdbcTemplate.update(UPDATE, params);
         log.debug("[update] updated rows: {}", rows);
 
-//        return account;
         return findById(account.getId()).get();
     }
 

@@ -31,14 +31,13 @@ public class CategoryCreateUsecaseImpl implements CategoryCreateUsecase {
                 .flatMap(this::checkNotExists)
                 .flatMap(this::findAndCheckParentIfNeeded)
                 .flatMap(this::createCategory)
-                .map(categoriesRepository::save)
+                .map(categoriesRepository::create)
                 .map(CategoryMapper.INSTANCE::fromDomain);
     }
 
 
     private Either<CommonError, CategoryCreateRequestDto> checkNotExists(CategoryCreateRequestDto request) {
         var categories = categoriesRepository.findAllByTitle(request.title());
-
         for (var cat : categories) {
             if (cat.getParent() == null) {
                 if (request.createParent()) {
@@ -48,7 +47,6 @@ public class CategoryCreateUsecaseImpl implements CategoryCreateUsecase {
                 return left(CATEGORY_ALREADY_EXISTS);
             }
         }
-
         return right(request);
     }
 

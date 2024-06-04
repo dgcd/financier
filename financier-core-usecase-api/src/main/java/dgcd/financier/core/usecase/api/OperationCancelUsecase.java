@@ -9,7 +9,7 @@ import java.util.List;
 @FunctionalInterface
 public interface OperationCancelUsecase {
 
-    Either<CommonError, ResponseDto> execute(Long id);
+    Either<CommonError, ResponseDto> execute(Long operationId);
 
 
     record ResponseDto(

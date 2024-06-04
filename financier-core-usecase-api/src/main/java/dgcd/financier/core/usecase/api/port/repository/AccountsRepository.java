@@ -13,7 +13,7 @@ public interface AccountsRepository {
 
     boolean existByTitle(String title);
 
-    Account save(Account account);
+    Account create(Account account);
 
     Account update(Account account);
 

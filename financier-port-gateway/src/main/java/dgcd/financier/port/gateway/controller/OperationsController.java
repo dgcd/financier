@@ -1,6 +1,7 @@
 package dgcd.financier.port.gateway.controller;
 
 import dgcd.financier.port.gateway.aspects.LogControllerData;
+import dgcd.financier.port.gateway.dto.CommonIdDto;
 import dgcd.financier.port.gateway.dto.CommonResponseDto;
 import dgcd.financier.port.gateway.dto.OperationCreateRequestDto;
 import dgcd.financier.port.gateway.service.OperationsService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static dgcd.financier.port.gateway.WebConstants.OPERATIONS_CANCEL_PATH;
 import static dgcd.financier.port.gateway.WebConstants.OPERATIONS_CREATE_PATH;
 import static dgcd.financier.port.gateway.controller.ResponseUtils.fromEither;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -36,12 +38,12 @@ class OperationsController {
         return fromEither(result);
     }
 
-//    @LogControllerData
-//    @PostMapping(OPERATIONS_CANCEL_PATH)
-//    @Operation(summary = "Cancel operation")
-//    public CommonResponseDto cancelOperation(@Valid @RequestBody CommonIdDto dto) {
-//        var payload = operationsService.cancelOperation(dto);
-//        return CommonResponseDto.ok(payload);
-//    }
+    @LogControllerData
+    @PostMapping(OPERATIONS_CANCEL_PATH)
+    @Operation(summary = "Cancel operation")
+    public ResponseEntity<CommonResponseDto> cancelOperation(@Valid @RequestBody CommonIdDto dto) {
+        var result = operationsService.cancelOperation(dto);
+        return fromEither(result);
+    }
 
 }

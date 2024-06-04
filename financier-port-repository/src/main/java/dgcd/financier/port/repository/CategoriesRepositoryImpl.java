@@ -113,18 +113,18 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
 
 
     @Override
-    public Category save(Category category) {
-        log.debug("[save] category: {}", category);
+    public Category create(Category category) {
+        log.debug("[create] category: {}", category);
 
-        Map<String, Object> params = new HashMap<>();
+        var params = new HashMap<String, Object>();
         params.put("title", category.getTitle());
         params.put("parent_id", category.getParentId());
         var paramSource = new MapSqlParameterSource(params);
-
         var keyHolder = new GeneratedKeyHolder();
+
         jdbcTemplate.update(INSERT, paramSource, keyHolder, KEY_FIELD);
-        long id = keyHolder.getKey().longValue();
-        log.debug("[save] category id: {}", id);
+        var id = keyHolder.getKey().longValue();
+        log.debug("[create] category id: {}", id);
 
         return findById(id).get();
     }
@@ -139,7 +139,7 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
                 "title", category.getTitle()
         );
 
-        int rows = jdbcTemplate.update(UPDATE, params);
+        var rows = jdbcTemplate.update(UPDATE, params);
         log.debug("[update] updated rows: {}", rows);
 
         return findById(category.getId()).get();
