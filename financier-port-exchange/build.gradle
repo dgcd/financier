@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation project(':financier-core-domain')
     implementation project(':financier-core-usecase-api')
 
     implementation 'org.springframework:spring-context'

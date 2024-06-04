@@ -10,8 +10,8 @@ public interface RatesRepository {
 
     Optional<Rate> getLastRate();
 
-//    void save(Rate rate);
-//
+    void createOrUpdate(Rate rate);
+
 //    List<Rate> saveAll(List<Rate> rates);
 
 }

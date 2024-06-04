@@ -6,6 +6,7 @@ import dgcd.financier.core.usecase.api.CategoryCreateUsecase;
 import dgcd.financier.core.usecase.api.InitDataGetUsecase;
 import dgcd.financier.core.usecase.api.OperationCancelUsecase;
 import dgcd.financier.core.usecase.api.OperationCreateUsecase;
+import dgcd.financier.core.usecase.api.RatesUpdateUsecase;
 import dgcd.financier.core.usecase.api.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.api.port.repository.CategoriesRepository;
 import dgcd.financier.core.usecase.api.port.repository.OperationsRepository;
@@ -16,6 +17,7 @@ import dgcd.financier.core.usecase.impl.CategoryCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.InitDataGetUsecaseImpl;
 import dgcd.financier.core.usecase.impl.OperationCancelUsecaseImpl;
 import dgcd.financier.core.usecase.impl.OperationCreateUsecaseImpl;
+import dgcd.financier.core.usecase.impl.RatesUpdateUsecaseImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -76,6 +78,12 @@ public class UsecaseConfig {
         );
     }
 
+
+    @Bean
+    public RatesUpdateUsecase ratesUpdateUsecase(RatesRepository ratesRepository) {
+        return new RatesUpdateUsecaseImpl(ratesRepository);
+    }
+
 //    @Bean
 //    public AlldataExportUsecase alldataExportUsecase(
 //            AccountsRepository accountsRepository,
@@ -103,16 +111,6 @@ public class UsecaseConfig {
 //                accountsRepository,
 //                categoriesRepository,
 //                operationsRepository,
-//                ratesRepository
-//        );
-//    }
-//
-//
-//    @Bean
-//    public RatesUpdateUsecase ratesUpdateUsecase(
-//            RatesRepository ratesRepository
-//    ) {
-//        return new RatesUpdateUsecaseImpl(
 //                ratesRepository
 //        );
 //    }

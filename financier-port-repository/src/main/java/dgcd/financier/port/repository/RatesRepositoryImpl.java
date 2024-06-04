@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,8 +23,22 @@ public class RatesRepositoryImpl implements RatesRepository {
     private static final String SELECT_LATEST = """
             select * from main.rates r
             order by r."date" desc
-            limit 1
-            """;
+            limit 1""";
+
+    private static final String UPSERT = """
+            insert into main.rates (
+                "date",
+                usd,
+                eur
+            ) values (
+                :date,
+                :usd,
+                :eur
+            )
+            on conflict ("date") do
+            update set
+                usd = :usd,
+                eur = :eur""";
 
     private static final RowMapper<Rate> ROW_MAPPER = (rs, _) -> new Rate()
             .setDate(getLd(rs, "date"))
@@ -48,12 +63,20 @@ public class RatesRepositoryImpl implements RatesRepository {
         return rate;
     }
 
-//    @Override
-//    public void save(Rate rate) {
-////        log.debug("[updateRates] rates: {}", savedEntity);
-//    }
-//
-//
+
+    @Override
+    public void createOrUpdate(Rate rate) {
+        log.debug("[createOrUpdate] rate: {}", rate);
+
+        var params = new HashMap<String, Object>();
+        params.put("date", rate.getDate());
+        params.put("usd", rate.getUsd());
+        params.put("eur", rate.getEur());
+
+        jdbcTemplate.update(UPSERT, params);
+        log.debug("[createOrUpdate] done");
+    }
+
 //    @Override
 //    public List<Rate> saveAll(List<Rate> rates) {
 //        log.debug("[saveAll] rates");

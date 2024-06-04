@@ -1,6 +1,6 @@
 package dgcd.financier.port.exchange;
 
-import dgcd.financier.core.usecase.impl.RatesUpdateUsecase;
+import dgcd.financier.core.usecase.api.RatesUpdateUsecase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 
+import static dgcd.financier.core.domain.Constants.AMOUNT_SCALE;
 import static java.math.RoundingMode.HALF_UP;
 
 @Slf4j
@@ -47,11 +48,15 @@ public class ExchangeService {
             }
 
             var rub = response.getRates().get("RUB");
-            var eur = BigDecimal.valueOf(rub).setScale(RATE_SCALE, HALF_UP);
-            var usd = BigDecimal.valueOf(rub / response.getRates().get("USD")).setScale(2, HALF_UP);
+            var eur = BigDecimal.valueOf(rub).setScale(AMOUNT_SCALE, HALF_UP);
+            var usd = BigDecimal.valueOf(rub / response.getRates().get("USD")).setScale(AMOUNT_SCALE, HALF_UP);
             log.info("updateRates RUB/EUR: {}, RUB/USD: {}, date: {}", eur, usd, response.getDate());
 
-            var request = new RatesUpdateUsecase.Request(response.getDate(), eur, usd);
+            var request = new RatesUpdateUsecase.RequestDto(
+                    response.getDate(),
+                    usd,
+                    eur
+            );
 
             ratesUpdateUsecase.execute(request);
 

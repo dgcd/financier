@@ -51,5 +51,7 @@ create table main.rates (
     usd         numeric(10, 2)          not null,
     eur         numeric(10, 2)          not null,
 
-    constraint  rates_pkey              primary key (date)
+    constraint  rates_pkey              primary key (date),
+    constraint  rates_positive_usd      check (usd > 0),
+    constraint  rates_positive_eur      check (eur > 0)
 );

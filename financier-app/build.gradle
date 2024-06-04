@@ -8,7 +8,7 @@ dependencies {
     implementation project(':financier-core-usecase-impl')
     implementation project(':financier-port-repository')
     implementation project(':financier-port-gateway')
-//    implementation project(':financier-port-exchange')
+    implementation project(':financier-port-exchange')
 
     // web
     implementation('org.springframework.boot:spring-boot-starter-web') {
