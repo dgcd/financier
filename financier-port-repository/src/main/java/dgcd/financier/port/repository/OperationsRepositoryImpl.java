@@ -140,13 +140,6 @@ public class OperationsRepositoryImpl implements OperationsRepository {
         return operationOpt;
     }
 
-//    @Override
-//    public List<Operation> findAll() {
-//        log.debug("[findAll] operations");
-////        log.debug("[findAll] operations size: {}", operations.size());
-//        return Collections.emptyList();
-//    }
-
 
     @Override
     public List<Operation> findByCorrelationIdStartingWith(String prefix) {
@@ -199,13 +192,13 @@ public class OperationsRepositoryImpl implements OperationsRepository {
         return findById(operation.getId()).get();
     }
 
-//    @Override
-//    public List<Operation> saveAll(List<Operation> operations) {
-//        log.debug("[saveAll] operations count: {}", operations.size());
-////        if (log.isDebugEnabled()) {
-////            savedOperations.forEach(operation -> log.debug("[saveAll] operation: {}", operation));
-////        }
-//        return Collections.emptyList();
-//    }
+
+    @Override
+    public List<Operation> createAll(List<Operation> operations) {
+        log.debug("[createAll] operations count: {}", operations.size());
+        return operations.stream()
+                .map(this::create)
+                .toList();
+    }
 
 }

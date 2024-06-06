@@ -145,13 +145,13 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
         return findById(category.getId()).get();
     }
 
-//    @Override
-//    public List<Category> saveAll(List<Category> categories) {
-//        log.debug("[saveAll] categories count: {}", categories.size());
-////        if (log.isDebugEnabled()) {
-////            savedCategories.forEach(category -> log.debug("[saveAll] category: {}", category));
-////        }
-//        return Collections.emptyList();
-//    }
+
+    @Override
+    public List<Category> createAll(List<Category> categories) {
+        log.debug("[saveAll] categories count: {}", categories.size());
+        return categories.stream()
+                .map(this::create)
+                .toList();
+    }
 
 }

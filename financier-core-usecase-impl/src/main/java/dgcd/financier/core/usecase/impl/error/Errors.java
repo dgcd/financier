@@ -23,6 +23,8 @@ public enum Errors implements CommonError {
     OPERATION_NOT_FOUND("Operation is not found"),
     TOO_MANY_OPERATIONS_FOUND("Too many operations found"),
     OPERATION_ALREADY_CANCELED("Operation is already canceled"),
+
+    DATABASE_NOT_EMPTY("Database is not empty"),
     ;
 
     private final String message;

@@ -6,9 +6,10 @@ import dgcd.financier.core.usecase.api.dto.CategoryCreateRequestDto;
 import dgcd.financier.core.usecase.api.dto.common.CategoryDto;
 import dgcd.financier.core.usecase.api.error.CommonError;
 import dgcd.financier.core.usecase.api.port.repository.CategoriesRepository;
-import dgcd.financier.core.usecase.impl.error.UsecaseError;
+import dgcd.financier.core.usecase.api.utils.EitherUtils;
 import dgcd.financier.core.usecase.impl.mapper.CategoryMapper;
 import io.vavr.control.Either;
+import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Objects;
@@ -71,15 +72,16 @@ public class CategoryCreateUsecaseImpl implements CategoryCreateUsecase {
 
 
     private Either<CommonError, Category> createCategory(CategoryCreateRequestDto request) {
-        try {
-            var category = new Category()
-                    .setTitle(request.title())
-                    .setParentId(request.parentId())
-                    .validate();
-            return right(category);
-        } catch (IllegalArgumentException ex) {
-            return left(new UsecaseError(ex.getMessage()));
-        }
+        return Try.of(() -> createAndValidate(request))
+                .fold(EitherUtils::toLeft, EitherUtils::toRight);
+    }
+
+
+    private static Category createAndValidate(CategoryCreateRequestDto request) {
+        return new Category()
+                .setTitle(request.title())
+                .setParentId(request.parentId())
+                .validate();
     }
 
 }

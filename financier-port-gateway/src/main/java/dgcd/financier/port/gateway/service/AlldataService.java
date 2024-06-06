@@ -1,7 +1,14 @@
 package dgcd.financier.port.gateway.service;
 
 import dgcd.financier.core.usecase.api.AlldataExportUsecase;
+import dgcd.financier.core.usecase.api.AlldataImportUsecase;
+import dgcd.financier.core.usecase.api.dto.EmptyDto;
+import dgcd.financier.core.usecase.api.error.CommonError;
+import dgcd.financier.port.gateway.dto.AlldataImportRequestDto;
+import dgcd.financier.port.gateway.service.alldata.AlldataError;
 import dgcd.financier.port.gateway.service.alldata.AlldataGenerateExcelService;
+import dgcd.financier.port.gateway.service.alldata.AlldataParseExcelService;
+import io.vavr.control.Either;
 import jakarta.servlet.ServletOutputStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,15 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
+import static dgcd.financier.core.usecase.api.dto.EmptyDto.EMPTY;
+import static io.vavr.control.Either.left;
+
 @Service
 @RequiredArgsConstructor
 public class AlldataService {
 
     private final AlldataExportUsecase alldataExportUsecase;
-//    private final AlldataImportUsecase alldataImportUsecase;
+    private final AlldataImportUsecase alldataImportUsecase;
 
     private final AlldataGenerateExcelService alldataGenerateExcelService;
-//    private final AlldataParseExcelService alldataParseExcelService;
+    private final AlldataParseExcelService alldataParseExcelService;
 
 
     @Transactional(readOnly = true)
@@ -26,28 +36,15 @@ public class AlldataService {
         alldataGenerateExcelService.generateExcel(outputStream, alldataRows);
     }
 
-//    @Transactional
-//    public AlldataImportResponseDto importAllDataFromExcel(AlldataImportRequestDto dto) {
-//        try (var inputStream = dto.file().getInputStream()) {
-//            var parsedData = alldataParseExcelService.parseDataFromExcel(inputStream);
-//            alldataImportUsecase.execute(new AlldataImportUsecase.Request(new AlldataUsecase.AlldataRows(
-//                    parsedData.accounts(),
-//                    parsedData.categories(),
-//                    parsedData.operations(),
-//                    parsedData.rates()
-//            )));
-//            return new AlldataImportResponseDto();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//
-//    public record ParsedData(
-//            List<AlldataUsecase.AccountRow> accounts,
-//            List<AlldataUsecase.CategoryRow> categories,
-//            List<AlldataUsecase.OperationRow> operations,
-//            List<AlldataUsecase.RatesRow> rates
-//    ) {}
+
+    @Transactional
+    public Either<CommonError, EmptyDto> importAllDataFromExcel(AlldataImportRequestDto dto) {
+        try (var inputStream = dto.file().getInputStream()) {
+            return alldataParseExcelService.parseDataFromExcel(inputStream)
+                    .flatMap(alldataImportUsecase::execute);
+        } catch (IOException e) {
+            return left(AlldataError.of(e));
+        }
+    }
 
 }

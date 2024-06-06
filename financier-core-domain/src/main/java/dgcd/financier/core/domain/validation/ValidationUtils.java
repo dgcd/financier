@@ -34,7 +34,7 @@ final class ValidationUtils {
     static void checkMaxScale(BigDecimal value, int maxScale, String fieldTitle) {
         requireNonNull(fieldTitle, "field title can not be null");
         if (value != null && value.scale() > maxScale) {
-            throw new IllegalArgumentException(fieldTitle + " scale is too big");
+            throw new IllegalArgumentException(fieldTitle + " scale is too big: " + value);
         }
     }
 
@@ -50,7 +50,7 @@ final class ValidationUtils {
     static void checkZero(BigDecimal value, String fieldTitle) {
         requireNonNull(fieldTitle, "field title can not be null");
         if (value != null && value.compareTo(ZERO) != 0) {
-            throw new IllegalArgumentException(fieldTitle + " mast be 0");
+            throw new IllegalArgumentException(fieldTitle + " mast be 0 but was: " + value);
         }
     }
 
@@ -73,7 +73,7 @@ final class ValidationUtils {
     static void checkPositive(BigDecimal value, String fieldTitle) {
         requireNonNull(fieldTitle, "field title can not be null");
         if (value != null && value.compareTo(ZERO) <= 0) {
-            throw new IllegalArgumentException(fieldTitle + " must be positive");
+            throw new IllegalArgumentException(fieldTitle + " must be positive but was: " + value);
         }
     }
 

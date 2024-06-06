@@ -17,6 +17,6 @@ public interface AccountsRepository {
 
     Account update(Account account);
 
-//    List<Account> saveAll(List<Account> accounts);
+    List<Account> createAll(List<Account> accounts);
 
 }

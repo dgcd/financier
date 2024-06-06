@@ -141,13 +141,13 @@ public class AccountsRepositoryImpl implements AccountsRepository {
         return findById(account.getId()).get();
     }
 
-//    @Override
-//    public List<Account> saveAll(List<Account> accounts) {
-//        log.debug("[saveAll] accounts count: {}", accounts.size());
-////        if (log.isDebugEnabled()) {
-////            savedAccounts.forEach(account -> log.debug("[saveAll] account: {}", account));
-////        }
-//        return Collections.emptyList();
-//    }
+
+    @Override
+    public List<Account> createAll(List<Account> accounts) {
+        log.debug("[createAll] accounts count: {}", accounts.size());
+        return accounts.stream()
+                .map(this::create)
+                .toList();
+    }
 
 }

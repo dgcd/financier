@@ -7,6 +7,8 @@ dependencies {
     implementation project(':financier-core-domain')
     implementation project(':financier-core-usecase-api')
 
+    implementation 'org.slf4j:slf4j-api'
+
     implementation "io.vavr:vavr:$vavrVersion"
     testImplementation "io.vavr:vavr-test:$vavrVersion"
 

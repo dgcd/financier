@@ -13,6 +13,6 @@ public interface RatesRepository {
 
     void createOrUpdate(Rate rate);
 
-//    List<Rate> saveAll(List<Rate> rates);
+    void createAll(List<Rate> rates);
 
 }

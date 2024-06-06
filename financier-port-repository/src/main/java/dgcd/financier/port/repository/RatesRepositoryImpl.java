@@ -85,10 +85,11 @@ public class RatesRepositoryImpl implements RatesRepository {
         log.debug("[createOrUpdate] done");
     }
 
-//    @Override
-//    public List<Rate> saveAll(List<Rate> rates) {
-//        log.debug("[saveAll] rates");
-//        return Collections.emptyList();
-//    }
+
+    @Override
+    public void createAll(List<Rate> rates) {
+        log.debug("[createAll] rates count: {}", rates.size());
+        rates.forEach(this::createOrUpdate);
+    }
 
 }

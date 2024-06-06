@@ -6,9 +6,10 @@ import dgcd.financier.core.usecase.api.dto.AccountCreateRequestDto;
 import dgcd.financier.core.usecase.api.dto.common.AccountDto;
 import dgcd.financier.core.usecase.api.error.CommonError;
 import dgcd.financier.core.usecase.api.port.repository.AccountsRepository;
-import dgcd.financier.core.usecase.impl.error.UsecaseError;
+import dgcd.financier.core.usecase.api.utils.EitherUtils;
 import dgcd.financier.core.usecase.impl.mapper.AccountMapper;
 import io.vavr.control.Either;
+import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 
 import static dgcd.financier.core.usecase.api.utils.EitherUtils.toRight;
@@ -39,14 +40,16 @@ public class AccountCreateUsecaseImpl implements AccountCreateUsecase {
 
 
     private Either<CommonError, Account> createAccount(AccountCreateRequestDto request) {
-        try {
-            var account = new Account()
-                    .setTitle(request.title())
-                    .setCurrency(request.currency());
-            return right(account.validate());
-        } catch (IllegalArgumentException ex) {
-            return left(new UsecaseError(ex.getMessage()));
-        }
+        return Try.of(() -> createAndValidate(request))
+                .fold(EitherUtils::toLeft, EitherUtils::toRight);
+    }
+
+
+    private static Account createAndValidate(AccountCreateRequestDto request) {
+        return new Account()
+                .setTitle(request.title())
+                .setCurrency(request.currency())
+                .validate();
     }
 
 }

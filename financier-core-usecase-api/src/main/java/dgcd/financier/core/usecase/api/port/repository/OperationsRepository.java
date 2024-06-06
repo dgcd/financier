@@ -11,14 +11,12 @@ public interface OperationsRepository {
 
     Optional<Operation> findById(Long id);
 
-//    List<Operation> findAll();
-
     List<Operation> findByCorrelationIdStartingWith(String prefix);
 
     Operation create(Operation operation);
 
     Operation update(Operation operation);
 
-//    List<Operation> saveAll(List<Operation> operations);
+    List<Operation> createAll(List<Operation> operations);
 
 }

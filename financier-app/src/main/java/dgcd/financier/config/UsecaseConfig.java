@@ -3,6 +3,7 @@ package dgcd.financier.config;
 import dgcd.financier.core.usecase.api.AccountCloseUsecase;
 import dgcd.financier.core.usecase.api.AccountCreateUsecase;
 import dgcd.financier.core.usecase.api.AlldataExportUsecase;
+import dgcd.financier.core.usecase.api.AlldataImportUsecase;
 import dgcd.financier.core.usecase.api.CategoryCreateUsecase;
 import dgcd.financier.core.usecase.api.InitDataGetUsecase;
 import dgcd.financier.core.usecase.api.OperationCancelUsecase;
@@ -10,11 +11,13 @@ import dgcd.financier.core.usecase.api.OperationCreateUsecase;
 import dgcd.financier.core.usecase.api.RatesUpdateUsecase;
 import dgcd.financier.core.usecase.api.port.repository.AccountsRepository;
 import dgcd.financier.core.usecase.api.port.repository.CategoriesRepository;
+import dgcd.financier.core.usecase.api.port.repository.MiscRepository;
 import dgcd.financier.core.usecase.api.port.repository.OperationsRepository;
 import dgcd.financier.core.usecase.api.port.repository.RatesRepository;
 import dgcd.financier.core.usecase.impl.AccountCloseUsecaseImpl;
 import dgcd.financier.core.usecase.impl.AccountCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.AlldataExportUsecaseImpl;
+import dgcd.financier.core.usecase.impl.AlldataImportUsecaseImpl;
 import dgcd.financier.core.usecase.impl.CategoryCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.InitDataGetUsecaseImpl;
 import dgcd.financier.core.usecase.impl.OperationCancelUsecaseImpl;
@@ -41,20 +44,24 @@ public class UsecaseConfig {
         );
     }
 
+
     @Bean
     public AccountCreateUsecase accountCreateUsecase(AccountsRepository accountsRepository) {
         return new AccountCreateUsecaseImpl(accountsRepository);
     }
+
 
     @Bean
     public AccountCloseUsecase accountCloseUsecase(AccountsRepository accountsRepository) {
         return new AccountCloseUsecaseImpl(accountsRepository);
     }
 
+
     @Bean
     public CategoryCreateUsecase categoryCreateUsecase(CategoriesRepository categoriesRepository) {
         return new CategoryCreateUsecaseImpl(categoriesRepository);
     }
+
 
     @Bean
     public OperationCreateUsecase operationCreateUsecase(
@@ -69,6 +76,7 @@ public class UsecaseConfig {
         );
     }
 
+
     @Bean
     public OperationCancelUsecase operationCancelUsecase(
             AccountsRepository accountsRepository,
@@ -82,9 +90,16 @@ public class UsecaseConfig {
 
 
     @Bean
-    public RatesUpdateUsecase ratesUpdateUsecase(RatesRepository ratesRepository) {
-        return new RatesUpdateUsecaseImpl(ratesRepository);
+    public RatesUpdateUsecase ratesUpdateUsecase(
+            MiscRepository miscRepository,
+            RatesRepository ratesRepository
+    ) {
+        return new RatesUpdateUsecaseImpl(
+                miscRepository,
+                ratesRepository
+        );
     }
+
 
     @Bean
     public AlldataExportUsecase alldataExportUsecase(
@@ -101,19 +116,22 @@ public class UsecaseConfig {
         );
     }
 
-//    @Bean
-//    public AlldataImportUsecase alldataImportUsecase(
-//            AccountsRepository accountsRepository,
-//            CategoriesRepository categoriesRepository,
-//            OperationsRepository operationsRepository,
-//            RatesRepository ratesRepository
-//    ) {
-//        return new AlldataImportUsecaseImpl(
-//                accountsRepository,
-//                categoriesRepository,
-//                operationsRepository,
-//                ratesRepository
-//        );
-//    }
+
+    @Bean
+    public AlldataImportUsecase alldataImportUsecase(
+            MiscRepository miscRepository,
+            AccountsRepository accountsRepository,
+            CategoriesRepository categoriesRepository,
+            OperationsRepository operationsRepository,
+            RatesRepository ratesRepository
+    ) {
+        return new AlldataImportUsecaseImpl(
+                miscRepository,
+                accountsRepository,
+                categoriesRepository,
+                operationsRepository,
+                ratesRepository
+        );
+    }
 
 }
