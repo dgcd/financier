@@ -17,6 +17,6 @@ public interface OperationsRepository {
 
     Operation update(Operation operation);
 
-    List<Operation> createAll(List<Operation> operations);
+    void createAll(List<Operation> operations);
 
 }

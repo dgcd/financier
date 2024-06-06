@@ -194,11 +194,9 @@ public class OperationsRepositoryImpl implements OperationsRepository {
 
 
     @Override
-    public List<Operation> createAll(List<Operation> operations) {
+    public void createAll(List<Operation> operations) {
         log.debug("[createAll] operations count: {}", operations.size());
-        return operations.stream()
-                .map(this::create)
-                .toList();
+        operations.forEach(this::create);
     }
 
 }

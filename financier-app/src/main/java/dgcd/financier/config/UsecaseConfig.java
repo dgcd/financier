@@ -90,14 +90,8 @@ public class UsecaseConfig {
 
 
     @Bean
-    public RatesUpdateUsecase ratesUpdateUsecase(
-            MiscRepository miscRepository,
-            RatesRepository ratesRepository
-    ) {
-        return new RatesUpdateUsecaseImpl(
-                miscRepository,
-                ratesRepository
-        );
+    public RatesUpdateUsecase ratesUpdateUsecase(RatesRepository ratesRepository) {
+        return new RatesUpdateUsecaseImpl(ratesRepository);
     }
 
 

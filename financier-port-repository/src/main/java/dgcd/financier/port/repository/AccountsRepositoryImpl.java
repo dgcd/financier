@@ -46,10 +46,14 @@ public class AccountsRepositoryImpl implements AccountsRepository {
     private static final String INSERT = """
             insert into main.accounts (
                 title,
-                currency
+                currency,
+                balance,
+                closed
             ) values (
                 :title,
-                :currency
+                :currency,
+                :balance,
+                :closed
             )""";
 
     private static final String UPDATE = """
@@ -111,7 +115,9 @@ public class AccountsRepositoryImpl implements AccountsRepository {
 
         var params = Map.of(
                 "title", account.getTitle(),
-                "currency", account.getCurrency().name()
+                "currency", account.getCurrency().name(),
+                "balance", account.getBalance(),
+                "closed", account.isClosed()
         );
         var paramSource = new MapSqlParameterSource(params);
         var keyHolder = new GeneratedKeyHolder();

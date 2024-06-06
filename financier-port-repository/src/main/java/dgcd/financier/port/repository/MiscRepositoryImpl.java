@@ -20,8 +20,6 @@ public class MiscRepositoryImpl implements MiscRepository {
             	select count(*) from main.categories
             	union
             	select count(*) from main.operations
-            	union
-            	select count(*) from main.rates
             )""";
 
 

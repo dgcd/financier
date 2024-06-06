@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
-import static dgcd.financier.core.usecase.api.dto.EmptyDto.EMPTY;
 import static io.vavr.control.Either.left;
 
 @Service

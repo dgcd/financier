@@ -77,10 +77,14 @@ public class AlldataImportUsecaseImpl implements AlldataImportUsecase {
     }
 
     private Either<CommonError, List<Account>> createAndValidateAccounts(List<AccountRow> accountRows) {
-        return Try.of(() -> accountRows.stream()
-                        .map(this::createAndValidate)
-                        .toList())
+        return Try.of(() -> createAndValidateAccountsInner(accountRows))
                 .fold(EitherUtils::toLeft, EitherUtils::toRight);
+    }
+
+    private List<Account> createAndValidateAccountsInner(List<AccountRow> accountRows) {
+        return accountRows.stream()
+                .map(this::createAndValidate)
+                .toList();
     }
 
     private Account createAndValidate(AccountRow a) {

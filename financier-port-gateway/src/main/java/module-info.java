@@ -21,6 +21,5 @@ module financier.port.gateway {
     exports dgcd.financier.port.gateway.controller;
     exports dgcd.financier.port.gateway.dto;
     exports dgcd.financier.port.gateway.exception;
-//    exports dgcd.financier.port.gateway.mapper;
     exports dgcd.financier.port.gateway.service;
 }

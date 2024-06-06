@@ -61,7 +61,7 @@ public final class JdbcUtils {
         try {
             return Optional.ofNullable(template.queryForObject(queryString, params, rowMapper));
         } catch (EmptyResultDataAccessException e) {
-            log.error("queryForObjectSafely: {}", e.getMessage());
+            log.error("queryForObjectSafely: ", e);
             return Optional.empty();
         }
     }
