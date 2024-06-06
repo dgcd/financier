@@ -2,6 +2,7 @@ package dgcd.financier.config;
 
 import dgcd.financier.core.usecase.api.AccountCloseUsecase;
 import dgcd.financier.core.usecase.api.AccountCreateUsecase;
+import dgcd.financier.core.usecase.api.AlldataExportUsecase;
 import dgcd.financier.core.usecase.api.CategoryCreateUsecase;
 import dgcd.financier.core.usecase.api.InitDataGetUsecase;
 import dgcd.financier.core.usecase.api.OperationCancelUsecase;
@@ -13,6 +14,7 @@ import dgcd.financier.core.usecase.api.port.repository.OperationsRepository;
 import dgcd.financier.core.usecase.api.port.repository.RatesRepository;
 import dgcd.financier.core.usecase.impl.AccountCloseUsecaseImpl;
 import dgcd.financier.core.usecase.impl.AccountCreateUsecaseImpl;
+import dgcd.financier.core.usecase.impl.AlldataExportUsecaseImpl;
 import dgcd.financier.core.usecase.impl.CategoryCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.InitDataGetUsecaseImpl;
 import dgcd.financier.core.usecase.impl.OperationCancelUsecaseImpl;
@@ -84,22 +86,21 @@ public class UsecaseConfig {
         return new RatesUpdateUsecaseImpl(ratesRepository);
     }
 
-//    @Bean
-//    public AlldataExportUsecase alldataExportUsecase(
-//            AccountsRepository accountsRepository,
-//            CategoriesRepository categoriesRepository,
-//            OperationsRepository operationsRepository,
-//            RatesRepository ratesRepository
-//    ) {
-//        return new AlldataExportUsecaseImpl(
-//                accountsRepository,
-//                categoriesRepository,
-//                operationsRepository,
-//                ratesRepository
-//        );
-//    }
-//
-//
+    @Bean
+    public AlldataExportUsecase alldataExportUsecase(
+            AccountsRepository accountsRepository,
+            CategoriesRepository categoriesRepository,
+            OperationsRepository operationsRepository,
+            RatesRepository ratesRepository
+    ) {
+        return new AlldataExportUsecaseImpl(
+                accountsRepository,
+                categoriesRepository,
+                operationsRepository,
+                ratesRepository
+        );
+    }
+
 //    @Bean
 //    public AlldataImportUsecase alldataImportUsecase(
 //            AccountsRepository accountsRepository,

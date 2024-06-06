@@ -23,7 +23,7 @@ public final class WebConstants {
 
     public static final String X_APPLICATION_XLSX_VALUE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-    public static final String ALLDATA_ATTACHMENT_NAMING = "attachment;filename=financier_data_%s.xlsx";
+    public static final String ALLDATA_ATTACHMENT_NAMING = "attachment;filename=financier_%s.xlsx";
 
     public static final String MDC_RQ_ID = "rqId";
 

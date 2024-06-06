@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,6 +25,9 @@ public class RatesRepositoryImpl implements RatesRepository {
             select * from main.rates r
             order by r."date" desc
             limit 1""";
+
+    private static final String SELECT_ALL = """
+            select * from main.rates""";
 
     private static final String UPSERT = """
             insert into main.rates (
@@ -48,12 +52,16 @@ public class RatesRepositoryImpl implements RatesRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-//    @Override
-//    public List<Rate> findAll() {
-//        log.debug("[findAll] rates");
-////        log.debug("[findAll] rates size: {}", rate.size());
-//        return Collections.emptyList();
-//    }
+
+    @Override
+    public List<Rate> findAll() {
+        log.debug("[findAll] started");
+        var rates = jdbcTemplate.query(SELECT_ALL, ROW_MAPPER);
+        log.debug("[findAll] rates size: {}", rates.size());
+        log.debug("[findAll] got rates: {}", rates);
+        return rates;
+    }
+
 
     @Override
     public Optional<Rate> getLastRate() {
