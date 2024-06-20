@@ -15,11 +15,11 @@ public class MiscRepositoryImpl implements MiscRepository {
 
     private static final String COUNT_ALL = """
             select sum("count") from (
-            	select count(*) from main.accounts
+            	select count(*) from accounts
             	union
-            	select count(*) from main.categories
+            	select count(*) from categories
             	union
-            	select count(*) from main.operations
+            	select count(*) from operations
             )""";
 
 

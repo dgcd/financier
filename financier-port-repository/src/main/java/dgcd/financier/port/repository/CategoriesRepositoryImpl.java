@@ -33,8 +33,8 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
             	c.parent_id as c_parent_id,
             	cp.id as cp_id,
             	cp.title as cp_title
-            from main.categories c
-            left join main.categories cp
+            from categories c
+            left join categories cp
             	on c.parent_id = cp.id""";
 
     private static final String SELECT_BY_ID = SELECT_ALL + " where c.id = :id";
@@ -42,7 +42,7 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
     private static final String SELECT_BY_TITLE = SELECT_ALL + " where c.title = :title";
 
     private static final String INSERT = """
-            insert into main.categories (
+            insert into categories (
                 title,
                 parent_id
             ) values (
@@ -51,7 +51,7 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
             )""";
 
     private static final String UPDATE = """
-            update main.categories
+            update categories
             set
             	title = :title
             where id = :id""";

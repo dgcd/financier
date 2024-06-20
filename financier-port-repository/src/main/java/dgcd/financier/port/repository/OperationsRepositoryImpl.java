@@ -54,12 +54,12 @@ public class OperationsRepositoryImpl implements OperationsRepository {
             	c.parent_id as c_parent_id,
             	cp.id as cp_id,
             	cp.title as cp_title
-            from main.operations o
-            left join main.accounts a
+            from operations o
+            left join accounts a
             	on o.account_id = a.id
-            left join main.categories c
+            left join categories c
             	on o.subcategory_id = c.id
-            left join main.categories cp
+            left join categories cp
             	on c.parent_id = cp.id""";
 
     private static final String SELECT_ALL_NOT_CANCELED = SELECT_ALL + " where o.canceled = false";
@@ -69,7 +69,7 @@ public class OperationsRepositoryImpl implements OperationsRepository {
     private static final String SELECT_BY_ID = SELECT_ALL + " where o.id = :id";
 
     private static final String INSERT = """
-            insert into main.operations (
+            insert into operations (
                 "date",
                 account_id,
                 quantity,
@@ -92,7 +92,7 @@ public class OperationsRepositoryImpl implements OperationsRepository {
             )""";
 
     private static final String UPDATE = """
-            update main.operations
+            update operations
             set
             	canceled = :canceled
             where id = :id""";

@@ -34,17 +34,17 @@ public class AccountsRepositoryImpl implements AccountsRepository {
                 a.currency as a_currency,
                 a.balance as a_balance,
                 a.closed as a_closed
-            from main.accounts a""";
+            from accounts a""";
 
     private static final String SELECT_BY_ID = SELECT_ALL + " where a.id = :id";
 
     private static final String COUNT_BY_TITLE = """
             select count(*)
-            from main.accounts
+            from accounts
             where title = :title""";
 
     private static final String INSERT = """
-            insert into main.accounts (
+            insert into accounts (
                 title,
                 currency,
                 balance,
@@ -57,7 +57,7 @@ public class AccountsRepositoryImpl implements AccountsRepository {
             )""";
 
     private static final String UPDATE = """
-            update main.accounts
+            update accounts
             set
             	title   = :title,
             	balance = :balance,

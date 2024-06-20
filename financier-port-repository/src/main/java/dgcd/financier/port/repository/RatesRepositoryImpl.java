@@ -22,15 +22,15 @@ import static dgcd.financier.port.repository.utils.JdbcUtils.queryForObjectSafel
 public class RatesRepositoryImpl implements RatesRepository {
 
     private static final String SELECT_LATEST = """
-            select * from main.rates r
+            select * from rates r
             order by r."date" desc
             limit 1""";
 
     private static final String SELECT_ALL = """
-            select * from main.rates""";
+            select * from rates""";
 
     private static final String UPSERT = """
-            insert into main.rates (
+            insert into rates (
                 "date",
                 usd,
                 eur
