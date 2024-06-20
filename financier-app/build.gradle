@@ -3,10 +3,12 @@ plugins {
 }
 
 dependencies {
-    implementation project(':financier-core-usecase')
-    implementation project(':financier-infra-repository')
-    implementation project(':financier-infra-gateway')
-    implementation project(':financier-infra-exchange')
+    implementation project(':financier-core-domain')
+    implementation project(':financier-core-usecase-api')
+    implementation project(':financier-core-usecase-impl')
+    implementation project(':financier-port-repository')
+    implementation project(':financier-port-gateway')
+    implementation project(':financier-port-exchange')
 
     // web
     implementation('org.springframework.boot:spring-boot-starter-web') {
@@ -18,7 +20,7 @@ dependencies {
     implementation "io.swagger.core.v3:swagger-core-jakarta:$swaggerAnnotationsJakarta"
 
     // database
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.flywaydb:flyway-database-postgresql'
     runtimeOnly 'org.postgresql:postgresql'
 

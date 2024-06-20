@@ -1,74 +1,61 @@
 package dgcd.financier.core.domain.validation;
 
-import dgcd.financier.core.domain.Operation;
-import dgcd.financier.core.domain.exception.IllegalOperationCommentException;
-import dgcd.financier.core.domain.exception.IllegalOperationCorrelationException;
-import dgcd.financier.core.domain.exception.IllegalOperationCounterpartyException;
+import dgcd.financier.core.domain.model.Operation;
 
+import static dgcd.financier.core.domain.Constants.AMOUNT_SCALE;
 import static dgcd.financier.core.domain.Constants.OPERATION_COMMENT_MAX_LENGTH;
 import static dgcd.financier.core.domain.Constants.OPERATION_COMMENT_MIN_LENGTH;
 import static dgcd.financier.core.domain.Constants.OPERATION_CORRELATION_MAX_LENGTH;
 import static dgcd.financier.core.domain.Constants.OPERATION_CORRELATION_MIN_LENGTH;
 import static dgcd.financier.core.domain.Constants.OPERATION_COUNTERPARTY_MAX_LENGTH;
 import static dgcd.financier.core.domain.Constants.OPERATION_COUNTERPARTY_MIN_LENGTH;
+import static dgcd.financier.core.domain.Constants.QUANTITY_SCALE;
 import static dgcd.financier.core.domain.OperationType.BASE;
-import static dgcd.financier.core.domain.validation.ValidationUtils.checkIdentity;
-import static dgcd.financier.core.domain.validation.ValidationUtils.checkStringBoundaries;
-import static java.math.BigDecimal.ZERO;
-import static java.util.Objects.nonNull;
-import static java.util.Objects.requireNonNull;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkId;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkLength;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkMaxScale;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkMustBeNull;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkNonNull;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkNotZero;
+import static dgcd.financier.core.domain.validation.ValidationUtils.checkPositive;
 
 public class OperationValidator {
 
-    public static void validate(Operation operation) {
-        checkIdentity(operation.getIdentity());
+    public static Operation validate(Operation operation) {
+        checkId(operation.getId(), "id");
 
-        requireNonNull(operation.getDate(), "Operation date can not be null");
-        requireNonNull(operation.getAccount(), "Operation account can not be null");
-        requireNonNull(operation.getType(), "Operation type can not be null");
-        requireNonNull(operation.getAmount(), "Operation amount can not be null");
+        checkNonNull(operation.getDate(), "date");
 
-        requireNonNull(operation.getQuantity(), "Operation quantity can not be null");
-        if (operation.getQuantity().compareTo(ZERO) <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater the 0");
-        }
+        checkNonNull(operation.getAccountId(), "accountId");
+        checkId(operation.getAccountId(), "accountId");
+
+        checkNonNull(operation.getType(), "type");
+
+        checkNonNull(operation.getQuantity(), "quantity");
+        checkPositive(operation.getQuantity(), "quantity");
+        checkMaxScale(operation.getQuantity(), QUANTITY_SCALE, "quantity");
+
+        checkNonNull(operation.getAmount(), "amount");
+        checkNotZero(operation.getAmount(), "amount");
+        checkMaxScale(operation.getAmount(), AMOUNT_SCALE, "amount");
 
         if (BASE.equals(operation.getType())) {
-            if (nonNull(operation.getSubcategory())) {
-                throw new IllegalArgumentException("BASE operation can not have category");
-            }
+            checkMustBeNull(operation.getSubcategoryId(), "subcategoryId");
         } else {
-            requireNonNull(operation.getSubcategory(), "Non-BASE operation subcategory can not be null");
-            if (operation.getSubcategory().isParent()) {
-                throw new IllegalArgumentException("Subcategory can not be parent");
-            }
+            checkNonNull(operation.getSubcategoryId(), "subcategoryId");
         }
 
-        var comment = operation.getComment();
-        checkStringBoundaries(
-                comment,
-                OPERATION_COMMENT_MIN_LENGTH,
-                OPERATION_COMMENT_MAX_LENGTH,
-                IllegalOperationCommentException::new
-        );
+        checkLength(operation.getComment(), OPERATION_COMMENT_MIN_LENGTH, OPERATION_COMMENT_MAX_LENGTH, "comment");
+        checkLength(operation.getCounterparty(), OPERATION_COUNTERPARTY_MIN_LENGTH, OPERATION_COUNTERPARTY_MAX_LENGTH, "counterparty");
 
-        var counterparty = operation.getCounterparty();
-        checkStringBoundaries(
-                counterparty,
-                OPERATION_COUNTERPARTY_MIN_LENGTH,
-                OPERATION_COUNTERPARTY_MAX_LENGTH,
-                IllegalOperationCounterpartyException::new
-        );
+        if (operation.getType().isPaired()) {
+            checkNonNull(operation.getCorrelationId(), "correlationId");
+            checkLength(operation.getCorrelationId(), OPERATION_CORRELATION_MIN_LENGTH, OPERATION_CORRELATION_MAX_LENGTH, "correlationId");
+        } else {
+            checkMustBeNull(operation.getCorrelationId(), "correlationId");
+        }
 
-        requireNonNull(operation.getIsCanceled(), "Operation isCanceled status can not be null");
-
-        var correlation = operation.getCorrelationId();
-        checkStringBoundaries(
-                correlation,
-                OPERATION_CORRELATION_MIN_LENGTH,
-                OPERATION_CORRELATION_MAX_LENGTH,
-                IllegalOperationCorrelationException::new
-        );
+        return operation;
     }
 
 }

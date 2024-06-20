@@ -42,10 +42,4 @@ docker run -d \
   postgres:alpine
 ```
 
-* Additionally create databases: financier_dev
-
-```sql
-create database financier_dev;
-```
-
 * Go to `front/` subfolder and run `npm install` and `npm run build`

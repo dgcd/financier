@@ -1,14 +1,19 @@
 package dgcd.financier.config;
 
-import dgcd.financier.core.usecase.AccountCloseUsecase;
-import dgcd.financier.core.usecase.AccountCreateUsecase;
-import dgcd.financier.core.usecase.AlldataExportUsecase;
-import dgcd.financier.core.usecase.AlldataImportUsecase;
-import dgcd.financier.core.usecase.CategoryCreateUsecase;
-import dgcd.financier.core.usecase.InitDataGetUsecase;
-import dgcd.financier.core.usecase.OperationCancelUsecase;
-import dgcd.financier.core.usecase.OperationCreateUsecase;
-import dgcd.financier.core.usecase.RatesUpdateUsecase;
+import dgcd.financier.core.usecase.api.AccountCloseUsecase;
+import dgcd.financier.core.usecase.api.AccountCreateUsecase;
+import dgcd.financier.core.usecase.api.AlldataExportUsecase;
+import dgcd.financier.core.usecase.api.AlldataImportUsecase;
+import dgcd.financier.core.usecase.api.CategoryCreateUsecase;
+import dgcd.financier.core.usecase.api.InitDataGetUsecase;
+import dgcd.financier.core.usecase.api.OperationCancelUsecase;
+import dgcd.financier.core.usecase.api.OperationCreateUsecase;
+import dgcd.financier.core.usecase.api.RatesUpdateUsecase;
+import dgcd.financier.core.usecase.api.port.repository.AccountsRepository;
+import dgcd.financier.core.usecase.api.port.repository.CategoriesRepository;
+import dgcd.financier.core.usecase.api.port.repository.MiscRepository;
+import dgcd.financier.core.usecase.api.port.repository.OperationsRepository;
+import dgcd.financier.core.usecase.api.port.repository.RatesRepository;
 import dgcd.financier.core.usecase.impl.AccountCloseUsecaseImpl;
 import dgcd.financier.core.usecase.impl.AccountCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.AlldataExportUsecaseImpl;
@@ -18,11 +23,6 @@ import dgcd.financier.core.usecase.impl.InitDataGetUsecaseImpl;
 import dgcd.financier.core.usecase.impl.OperationCancelUsecaseImpl;
 import dgcd.financier.core.usecase.impl.OperationCreateUsecaseImpl;
 import dgcd.financier.core.usecase.impl.RatesUpdateUsecaseImpl;
-import dgcd.financier.core.usecase.port.repository.AccountsRepository;
-import dgcd.financier.core.usecase.port.repository.CategoriesRepository;
-import dgcd.financier.core.usecase.port.repository.OperationsRepository;
-import dgcd.financier.core.usecase.port.repository.RatesRepository;
-import dgcd.financier.core.usecase.port.service.TechInfoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -34,15 +34,13 @@ public class UsecaseConfig {
             AccountsRepository accountsRepository,
             CategoriesRepository categoriesRepository,
             OperationsRepository operationsRepository,
-            RatesRepository ratesRepository,
-            TechInfoService techInfoService
+            RatesRepository ratesRepository
     ) {
         return new InitDataGetUsecaseImpl(
                 accountsRepository,
                 categoriesRepository,
                 operationsRepository,
-                ratesRepository,
-                techInfoService
+                ratesRepository
         );
     }
 
@@ -92,6 +90,12 @@ public class UsecaseConfig {
 
 
     @Bean
+    public RatesUpdateUsecase ratesUpdateUsecase(RatesRepository ratesRepository) {
+        return new RatesUpdateUsecaseImpl(ratesRepository);
+    }
+
+
+    @Bean
     public AlldataExportUsecase alldataExportUsecase(
             AccountsRepository accountsRepository,
             CategoriesRepository categoriesRepository,
@@ -109,25 +113,17 @@ public class UsecaseConfig {
 
     @Bean
     public AlldataImportUsecase alldataImportUsecase(
+            MiscRepository miscRepository,
             AccountsRepository accountsRepository,
             CategoriesRepository categoriesRepository,
             OperationsRepository operationsRepository,
             RatesRepository ratesRepository
     ) {
         return new AlldataImportUsecaseImpl(
+                miscRepository,
                 accountsRepository,
                 categoriesRepository,
                 operationsRepository,
-                ratesRepository
-        );
-    }
-
-
-    @Bean
-    public RatesUpdateUsecase ratesUpdateUsecase(
-            RatesRepository ratesRepository
-    ) {
-        return new RatesUpdateUsecaseImpl(
                 ratesRepository
         );
     }

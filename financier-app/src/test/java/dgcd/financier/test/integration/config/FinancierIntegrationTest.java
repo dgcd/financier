@@ -1,9 +1,7 @@
 package dgcd.financier.test.integration.config;
 
-import dgcd.financier.test.support.queryCounter.QueryCountExtension;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,7 +23,6 @@ import static io.zonky.test.db.AutoConfigureEmbeddedDatabase.DatabaseType.POSTGR
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("integrationTest")
-@ExtendWith(QueryCountExtension.class)
 @AutoConfigureEmbeddedDatabase(provider = ZONKY, type = POSTGRES)
 public @interface FinancierIntegrationTest {
 

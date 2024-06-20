@@ -1,0 +1,12 @@
+plugins {
+    id 'groovy'
+    id 'java-library'
+}
+
+dependencies {
+    implementation project(':financier-core-domain')
+
+    implementation "io.vavr:vavr:$vavrVersion"
+
+    testImplementation "org.spockframework:spock-core:$spockVersion"
+}

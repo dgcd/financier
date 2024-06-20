@@ -11,9 +11,11 @@ module financier.app {
     requires spring.boot.actuator;
     requires com.fasterxml.jackson.annotation;
     requires org.apache.tomcat.embed.core;
+    requires com.zaxxer.hikari;
 
-    requires financier.core.usecase;
-    requires financier.infra.gateway;
-    requires financier.infra.repository;
-    requires financier.infra.exchange;
+    requires financier.core.usecase.api;
+    requires financier.core.usecase.impl;
+    requires financier.port.gateway;
+    requires financier.port.repository;
+    requires financier.port.exchange;
 }

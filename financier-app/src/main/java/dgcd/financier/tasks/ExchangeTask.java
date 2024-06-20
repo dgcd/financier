@@ -1,6 +1,6 @@
 package dgcd.financier.tasks;
 
-import dgcd.financier.infra.exchange.ExchangeService;
+import dgcd.financier.port.exchange.ExchangeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;

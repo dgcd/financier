@@ -10,8 +10,9 @@ rootProject.name = 'financier'
 include 'financier-app'
 
 include 'financier-core-domain'
-include 'financier-core-usecase'
+include 'financier-core-usecase-api'
+include 'financier-core-usecase-impl'
 
-include 'financier-infra-repository'
-include 'financier-infra-gateway'
-include 'financier-infra-exchange'
+include 'financier-port-repository'
+include 'financier-port-gateway'
+include 'financier-port-exchange'

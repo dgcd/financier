@@ -1,0 +1,19 @@
+plugins {
+    id 'groovy'
+    id 'java-library'
+}
+
+dependencies {
+    implementation project(':financier-core-domain')
+    implementation project(':financier-core-usecase-api')
+
+    implementation 'org.slf4j:slf4j-api'
+
+    implementation "io.vavr:vavr:$vavrVersion"
+    testImplementation "io.vavr:vavr-test:$vavrVersion"
+
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
+    testImplementation "org.spockframework:spock-core:$spockVersion"
+}

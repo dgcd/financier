@@ -1,8 +1,8 @@
 plugins {
+    id 'groovy'
     id 'java-library'
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.assertj:assertj-core'
+    testImplementation "org.spockframework:spock-core:$spockVersion"
 }
