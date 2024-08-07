@@ -6,9 +6,9 @@
             <th>Account</th>
 
             <th>Type</th>
-            <th>Price</th>
-            <th>Quantity</th>
             <th>Amount</th>
+            <th>Quantity</th>
+            <th>Price</th>
 
             <th>Category</th>
             <th>Subcategory</th>
@@ -38,9 +38,9 @@
             <td style="min-width:120px">{{ o.accountTitle | removeUnderscores }}</td>
 
             <td>{{ o.type | shortenExpenseType }}</td>
-            <td align="right">{{ (o.amount / o.quantity) | formatMoneyToString }}</td>
-            <td>{{ o.quantity }}</td>
             <td align="right" style="font-weight: bold">{{ o.amount | formatMoneyToString }}</td>
+            <td>{{ o.quantity }}</td>
+            <td align="right">{{ (o.amount / o.quantity) | formatMoneyToString }}</td>
 
             <td>{{ o.categoryTitle }}</td>
             <td>{{ o.subcategoryTitle }}</td>
