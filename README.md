@@ -17,7 +17,7 @@ Simple personal finance manager and playground for new features. Clean architect
 
 * JDK 22
 * PostgreSQL 16
-* Node.js 20
+* Node.js 22
 
 ## Prerequisites
 
