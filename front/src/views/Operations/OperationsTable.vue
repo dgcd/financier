@@ -14,7 +14,7 @@
             <th>Subcategory</th>
             <th>Comment</th>
             <th>Counterparty</th>
-            <th>Cancel</th>
+            <th>Edit</th>
         </tr>
         <tr>
             <td></td>
@@ -46,7 +46,10 @@
             <td>{{ o.subcategoryTitle }}</td>
             <td>{{ o.comment }}</td>
             <td>{{ o.counterparty }}</td>
-            <td><button v-if="o.thisSession" class="btn btn-link btn-sm py-0" @click="cancelOperationHandler(o)">X</button></td>
+            <td>
+                <redirect-button v-if="o.thisSession" class="btn btn-link btn-sm py-0" :title="'Edit'" :path="`/operations/edit?id=${o.id}`"/>
+                <button v-if="o.thisSession" class="btn btn-link btn-sm py-0" @click="cancelOperationHandler(o)">X</button>
+            </td>
         </tr>
     </table>
 </template>

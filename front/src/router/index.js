@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import DashboardView from '../views/Dashboard/DashboardView.vue';
 import OperationsView from '../views/Operations/OperationsView.vue';
 import OperationCreateView from '../views/OperationCreate/OperationCreateView.vue';
+import OperationEditView from '../views/OperationCreate/OperationEditView.vue';
 import AccountsView from '../views/Accounts/AccountsView.vue';
 import AccountCreateView from '../views/AccountCreate/AccountCreateView.vue';
 import CategoriesView from '../views/Categories/CategoriesView.vue';
@@ -35,6 +36,14 @@ const routes = [
         component: OperationCreateView,
         meta: {
             title: 'Create operation',
+        },
+    },
+    {
+        path: '/operations/edit',
+        name: 'OperationEditView',
+        component: OperationEditView,
+        meta: {
+            title: 'Edit operation',
         },
     },
     {

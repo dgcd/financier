@@ -94,7 +94,10 @@ public class OperationsRepositoryImpl implements OperationsRepository {
     private static final String UPDATE = """
             update operations
             set
-            	canceled = :canceled
+                date = :date,
+                comment = :comment,
+                counterparty = :counterparty,
+                canceled = :canceled
             where id = :id""";
 
 
@@ -156,7 +159,7 @@ public class OperationsRepositoryImpl implements OperationsRepository {
     public Operation create(Operation operation) {
         log.debug("[create] operation: {}", operation);
 
-        Map<String, Object> params = new HashMap<>();
+        var params = new HashMap<String, Object>();
         params.put("date", operation.getDate());
         params.put("account_id", operation.getAccountId());
         params.put("quantity", operation.getQuantity());
@@ -181,10 +184,12 @@ public class OperationsRepositoryImpl implements OperationsRepository {
     public Operation update(Operation operation) {
         log.debug("[update] operation: {}", operation);
 
-        var params = Map.of(
-                "id", operation.getId(),
-                "canceled", operation.isCanceled()
-        );
+        var params = new HashMap<String, Object>();
+        params.put("id", operation.getId());
+        params.put("date", operation.getDate());
+        params.put("comment", operation.getComment());
+        params.put("counterparty", operation.getCounterparty());
+        params.put("canceled", operation.isCanceled());
 
         var rows = jdbcTemplate.update(UPDATE, params);
         log.debug("[update] updated rows: {}", rows);

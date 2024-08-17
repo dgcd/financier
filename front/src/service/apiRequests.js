@@ -58,6 +58,16 @@ export default {
         );
     },
 
+    editOperation(operation, success, fail) {
+        apiHelper.performApiRequest(
+            apiUrls.operationEditUrl,
+            operation,
+            'Edit operation',
+            success,
+            fail,
+        );
+    },
+
     cancelOperation(idDto, success, fail) {
         apiHelper.performApiRequest(
             apiUrls.operationCancelUrl,
