@@ -17,7 +17,7 @@ Simple personal finance manager and playground for new features. Clean architect
 
 * JDK 22
 * PostgreSQL 16
-* Node.js 20
+* Node.js 22
 
 ## Prerequisites
 
@@ -27,7 +27,11 @@ Simple personal finance manager and playground for new features. Clean architect
 POSTGRES_FINANCIER_USERNAME=##;POSTGRES_FINANCIER_PASSWORD=####;POSTGRES_FINANCIER_PORT=######;EXCHANGE_API_KEY=##
 ```
 
-* Add `financierhost` to `hosts` file
+* Execute:
+
+```shell
+echo "127.0.0.1 financierhost" | sudo tee -a /etc/hosts
+```
 
 * Run PostgreSQL in Docker/Podman on `financierhost` host:
 

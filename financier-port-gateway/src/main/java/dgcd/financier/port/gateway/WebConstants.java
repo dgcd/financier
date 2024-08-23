@@ -15,6 +15,7 @@ public final class WebConstants {
 
     public static final String OPERATIONS_PATH = API_PATH + "/operations";
     public static final String OPERATIONS_CREATE_PATH = OPERATIONS_PATH + "/create";
+    public static final String OPERATIONS_EDIT_PATH = OPERATIONS_PATH + "/edit";
     public static final String OPERATIONS_CANCEL_PATH = OPERATIONS_PATH + "/cancel";
 
     private static final String DATA_EXCEL_PATH = API_PATH + "/data";
