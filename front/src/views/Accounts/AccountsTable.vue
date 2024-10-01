@@ -2,7 +2,6 @@
     <div>
         <table class="tbl">
             <tr>
-                <!-- <th>Id</th> -->
                 <th>Title</th>
                 <th>Currency</th>
                 <th>Balance</th>
@@ -10,15 +9,17 @@
                 <th v-for="c in getHistoryColumns" :key="c">{{c}}</th>
             </tr>
             <tr v-for="a in sortedAccounts" :key="a.id">
-                <!-- <td>{{ a.id }}</td> -->
-                <td align="left" style="min-width:250px">
+                <td
+                    style="min-width:250px; text-align:start"
+                    :title="a.id"
+                >
                     {{ a.title }}
                     <button class="btn btn-link btn-sm py-0" v-if="a.id && !a.balance && !a.closed" @click="closeAccountHandler(a)">X</button>
                 </td>
                 <td>{{ a.currency }}</td>
-                <td align="right" style="font-weight: bold">{{ a.balance | formatMoneyToString }}</td>
-                <td align="right" v-if="showChecked">{{ a.checkedBalance | formatMoneyToString }}{{ a.checkFailed ? " !" : ""}}</td>
-                <td align="right" v-for="c in getHistoryColumns" :key="c">{{getHistoryValue(a, c) | formatMoneyToString }}</td>
+                <td style="font-weight:bold; text-align:end">{{ a.balance | formatMoneyToString }}</td>
+                <td style="text-align:end" v-if="showChecked">{{ a.checkedBalance | formatMoneyToString }}{{ a.checkFailed ? " !" : ""}}</td>
+                <td style="text-align:end" v-for="c in getHistoryColumns" :key="c">{{getHistoryValue(a, c) | formatMoneyToString }}</td>
             </tr>
         </table>
     </div>
