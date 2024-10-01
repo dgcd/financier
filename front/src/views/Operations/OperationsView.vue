@@ -17,17 +17,13 @@
 
         <error-message v-if="error" :message="error" />
 
-        <OperationsTable
-            :operations="operations"
-            :cancelOperationHandler="cancelOperation"
-        />
+        <OperationsTable :operations="operations" />
     </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import OperationsTable from './OperationsTable.vue';
-import apiRequests from '@/service/apiRequests.js';
 
 export default {
     name: 'OperationsView',
@@ -44,30 +40,6 @@ export default {
 
     computed: {
         ...mapState(['operations']),
-    },
-
-    methods: {
-        ...mapMutations(['updateAccounts', 'removeOperationsByIds']),
-
-        cancelOperation(operation) {
-            if (!window.confirm(`Cancel operation '${operation.amount} (${operation.accountTitle})'?`)) {
-                return;
-            }
-            apiRequests.cancelOperation(
-                { id: operation.id },
-                this.requestSuccess,
-                this.requestError,
-            );
-        },
-
-        requestSuccess(payload) {
-            this.removeOperationsByIds(payload.canceledOperationsIds);
-            this.updateAccounts(payload.updatedAccounts);
-        },
-
-        requestError(message) {
-            this.error = message;
-        },
     },
 }
 </script>

@@ -37,7 +37,8 @@
         <error-message v-if="error" :message="error" />
 
         <p>
-            <button class="btn btn-link" @click="onSave">Save</button>
+            <button class="btn btn-link" @click="saveOperation">Save</button>
+            <button class="btn btn-link" @click="cancelOperation">Delete!</button>
         </p>
     </div>
 </template>
@@ -47,7 +48,7 @@ import { mapMutations, mapState } from 'vuex';
 import apiRequests from '@/service/apiRequests.js';
 
 export default {
-    name: 'OperationCreateView',
+    name: 'OperationEditView',
 
     data() {
         return {
@@ -58,17 +59,26 @@ export default {
             comment: '',
             counterparty: '',
 
+            amount: null,
+            accountTitle: null,
+
             error: null,
         }
     },
 
     created() {
         let srcOperation = this.operations.find(o => o.id == this.$route.query.id)
+        if (!srcOperation) {
+            this.error = 'Operation not found'
+            return
+        }
         this.id = srcOperation.id
         this.operationType = srcOperation.type
         this.date = srcOperation.date
         this.comment = srcOperation.comment || ''
         this.counterparty = srcOperation.counterparty || ''
+        this.amount = srcOperation.amount
+        this.accountTitle = srcOperation.accountTitle
     },
 
     computed: {
@@ -79,9 +89,10 @@ export default {
         ...mapMutations([
             'removeOperationsByIds',
             'addOperations',
+            'updateAccounts',
         ]),
 
-        onSave() {
+        saveOperation() {
             let operation = {
                 id: this.id,
                 date: this.date,
@@ -91,15 +102,32 @@ export default {
             this.error = null;
             apiRequests.editOperation(
                 operation,
-                this.requestSuccess,
+                this.saveRequestSuccess,
                 this.requestError,
             );
         },
 
-        requestSuccess(payload) {
-            console.log('success payload:', payload)
+        saveRequestSuccess(payload) {
             this.removeOperationsByIds([payload.id]);
             this.addOperations([payload]);
+            this.$router.push('/operations');
+        },
+
+
+        cancelOperation() {
+            if (!window.confirm(`Cancel operation '${this.amount} (${this.accountTitle})'?`)) {
+                return;
+            }
+            apiRequests.cancelOperation(
+                { id: this.id },
+                this.cancelRequestSuccess,
+                this.requestError,
+            );
+        },
+
+        cancelRequestSuccess(payload) {
+            this.removeOperationsByIds(payload.canceledOperationsIds);
+            this.updateAccounts(payload.updatedAccounts);
             this.$router.push('/operations');
         },
 

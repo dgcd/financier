@@ -1,16 +1,15 @@
 <template>
     <table class="tbl">
         <tr>
-            <!-- <th>Id</th> -->
             <th>Title</th>
             <th><button class="btn btn-link" @click="onClickCreate(null)">add parent</button></th>
             <th>Ops</th>
         </tr>
         <tr v-for="c in sortedCategories" :key="c.id">
-            <!-- <td>{{ c.id }}</td> -->
             <td
-                align="left"
+                style="text-align:start"
                 :class="c.parentId ? '' : 'boldRow'"
+                :title="c.id"
             >{{ c.title }}</td>
             <td><button class="btn btn-link" v-if="!c.parentId" @click="onClickCreate(c.id)">add child</button></td>
             <td

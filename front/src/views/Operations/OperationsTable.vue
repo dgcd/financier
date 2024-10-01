@@ -38,17 +38,16 @@
             <td style="min-width:120px">{{ o.accountTitle | removeUnderscores }}</td>
 
             <td>{{ o.type | shortenExpenseType }}</td>
-            <td align="right" style="font-weight: bold">{{ o.amount | formatMoneyToString }}</td>
+            <td style="font-weight:bold; text-align:end">{{ o.amount | formatMoneyToString }}</td>
             <td>{{ o.quantity }}</td>
-            <td align="right">{{ (o.amount / o.quantity) | formatMoneyToString }}</td>
+            <td style="text-align:end">{{ (o.amount / o.quantity) | formatMoneyToString }}</td>
 
             <td>{{ o.categoryTitle }}</td>
             <td>{{ o.subcategoryTitle }}</td>
             <td>{{ o.comment }}</td>
             <td>{{ o.counterparty }}</td>
             <td>
-                <redirect-button v-if="o.thisSession" class="btn btn-link btn-sm py-0" :title="'Edit'" :path="`/operations/edit?id=${o.id}`"/>
-                <button v-if="o.thisSession" class="btn btn-link btn-sm py-0" @click="cancelOperationHandler(o)">X</button>
+                <redirect-button class="btn btn-link btn-sm py-0" :title="'Edit'" :path="`/operations/edit?id=${o.id}`"/>
             </td>
         </tr>
     </table>
@@ -64,10 +63,6 @@ export default {
     props: {
         operations: {
             type: Array,
-            required: true,
-        },
-        cancelOperationHandler: {
-            type: Function,
             required: true,
         },
     },
