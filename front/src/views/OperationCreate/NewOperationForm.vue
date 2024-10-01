@@ -41,7 +41,12 @@
 
         <tr>
             <td><span>{{isExchange ? 'Amount from: ' : 'Total amount: '}}</span></td>
-            <td><input type="text" v-model.trim="amount"></td>
+            <td><input
+                type="text"
+                v-model.trim="amount"
+                ref="totalAmountInput"
+                @focus="$event.target.select()"
+            ></td>
         </tr>
         <tr v-if="isExchange">
             <td><span>Amount to: </span></td>
@@ -131,6 +136,10 @@ export default {
 
             emitEnabled: false,
         };
+    },
+
+    mounted() {
+        this.$refs.totalAmountInput.focus();
     },
 
     computed: {
@@ -273,6 +282,15 @@ export default {
                 case '*': nums.push(l * r); break;
                 case '/': nums.push(l / r); break;
             }
+        },
+
+        flushForm() {
+            this.amount = 0;
+            this.amountTo = 0;
+            this.quantity = 1;
+            this.comment = '';
+            this.counterparty = '';
+            this.$refs.totalAmountInput.focus();
         },
     },
 }
