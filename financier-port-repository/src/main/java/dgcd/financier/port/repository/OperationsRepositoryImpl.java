@@ -4,7 +4,6 @@ import dgcd.financier.core.domain.OperationType;
 import dgcd.financier.core.domain.model.Operation;
 import dgcd.financier.core.usecase.api.port.repository.OperationsRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -154,7 +153,6 @@ public class OperationsRepositoryImpl implements OperationsRepository {
     }
 
 
-    @SneakyThrows
     @Override
     public Operation create(Operation operation) {
         log.debug("[create] operation: {}", operation);

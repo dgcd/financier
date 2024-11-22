@@ -12,6 +12,7 @@
             v-model="operation"
             :isTrans="isTrans"
             :isIncome="isIncome"
+            ref="newOperationForm"
         />
 
         <error-message v-if="error" :message="error" />
@@ -106,7 +107,8 @@ export default {
         requestSuccess(payload) {
             this.addOperations(payload.newOperations);
             this.updateAccounts(payload.updatedAccounts);
-            this.$router.push('/operations');
+            this.$refs.newOperationForm.flushForm();
+            // this.$router.push('/operations');
         },
 
         requestError(message) {

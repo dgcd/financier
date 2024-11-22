@@ -19,7 +19,7 @@ subprojects {
     compileTestJava.options.encoding = 'UTF-8'
     java {
         toolchain {
-            languageVersion = JavaLanguageVersion.of(22)
+            languageVersion = JavaLanguageVersion.of(23)
         }
     }
 
@@ -38,6 +38,8 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
         testCompileOnly 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
+
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
 
     dependencyManagement {
@@ -77,4 +79,15 @@ subprojects {
                 '-Xmx512m',
         ])
     }
+}
+
+tasks.register('buildAll') {
+    group = 'build'
+    dependsOn ':financier-core-domain:build'
+    dependsOn ':financier-core-usecase-api:build'
+    dependsOn ':financier-core-usecase-impl:build'
+    dependsOn ':financier-port-exchange:build'
+    dependsOn ':financier-port-gateway:build'
+    dependsOn ':financier-port-repository:build'
+    dependsOn ':financier-app:build'
 }
