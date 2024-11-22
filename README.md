@@ -16,7 +16,7 @@ Simple personal finance manager and playground for new features. Clean architect
 ## Uses
 
 * JDK 23
-* PostgreSQL 16
+* PostgreSQL 17
 * Node.js 22
 
 ## Prerequisites
@@ -43,7 +43,7 @@ docker run -d \
   -e POSTGRES_PASSWORD=#### \
   -e POSTGRES_DB=financier \
   -p ######:5432 \
-  postgres:alpine
+  postgres:17-alpine
 ```
 
 * Go to `front/` subfolder and run `npm install` and `npm run build`
